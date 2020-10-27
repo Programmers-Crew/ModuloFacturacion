@@ -14,6 +14,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -27,28 +28,6 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="639.0" stylesheets="@../resource/MenuPrincipalStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.moduloFacturacion.controller.MenuPrincipalContoller">
    <children>
-      <Pane layoutY="1.0" prefHeight="26.0" prefWidth="600.0" styleClass="menu" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <MenuBar prefHeight="0.0" prefWidth="163.0" styleClass="menubar">
-              <menus>
-                <Menu id="menuItem" mnemonicParsing="false" text="Modulos">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Modulo de Facturación" />
-                        <MenuItem mnemonicParsing="false" text="Modulo de Productos" />
-                        <MenuItem mnemonicParsing="false" text="Modulo de Inventario" />
-                        <MenuItem mnemonicParsing="false" text="Modulo de clientes" />
-                        <MenuItem mnemonicParsing="false" text="Modulo de proveedores" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Reportes">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-         </children>
-      </Pane>
       <TabPane layoutY="26.0" prefHeight="375.0" prefWidth="600.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
         <tabs>
           <Tab styleClass="tabItem">
@@ -200,6 +179,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Menu de Inicio" />
+               </tooltip>
           </Tab>
           <Tab styleClass="tabItem">
             <content>
@@ -213,7 +195,7 @@
                                        <children>
                                           <AnchorPane prefHeight="249.0" prefWidth="195.0">
                                              <children>
-                                                <JFXTextField layoutX="16.0" layoutY="58.0" prefHeight="26.0" prefWidth="163.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
+                                                <JFXTextField layoutX="16.0" layoutY="58.0" prefHeight="26.0" prefWidth="163.0" promptText="In" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
                                                 <HBox alignment="CENTER" layoutY="1.0" prefHeight="26.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                                    <children>
                                                       <Label text="AGREGAR USUARIO">
@@ -330,6 +312,9 @@
                         <Image url="@../img/ajustesBlanco.png" />
                      </image></ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Configuración y Usuarios" />
+               </tooltip>
           </Tab>
             <Tab styleClass="tabItem">
               <content>
@@ -349,8 +334,29 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Información" />
+               </tooltip>
             </Tab>
         </tabs>
       </TabPane>
+      <MenuBar layoutX="-1.0" layoutY="-5.0" prefHeight="26.0" prefWidth="289.0" styleClass="menubar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu id="menuItem" mnemonicParsing="false" text="Modulos">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Modulo de Facturación" />
+                  <MenuItem mnemonicParsing="false" text="Modulo de Productos" />
+                  <MenuItem mnemonicParsing="false" text="Modulo de Inventario" />
+                  <MenuItem mnemonicParsing="false" text="Modulo de clientes" />
+                  <MenuItem mnemonicParsing="false" text="Modulo de proveedores" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Reportes">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>

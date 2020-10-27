@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="486.0" prefWidth="716.0" stylesheets="@../resource/moduloStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="5.0" prefHeight="36.0" prefWidth="600.0" styleClass="bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane layoutX="7.0" layoutY="5.0" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <Reflection />
+               </effect>
+            </Pane>
+            <Pane layoutX="61.0" layoutY="5.0" prefHeight="27.0" prefWidth="46.0" styleClass="paneCliente">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Pane>
+         </children>
+      </Pane>
+      <TabPane layoutX="10.0" layoutY="46.0" prefHeight="375.0" prefWidth="600.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+         <tabs>
+            <Tab styleClass="tabItem">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.37267080745341613" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <AnchorPane prefHeight="176.0" prefWidth="243.0">
+                                             <children>
+                                                <HBox alignment="CENTER" layoutY="14.0" prefHeight="27.0" prefWidth="247.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="14.0">
+                                                   <children>
+                                                      <Label text="CLIENTE">
+                                                         <font>
+                                                            <Font name="Arial Bold Italic" size="17.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <Label layoutX="18.0" layoutY="42.0" text="NIT:" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="136.6" AnchorPane.topAnchor="42.0" />
+                                                <Label layoutX="23.0" layoutY="104.0" text="NOMBRE:" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="104.0" />
+                                                <JFXTextField layoutX="26.0" layoutY="122.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="14.199999999999989" />
+                                                <JFXComboBox editable="true" layoutX="23.0" layoutY="60.0" prefHeight="26.0" prefWidth="210.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="60.0" />
+                                             </children>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="243.0" prefWidth="243.0">
+                                             <children>
+                                                <HBox alignment="CENTER" layoutY="7.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Label text="FACTURA">
+                                                         <font>
+                                                            <Font name="Arial Bold Italic" size="17.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <Label layoutX="14.0" layoutY="40.0" text="PRODUCTO:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="130.6" AnchorPane.topAnchor="46.0" />
+                                                <Label layoutX="14.0" layoutY="91.0" text="PRECIO:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="130.6" AnchorPane.topAnchor="93.0" />
+                                                <Label layoutX="17.0" layoutY="139.0" text="CANTIDAD:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="139.0" />
+                                                <JFXTextField layoutX="20.0" layoutY="108.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.199999999999989" AnchorPane.topAnchor="104.0" />
+                                                <JFXTextField layoutX="18.0" layoutY="157.0" prefHeight="26.0" prefWidth="222.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="8.0" />
+                                                <HBox alignment="CENTER" layoutX="1.0" layoutY="204.0" prefHeight="27.0" prefWidth="208.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="204.0">
+                                                   <children>
+                                                      <JFXButton buttonType="RAISED" styleClass="boton" text="VENDER" textFill="WHITE">
+                                                         <font>
+                                                            <Font size="11.0" />
+                                                         </font>
+                                                      </JFXButton>
+                                                   </children>
+                                                </HBox>
+                                                <JFXComboBox editable="true" layoutX="16.0" layoutY="64.0" prefHeight="26.0" prefWidth="210.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="11.799999999999983" AnchorPane.topAnchor="62.0" />
+                                             </children>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </AnchorPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <TableView layoutX="15.0" layoutY="14.0" prefHeight="294.0" prefWidth="310.0" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <columns>
+                                          <TableColumn prefWidth="76.00001525878906" text="PRODUCTO" />
+                                          <TableColumn prefWidth="154.4000244140625" text="CANTIDAD" />
+                                          <TableColumn prefWidth="136.800048828125" text="PRECIO UNIT" />
+                                          <TableColumn prefWidth="75.0" text="TOTAL PARCIAL" />
+                                       </columns>
+                                    </TableView>
+                                    <JFXButton buttonType="RAISED" layoutX="262.0" layoutY="324.0" styleClass="boton" text="IMPRIMIR" textFill="WHITE" AnchorPane.bottomAnchor="14.399999999999977" AnchorPane.rightAnchor="14.0">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXTextField layoutX="130.0" layoutY="410.0" prefHeight="26.0" prefWidth="197.0" AnchorPane.bottomAnchor="18.400000000000013" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="85.20000000000002" />
+                                    <Label layoutX="15.0" layoutY="414.0" text="TOTAL DE FACTURA" AnchorPane.bottomAnchor="15.20000000000001" AnchorPane.leftAnchor="15.0" />
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/usuarioBlanco.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Clientes" />
+               </tooltip>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
