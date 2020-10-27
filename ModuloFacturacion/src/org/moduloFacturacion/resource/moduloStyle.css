@@ -73,3 +73,39 @@
 .boton:pressed{
     -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 0, 0);
 }
+
+.paneProveedor{
+    -fx-background-image: url(../img/proveedores.png);
+    -fx-background-size: stretch;
+}
+
+
+.paneProveedor:hover{
+   -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2);
+    
+}
+.paneProveedor:pressed{
+    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 0, 0);
+}
+
+
+
+.paneCategoria{
+    -fx-background-image: url(../img/categoriaNombre.png);
+    -fx-background-size: stretch;
+}
+
+
+
+.paneProducto{
+    -fx-background-image: url(../img/producto.png);
+    -fx-background-size: stretch;
+}
+
+.paneProducto:hover{
+   -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2);
+    
+}
+.paneProducto:pressed{
+    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 0, 0);
+}
