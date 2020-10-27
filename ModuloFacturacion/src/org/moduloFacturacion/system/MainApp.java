@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+
 public class MainApp extends Application {
     
     @Override
@@ -16,9 +17,9 @@ public class MainApp extends Application {
          
          
         Scene scene = new Scene(root);
-        stage.setWidth(568);
-        stage.setHeight(420);
-        stage.setScene(scene);
+        stage.setWidth(668);
+        stage.setHeight(520);
+        stage.setScene(scene);     
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }

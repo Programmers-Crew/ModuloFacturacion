@@ -1,5 +1,5 @@
 .cerrar{
-    -fx-background-color: #CC0000;
+    -fx-background-color: transparent;
     
     
 }
@@ -10,6 +10,12 @@
 }
 
 .boton{
-    -fx-background-color: #33b5e5;
+    -fx-background-color: #33b5e5;  
     
+}
+
+.imagenLogin{
+    -fx-background-image: url(../img/store-4156934_1280.png);
+    -fx-background-size: stretch;
+     
 }
