@@ -198,3 +198,258 @@ DELIMITER $$
 				where categoriaId = idBuscado;
         END $$
 DELIMITER ;
+
+
+
+#-------------------------- Entidad de productos
+DELIMITER $$
+	create procedure SpListarProductos()
+		BEGIN
+			select pr.productoId, pr.productoDesc, p.proveedorNombre, cp.categoriaNombre , pr.productoPrecio
+				from Productos as pr
+					inner join Proveedores as p
+						on pr.proveedorId = p.proveedorId
+							inner join CategoriaProductos as cp
+								on p.categoriaId = cp.categoriaId;
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpAgregarProductos(id int(100), descr varchar(50), provId int(100), catId int(100), precio decimal(10,2))
+		BEGIN
+			insert into Productos(productoId, productoDesc, proveedorId, categoriaId, productoPrecio)
+				values(id, descr, provId, catId, precio);
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpActualizarProductosProductos(idBuscado int(100),id int(100), descr varchar(50), precio decimal(10,2))
+		BEGIN
+			update Productos
+				set productoId = id, productoDesc = descr, productoPrecio = precio
+					where productoId = idBuscado;
+		END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpBuscarProductos(idBuscado int(100))
+		BEGIN
+			select pr.productoId, pr.productoDesc, p.proveedorNombre, cp.categoriaNombre , pr.productoPrecio
+				from Productos as pr
+					inner join Proveedores as p
+						on pr.proveedorId = p.proveedorId
+							inner join CategoriaProductos as cp
+								on p.categoriaId = cp.categoriaId
+									where pr.productoId = idBuscado;
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpEliminarProductos(idBuscado int(100))
+		BEGIN
+			delete from Productos 
+				where productoId = idBuscado;
+		END $$
+DELIMITER ;
+
+
+#----------------- Entidad Inventario de productos
+DELIMITER $$
+	create procedure SpListarInventarioProductos()
+		BEGIN
+			select ip.inventarioProductoId, ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc , ep.estadoProductoDesc
+				from InventarioProductos as ip
+					inner join Proveedores as pr
+						on ip.proveedorId = pr.proveedorId
+							inner join Productos as p
+								on ip.productoId = p.productoId
+									inner join EstadoProductos as ep
+										on ip.estadoProductoId = ep.estadoProductoId;
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$	
+	create procedure SpAgregarInventarioProductos(id int(100), cant int(100), proveedor int(100), producto int(100), estado tinyint(1))
+		BEGIN
+			insert into InventarioProductos(inventarioProductoId, inventarioProductoCant, proveedorId, productoId, estadoProductoId)
+				values(id, cant, proveedor, producto, estado);
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpActualizarInventarioProductos(idBuscado int(100), id int(100), cant int(100), proveedor int(100), producto int(100), estado tinyint(1))
+		BEGIN
+			update InventarioProductos
+				set inventarioProductoId = id, inventarioProductoCant = cant, estadoProductoId = estado
+					where inventarioProductoId = idBuscado;
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpBuscarInventarioProductos(idBuscado int(100))
+		BEGIN
+			select ip.inventarioProductoId, ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc , ep.estadoProductoDesc
+				from InventarioProductos as ip
+					inner join Proveedores as pr
+						on ip.proveedorId = pr.proveedorId
+							inner join Productos as p
+								on ip.productoId = p.productoId
+									inner join EstadoProductos as ep
+										on ip.estadoProductoId = ep.estadoProductoId
+											where ip.inventarioProductoId = idBuscado;
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpEliminarInventarioProductos(idBuscado int(100))
+		BEGIN
+			delete from InventarioProductos
+				where inventarioProductoId = idBuscado;
+        END $$
+DELIMITER ;
+
+
+
+#-------------- Entidad Usuario
+DELIMITER $$
+	create procedure SpListarUsuario()
+		BEGIN 
+			select usuarioId, usuarioNombre, usuarioPassword
+				from Usuarios;
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpAgregarUsuario(nombre varchar(30), pass varchar(40))
+		BEGIN
+			insert into Usuarios(usuarioNombre, usuarioPassword)
+				values(nombre, pass);
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpActualizarUsuario(idBuscado int(100), nombre varchar(30), pass varchar(30))
+		BEGIN
+			update Usuarios
+				set usuarioNombre = nombre, usuarioPassword = pass
+					where usuarioId = idBuscado;
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpBuscarUsuario(idBuscado int(100))
+		BEGIN
+			select usuarioId, usuarioNombre, usuarioPassword
+				from Usuarios
+					where usuarioId = idBuscado;
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpEliminarUsuarios(idBuscado int(100))
+		BEGIN
+			delete from Usuarios
+				where usuarioId = idBuscado;
+        END $$
+DELIMITER ;
+
+
+
+#-------------------- Entidad Facturas
+DELIMITER $$
+	create procedure SpListarFacturas()
+		BEGIN
+			select f.facturaId, c.clienteNombre, f.facturaFecha, u.usuarioNombre, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal
+				from Facturas as f
+					inner join Clientes as c
+						on  f.clienteId = c.clienteId
+							inner join Usuarios as u 
+								on f.usuarioId = u.usuarioId;
+        END $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure SpAgregarFacturas(id int(100), cliente int(100), fecha date, usuario int(100), neto decimal(10,2), iva decimal(10,2), total decimal(10,2))
+		BEGIN
+			insert into Facturas(facturaId, clienteId, facturaFecha, usuarioId, facturaTotalNeto, facturaTotalIva, facturaTotal)
+				values(id, cliente, fecha, usuario, neto, iva, total);
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpBuscarFacturas(idBuscado int(100))
+		BEGIN
+			select f.facturaId, c.clienteNombre, f.facturaFecha, u.usuarioNombre, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal
+				from Facturas as f
+					inner join Clientes as c
+						on  f.clienteId = c.clienteId
+							inner join Usuarios as u 
+								on f.usuarioId = u.usuarioId
+									where f.facturaId = idBuscado;
+		END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpListarFacturaDetalle()
+		BEGIN
+			select fd.facturaDetalleId, f.facturaId, p.productoId, fd.cantidad, fd.precios
+				from FacturaDetalle as fd
+					inner join Facturas as f
+						on fd.facturaId = f.facturaId
+							inner join Productos as p
+								on fd.productoId = p.productoId;
+        END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure SpAgregarDetalleFacturas(id int(100), factura int(100), prodcutos int(100), cantidad int(100), precios decimal(10,2))
+		BEGIN
+			insert into FacturaDetalle(facturaDetalleId, facturaId, productoId, cantidad, precios)
+				values(id, factura, productos, cantidad, precios);
+        END $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure SpBuscarDetalleFacturas(idBuscado int(100))
+		BEGIN
+			select fd.facturaDetalleId, f.facturaId, p.productoId, fd.cantidad, fd.precios
+				from FacturaDetalle as fd
+					inner join Facturas as f
+						on fd.facturaId = f.facturaId
+							inner join Productos as p
+								on fd.productoId = p.productoId
+									where facturaDetalleId = idBuscado;
+        END $$
+DELIMITER ;
