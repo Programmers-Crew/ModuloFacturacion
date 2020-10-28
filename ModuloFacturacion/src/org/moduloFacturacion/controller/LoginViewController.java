@@ -1,26 +1,34 @@
 
 package org.moduloFacturacion.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.moduloFacturacion.bean.CambioScene;
 
 
 public class LoginViewController implements Initializable {
     
     private Label label;
-    @FXML
     private Pane panelTransicion;
+    @FXML
+    private AnchorPane anchor;
     
-    
+    CambioScene cambioScene = new CambioScene();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        FadeTransition ft = new FadeTransition();
@@ -40,10 +48,26 @@ public class LoginViewController implements Initializable {
        tt.play();
     }    
 
+   
+
     @FXML
-    private void cerrar(MouseEvent event) {   
+    private void btnIngresar(MouseEvent event) throws IOException {
+        Stage stage1 = (Stage)anchor.getScene().getWindow();
+        
+        Stage primaryStage= new Stage();
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/moduloFacturacion/view/menuPrincipal.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setWidth(800);
+        primaryStage.setHeight(500);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        stage1.close();
+
+    }
+
+    @FXML
+    private void btnCerrar(MouseEvent event) {
         System.exit(0);
-    
     }
     
 }
