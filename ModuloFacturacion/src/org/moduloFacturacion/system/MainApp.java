@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.moduloFacturacion.db.Conexion;
 
 
 public class MainApp extends Application {
@@ -14,7 +15,12 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
          Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/moduloFacturacion/view/LoginView.fxml"));
         
-         
+       Conexion c = new Conexion();
+        if(c.getConexion() != null){
+            System.out.println("CONEXIO CORRECTA 1");
+        }else{
+            System.out.println("CONEXION INCORRECTA");
+        }
          
         Scene scene = new Scene(root);
         stage.setWidth(668);
@@ -26,6 +32,8 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+       
+
     }
     
 }

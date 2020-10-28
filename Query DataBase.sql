@@ -53,7 +53,7 @@ create table InventarioProductos(
 
 
 create table Usuarios(
-	usuarioId int(10) primary key,
+	usuarioId int(10) primary key auto_increment,
     usuarioNombre varchar(30) not null,
     usuarioPassword varchar(40) unique not null
 );
