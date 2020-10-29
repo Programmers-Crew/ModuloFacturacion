@@ -453,3 +453,132 @@ DELIMITER $$
 									where facturaDetalleId = idBuscado;
         END $$
 DELIMITER ;
+
+
+##--------------------- FILTROS -------------------------------
+
+#=== Inventario =====
+
+#==================== Buscar en inventario por el codigo de producto
+DELIMITER $$
+	create procedure SpBuscarPorCodigoInventario(idBuscado int(100))
+		BEGIN
+			select ip.inventarioProductoId, ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc , ep.estadoProductoDesc
+				from InventarioProductos as ip
+					inner join Proveedores as pr
+						on ip.proveedorId = pr.proveedorId
+							inner join Productos as p
+								on ip.productoId = p.productoId
+									inner join EstadoProductos as ep
+										on ip.estadoProductoId = ep.estadoProductoId
+											where ip.productoId = p.productoId and ip.productoId = idBuscado;
+        END $$
+DELIMITER ;
+
+
+
+#==================== Buscar en inventario por el nombre de producto
+DELIMITER $$
+	create procedure SpBuscarPorNombreInventario(nombre varchar(50))
+		BEGIN
+			select ip.inventarioProductoId, ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc , ep.estadoProductoDesc
+				from InventarioProductos as ip
+					inner join Proveedores as pr
+						on ip.proveedorId = pr.proveedorId
+							inner join Productos as p
+								on ip.productoId = p.productoId
+									inner join EstadoProductos as ep
+										on ip.estadoProductoId = ep.estadoProductoId
+											where p.productoDesc = nombre and ip.productoId = p.productoId;
+        END $$
+DELIMITER ;
+
+
+
+#==================== Buscar en inventario por el nombre de proveedor
+DELIMITER $$
+	create procedure SpBuscarPorProveedorInventario(nombre varchar(50))
+		BEGIN
+			select ip.inventarioProductoId, ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc , ep.estadoProductoDesc
+				from InventarioProductos as ip
+					inner join Proveedores as pr
+						on ip.proveedorId = pr.proveedorId
+							inner join Productos as p
+								on ip.productoId = p.productoId
+									inner join EstadoProductos as ep
+										on ip.estadoProductoId = ep.estadoProductoId
+											where pr.proveedorNombre = nombre and ip.proveedorId = pr.proveedorId;
+        END $$
+DELIMITER ;
+
+
+
+#==================== Buscar en inventario por el codigo de proveedor
+DELIMITER $$
+	create procedure SpBuscarPorProveedorCodigoInventario(idBuscado int(100))
+		BEGIN
+			select ip.inventarioProductoId, ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc , ep.estadoProductoDesc
+				from InventarioProductos as ip
+					inner join Proveedores as pr
+						on ip.proveedorId = pr.proveedorId
+							inner join Productos as p
+								on ip.productoId = p.productoId
+									inner join EstadoProductos as ep
+										on ip.estadoProductoId = ep.estadoProductoId
+											where pr.proveedorId = idBuscado and ip.proveedorId = pr.proveedorId;
+        END $$
+DELIMITER ; 
+
+
+
+#==================== Buscar en inventario por el codigo de estado 
+DELIMITER $$
+	create procedure SpBuscarPorEstadoCodigoInventario(idBuscado int(100))
+		BEGIN
+			select ip.inventarioProductoId, ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc , ep.estadoProductoDesc
+				from InventarioProductos as ip
+					inner join Proveedores as pr
+						on ip.proveedorId = pr.proveedorId
+							inner join Productos as p
+								on ip.productoId = p.productoId
+									inner join EstadoProductos as ep
+										on ip.estadoProductoId = ep.estadoProductoId
+											where ep.estadoProductoId = idBuscado and ip.estadoProductoId = ep.estadoProductoId;
+        END $$
+DELIMITER ; 
+
+
+
+#==================== Buscar en inventario por el nombre de estado 
+DELIMITER $$
+	create procedure SpBuscarPorEstadoNombreInventario(nombre varchar(100))
+		BEGIN
+			select ip.inventarioProductoId, ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc , ep.estadoProductoDesc
+				from InventarioProductos as ip
+					inner join Proveedores as pr
+						on ip.proveedorId = pr.proveedorId
+							inner join Productos as p
+								on ip.productoId = p.productoId
+									inner join EstadoProductos as ep
+										on ip.estadoProductoId = ep.estadoProductoId
+											where ep.estadoProductoDesc = nombre and ip.estadoProductoId = ep.estadoProductoId;
+        END $$
+DELIMITER ;
+
+
+#========== Facturas
+
+DELIMITER $$
+	create procedure SpBuscarDetalleFacturasFecha(fechaInicio date, FechaFinal date)
+		BEGIN
+			select f.facturaId, f.facturaFecha, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal, c.clienteNit, c.clienteNombre, p.productoDesc, fd.cantidad, fd.precios
+				from facturas as f
+					inner join clientes as c
+						on f.clienteId = c.clienteId
+							inner join facturadetalle as fd
+								on  f.facturaId = fd.facturaDetalleId
+									inner join productos as p
+										on fd.productoId = p.productoId
+											where f.facturaFecha between fechaInicio and FechaFinal;
+        END $$
+DELIMITER ;
