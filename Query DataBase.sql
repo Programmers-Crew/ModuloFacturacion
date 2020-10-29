@@ -51,11 +51,17 @@ create table InventarioProductos(
 	CONSTRAINT FK_EstadoProductoInventario FOREIGN KEY (estadoProductoId) REFERENCES EstadoProductos(estadoProductoId)
 );
 
+create table TipoUsuario(
+	tipoUsuarioId tinyint(1) primary key auto_increment,
+    tipoUsuario varchar(20) not null unique
+);
 
 create table Usuarios(
-	usuarioId int(10) primary key auto_increment,
-    usuarioNombre varchar(30) not null,
-    usuarioPassword varchar(40) unique not null
+	usuarioId int(10) primary key not null auto_increment,
+    usuarioNombre varchar(30) not null unique,
+    usuarioPassword varchar(40)  not null,
+    tipoUsuarioId tinyint(1) not null,
+    CONSTRAINT FK_UsuariosTipoUsuario FOREIGN KEY (tipoUsuarioId) REFERENCES TipoUsuario(tipoUsuarioId)
 );
 
 

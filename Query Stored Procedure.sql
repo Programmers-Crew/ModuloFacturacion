@@ -582,3 +582,23 @@ DELIMITER $$
 											where f.facturaFecha between fechaInicio and FechaFinal;
         END $$
 DELIMITER ;
+
+	DELIMITER $$
+
+	CREATE PROCEDURE  SpLogin(usuarioNom varchar(30), pass varchar(40))
+		BEGIN
+			select u.usuarioNombre, u.usuarioPassword
+				from usuarios as u
+					where u.usuarioNombre = usuarioNom and u.usuarioPassword = pass;
+		END $$
+	DELIMITER ;
+
+	DELIMITER $$
+
+	CREATE PROCEDURE  SpLoginValidar(usuarioNom varchar(30))
+		BEGIN
+			select u.tipoUsuarioId
+				from usuarios as u
+					where u.usuarioNombre = usuarioNom;
+		END $$
+	DELIMITER ;
