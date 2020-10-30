@@ -330,8 +330,9 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpListarUsuario()
 		BEGIN 
-			select usuarioId, usuarioNombre, usuarioPassword
-				from Usuarios;
+			select usuarioId, usuarioNombre, usuarioPassword, tipoUsuario
+				from Usuarios, tipousuario 
+					where Usuarios.tipoUsuarioId = tipousuario.tipoUsuarioId;
         END $$
 DELIMITER ;
 
@@ -377,7 +378,13 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-
+#------------------ ENTIDAD TIPO USUARIO
+DELIMITER $$
+	CREATE PROCEDURE spListarTipoUsuario()
+		BEGIN
+			SELECT * FROM tipoUsuario;
+        END $$
+DELIMITER ;
 
 #-------------------- Entidad Facturas
 DELIMITER $$

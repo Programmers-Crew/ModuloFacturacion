@@ -12,7 +12,12 @@
     -fx-background-color: #0099CC;
     -fx-cursor: hand;
 }
-
+.combo{
+    
+    -fx-background-color: transparent;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 1 0;
+}
 
 .menubar{
     -fx-background-color: #0099CC;

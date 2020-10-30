@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 public class CambioScene {    
     //método donde cambia de una escena a otra.
-    public void Cambio(String url, Stage primaryStage, int ancho, int largo) throws IOException{
+    public void Cambio(String url, Stage primaryStage) throws IOException{
         
       
        
@@ -24,9 +24,7 @@ public class CambioScene {
         
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setWidth(ancho);
-        primaryStage.setHeight(largo);
-        
+       
         
         primaryStage.show();
         

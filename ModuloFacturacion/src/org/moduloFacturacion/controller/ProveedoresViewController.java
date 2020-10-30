@@ -5,9 +5,15 @@
  */
 package org.moduloFacturacion.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import org.moduloFacturacion.bean.CambioScene;
 
 /**
  * FXML Controller class
@@ -15,7 +21,9 @@ import javafx.fxml.Initializable;
  * @author davis
  */
 public class ProveedoresViewController implements Initializable {
-
+    CambioScene cambioScene = new CambioScene();
+    @FXML
+    private AnchorPane anchor;
     /**
      * Initializes the controller class.
      */
@@ -23,5 +31,11 @@ public class ProveedoresViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void regresar(MouseEvent event) throws IOException {
+         String menu = "org/moduloFacturacion/view/menuPrincipal.fxml";
+        cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
+    }
     
 }

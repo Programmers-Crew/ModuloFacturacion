@@ -20,10 +20,11 @@ import org.moduloFacturacion.bean.CambioScene;
  *
  * @author davis
  */
-public class FacturacionViewController implements Initializable {
-    CambioScene cambioScene = new CambioScene();    
+public class ClienteViewController implements Initializable {
+    CambioScene cambioScene = new CambioScene();
     @FXML
     private AnchorPane anchor;
+
     /**
      * Initializes the controller class.
      */

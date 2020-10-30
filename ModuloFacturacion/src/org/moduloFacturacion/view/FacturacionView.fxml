@@ -25,11 +25,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="486.0" prefWidth="865.0" stylesheets="@../resource/moduloStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.moduloFacturacion.controller.FacturacionViewController">
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="486.0" prefWidth="865.0" stylesheets="@../resource/moduloStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.moduloFacturacion.controller.FacturacionViewController">
    <children>
       <Pane layoutX="5.0" prefHeight="36.0" prefWidth="600.0" styleClass="bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane layoutX="7.0" layoutY="5.0" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
+            <Pane layoutX="7.0" layoutY="5.0" onMouseClicked="#regresar" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -92,7 +92,7 @@
                                                 <Label layoutX="26.0" layoutY="164.0" text="CANTIDAD:" AnchorPane.leftAnchor="26.0" AnchorPane.topAnchor="164.0" />
                                                 <JFXTextField layoutX="26.0" layoutY="129.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="16.19999999999999" AnchorPane.topAnchor="129.0" />
                                                 <JFXTextField layoutX="25.0" layoutY="182.0" prefHeight="26.0" prefWidth="222.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="16.0" />
-                                                <HBox alignment="CENTER" layoutX="5.0" layoutY="215.0" prefHeight="27.0" prefWidth="208.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="215.0">
+                                                <HBox alignment="CENTER" layoutX="5.0" layoutY="215.0" prefHeight="27.0" prefWidth="208.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="226.0">
                                                    <children>
                                                       <JFXButton buttonType="RAISED" styleClass="boton" text="VENDER" textFill="WHITE">
                                                          <font>
@@ -126,12 +126,12 @@
                                           <TableColumn prefWidth="75.0" text="TOTAL PARCIAL" />
                                        </columns>
                                     </TableView>
-                                    <JFXButton buttonType="RAISED" layoutX="262.0" layoutY="324.0" styleClass="boton" text="IMPRIMIR" textFill="WHITE" AnchorPane.bottomAnchor="14.399999999999977" AnchorPane.rightAnchor="14.0">
+                                    <JFXButton buttonType="RAISED" layoutX="428.0" layoutY="413.0" styleClass="boton" text="IMPRIMIR" textFill="WHITE" AnchorPane.bottomAnchor="11.800000000000011" AnchorPane.rightAnchor="15.199999999999989">
                                        <font>
                                           <Font size="11.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXTextField layoutX="130.0" layoutY="410.0" prefHeight="26.0" prefWidth="197.0" AnchorPane.bottomAnchor="18.400000000000013" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="85.20000000000002" />
+                                    <JFXTextField layoutX="151.0" layoutY="410.0" prefHeight="26.0" prefWidth="249.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="150.6" AnchorPane.rightAnchor="107.0" />
                                     <Label layoutX="15.0" layoutY="414.0" text="TOTAL DE FACTURA" AnchorPane.bottomAnchor="15.20000000000001" AnchorPane.leftAnchor="15.0" />
                                  </children>
                               </AnchorPane>

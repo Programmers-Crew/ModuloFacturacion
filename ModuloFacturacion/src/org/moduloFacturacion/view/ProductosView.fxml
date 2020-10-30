@@ -24,11 +24,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="466.0" prefWidth="865.0" stylesheets="@../resource/moduloStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.moduloFacturacion.controller.ProductosViewController">
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="466.0" prefWidth="865.0" stylesheets="@../resource/moduloStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.moduloFacturacion.controller.ProductosViewController">
    <children>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="600.0" styleClass="bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane layoutX="7.0" layoutY="5.0" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
+            <Pane layoutX="7.0" layoutY="5.0" onMouseClicked="#regresar" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -67,13 +67,13 @@
                                                    </children>
                                                 </HBox>
                                                 <Label layoutX="14.0" layoutY="40.0" text="CÓDIGO:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="130.6" AnchorPane.topAnchor="46.0" />
-                                                <Label layoutX="27.0" layoutY="95.0" prefHeight="18.0" prefWidth="61.0" text="NOMBRE:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="95.0" />
-                                                <Label layoutX="17.0" layoutY="139.0" text="CATEGORÍA:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="139.0" />
+                                                <Label layoutX="27.0" layoutY="95.0" prefHeight="18.0" prefWidth="61.0" text="NOMBRE:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="98.0" />
+                                                <Label layoutX="17.0" layoutY="139.0" text="CATEGORÍA:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="145.0" />
                                                 <JFXTextField layoutX="14.0" layoutY="58.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.199999999999989" AnchorPane.topAnchor="58.0" />
-                                                <JFXTextField layoutX="20.0" layoutY="108.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.199999999999989" AnchorPane.topAnchor="104.0" />
-                                                <HBox alignment="CENTER" layoutX="2.0" layoutY="260.0" prefHeight="27.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="260.0">
+                                                <JFXTextField layoutX="20.0" layoutY="108.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.199999999999989" AnchorPane.topAnchor="108.0" />
+                                                <HBox alignment="CENTER" layoutX="2.0" layoutY="260.0" prefHeight="27.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="275.0">
                                                    <children>
-                                                      <GridPane prefHeight="19.0" prefWidth="196.0">
+                                                      <GridPane prefHeight="27.0" prefWidth="222.0">
                                                          <columnConstraints>
                                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.20001220703125" minWidth="10.0" prefWidth="70.99998779296875" />
                                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="57.40001220703125" />
@@ -83,7 +83,7 @@
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                          </rowConstraints>
                                                          <children>
-                                                            <JFXButton buttonType="RAISED" styleClass="boton" text="AGREGAR" textFill="WHITE">
+                                                            <JFXButton buttonType="RAISED" prefHeight="24.0" prefWidth="72.0" styleClass="boton" text="AGREGAR" textFill="WHITE">
                                                                <GridPane.margin>
                                                                   <Insets />
                                                                </GridPane.margin>
@@ -91,7 +91,7 @@
                                                                   <Font size="11.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXButton buttonType="RAISED" styleClass="boton" text="EDITAR" textFill="WHITE" GridPane.columnIndex="1">
+                                                            <JFXButton buttonType="RAISED" prefHeight="24.0" prefWidth="62.0" styleClass="boton" text="EDITAR" textFill="WHITE" GridPane.columnIndex="1">
                                                                <GridPane.margin>
                                                                   <Insets />
                                                                </GridPane.margin>
@@ -99,7 +99,7 @@
                                                                   <Font size="11.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXButton buttonType="RAISED" styleClass="boton" text="ELIMINAR" textFill="WHITE" GridPane.columnIndex="2">
+                                                            <JFXButton buttonType="RAISED" prefHeight="24.0" prefWidth="71.0" styleClass="boton" text="ELIMINAR" textFill="WHITE" GridPane.columnIndex="2">
                                                                <GridPane.margin>
                                                                   <Insets />
                                                                </GridPane.margin>
@@ -111,9 +111,9 @@
                                                       </GridPane>
                                                    </children>
                                                 </HBox>
-                                                <JFXComboBox layoutX="19.0" layoutY="157.0" prefHeight="26.0" prefWidth="157.0" promptText="Seleccione una Categoría" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.800000000000011" />
-                                                <Label layoutX="20.0" layoutY="202.0" text="PROVEEDOR:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="193.0" />
-                                                <JFXComboBox layoutX="22.0" layoutY="220.0" prefHeight="26.0" prefWidth="157.0" promptText="Seleccione un Proveedor" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="18.599999999999994" AnchorPane.topAnchor="212.0" />
+                                                <JFXComboBox layoutX="19.0" layoutY="157.0" prefHeight="26.0" prefWidth="157.0" promptText="Seleccione una Categoría" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.800000000000011" AnchorPane.topAnchor="165.0" />
+                                                <Label layoutX="20.0" layoutY="202.0" text="PROVEEDOR:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="207.0" />
+                                                <JFXComboBox layoutX="22.0" layoutY="220.0" prefHeight="26.0" prefWidth="157.0" promptText="Seleccione un Proveedor" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="7.599999999999994" AnchorPane.topAnchor="226.0" />
                                              </children>
                                              <padding>
                                                 <Insets left="5.0" />
@@ -136,10 +136,10 @@
                                           <TableColumn prefWidth="75.0" text="PROVEEDOR" />
                                        </columns>
                                     </TableView>
-                                    <JFXComboBox layoutX="81.0" layoutY="20.0" prefHeight="18.0" prefWidth="204.0" promptText="Eliga un campo a Buscar" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="91.80000000000001" AnchorPane.topAnchor="20.0" />
+                                    <JFXComboBox layoutX="94.0" layoutY="20.0" prefHeight="26.0" prefWidth="318.0" promptText="Eliga un campo a Buscar" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="20.0" />
                                     <Label layoutX="14.0" layoutY="25.0" text="Buscar por:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="25.0" />
                                     <JFXButton buttonType="RAISED" layoutX="301.0" layoutY="67.0" styleClass="boton" text="BUSCAR" textFill="WHITE" AnchorPane.rightAnchor="15.800000000000011" AnchorPane.topAnchor="72.0" />
-                                    <JFXComboBox editable="true" layoutX="25.0" layoutY="67.0" prefHeight="26.0" prefWidth="262.0" promptText="Ingrese el valor a buscar" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="89.40000000000003" AnchorPane.topAnchor="67.0" />
+                                    <JFXComboBox editable="true" layoutX="25.0" layoutY="67.0" prefHeight="26.0" prefWidth="395.0" promptText="Ingrese el valor a buscar" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="67.0" />
                                  </children>
                               </AnchorPane>
                            </items>
