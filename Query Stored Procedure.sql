@@ -332,27 +332,27 @@ DELIMITER $$
 		BEGIN 
 			select usuarioId, usuarioNombre, usuarioPassword, tipoUsuario
 				from Usuarios, tipousuario 
-					where Usuarios.tipoUsuarioId = tipousuario.tipoUsuarioId;
+					where Usuarios.tipoUsuarioId = tipousuario.tipoUsuarioId order by usuarioId ASC;
         END $$
 DELIMITER ;
 
 
 
 DELIMITER $$
-	create procedure SpAgregarUsuario(nombre varchar(30), pass varchar(40))
+	create procedure SpAgregarUsuario(nombre varchar(30), pass varchar(40), tipoUsuario tinyint(1))
 		BEGIN
-			insert into Usuarios(usuarioNombre, usuarioPassword)
-				values(nombre, pass);
+			insert into Usuarios(usuarioNombre, usuarioPassword,tipoUsuarioId)
+				values(nombre, pass,tipousuario);
         END $$
 DELIMITER ;
 
 
 
 DELIMITER $$
-	create procedure SpActualizarUsuario(idBuscado int(100), nombre varchar(30), pass varchar(30))
+	create procedure SpActualizarUsuario(idBuscado int(100), nombre varchar(30), pass varchar(30),tipoUsuario tinyint(1))
 		BEGIN
 			update Usuarios
-				set usuarioNombre = nombre, usuarioPassword = pass
+				set usuarioNombre = nombre, usuarioPassword = pass, tipoUsuarioId = tipoUsuario
 					where usuarioId = idBuscado;
         END $$
 DELIMITER ;
@@ -362,9 +362,9 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarUsuario(idBuscado int(100))
 		BEGIN
-			select usuarioId, usuarioNombre, usuarioPassword
-				from Usuarios
-					where usuarioId = idBuscado;
+			select usuarioId, usuarioNombre, usuarioPassword, tipoUsuario
+				from Usuarios,tipousuario
+					where usuarioId = idBuscado and tipousuario.tipoUsuarioId = usuarios.tipoUsuarioId;
         END $$
 DELIMITER ;
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
@@ -195,7 +196,6 @@
                                        <children>
                                           <AnchorPane fx:id="paneUsuario" prefHeight="249.0" prefWidth="195.0">
                                              <children>
-                                                <JFXTextField fx:id="txtUsuario" layoutX="16.0" layoutY="58.0" prefHeight="26.0" prefWidth="163.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
                                                 <HBox alignment="CENTER" layoutY="1.0" prefHeight="26.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                                    <children>
                                                       <Label text="AGREGAR USUARIO">
@@ -208,47 +208,20 @@
                                                    <font>
                                                       <Font name="System Italic" size="12.0" />
                                                    </font></Label>
+                                                <JFXTextField fx:id="txtUsuario" layoutX="16.0" layoutY="58.0" prefHeight="26.0" prefWidth="163.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
                                                 <Label layoutX="18.0" layoutY="93.0" text="PASSWORD" AnchorPane.leftAnchor="18.0">
                                                    <font>
                                                       <Font name="System Italic" size="12.0" />
                                                    </font></Label>
-                                                <JFXTextField fx:id="txtPassword" layoutX="16.0" layoutY="110.0" onKeyReleased="#validarTxtPassword" prefHeight="26.0" prefWidth="163.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
+                                                <JFXPasswordField fx:id="txtPassword" layoutX="16.0" layoutY="111.0" prefHeight="26.0" prefWidth="240.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
                                                 <Label layoutX="16.0" layoutY="149.0" text="TIPO USUARIO" AnchorPane.leftAnchor="16.0">
                                                    <font>
                                                       <Font name="System Italic" size="12.0" />
                                                    </font></Label>
-                                                <HBox alignment="CENTER" layoutY="216.0" prefHeight="58.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                                                   <children>
-                                                      <GridPane prefHeight="64.0" prefWidth="276.0">
-                                                        <columnConstraints>
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.00000610351563" minWidth="10.0" prefWidth="96.00000610351563" />
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="80.2" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="99.39999999999998" />
-                                                        </columnConstraints>
-                                                        <rowConstraints>
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                        </rowConstraints>
-                                                         <children>
-                                                            <JFXButton fx:id="btnAgregar" buttonType="RAISED" onMouseClicked="#btnAgregar" styleClass="boton" text="AGREGAR" textFill="WHITE">
-                                                               <GridPane.margin>
-                                                                  <Insets />
-                                                               </GridPane.margin>
-                                                            </JFXButton>
-                                                            <JFXButton fx:id="btnEditar" buttonType="RAISED" onMouseClicked="#btnEditar" styleClass="boton" text="EDITAR" textFill="WHITE" GridPane.columnIndex="1">
-                                                               <GridPane.margin>
-                                                                  <Insets />
-                                                               </GridPane.margin>
-                                                            </JFXButton>
-                                                            <JFXButton fx:id="btnEliminar" buttonType="RAISED" onMouseClicked="#btnEliminar" prefHeight="26.0" prefWidth="94.0" styleClass="boton" text="ELIMINAR" textFill="WHITE" GridPane.columnIndex="2">
-                                                               <GridPane.margin>
-                                                                  <Insets />
-                                                               </GridPane.margin>
-                                                            </JFXButton>
-                                                         </children>
-                                                      </GridPane>
-                                                   </children>
-                                                </HBox>
                                                 <ComboBox fx:id="cmbTipoUsuario" layoutY="167.0" prefHeight="26.0" prefWidth="292.0" styleClass="combo" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="167.0" />
+                                                <JFXButton fx:id="btnEditar" buttonType="RAISED" layoutX="206.0" layoutY="216.0" onMouseClicked="#btnEditar" prefHeight="26.0" prefWidth="78.0" styleClass="boton" text="EDITAR" textFill="WHITE" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="216.0" />
+                                                <JFXButton fx:id="btnEliminar" buttonType="RAISED" layoutX="103.0" layoutY="216.0" onMouseClicked="#btnEliminar" prefHeight="26.0" prefWidth="94.0" styleClass="boton" text="ELIMINAR" textFill="WHITE" AnchorPane.leftAnchor="106.0" AnchorPane.topAnchor="216.0" />
+                                                <JFXButton fx:id="btnAgregar" buttonType="RAISED" layoutX="8.0" layoutY="216.0" onMouseClicked="#btnAgregar" prefHeight="26.0" prefWidth="90.0" styleClass="boton" text="AGREGAR" textFill="WHITE" />
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -262,7 +235,7 @@
                                           <Font size="11.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="tableUsuario" layoutX="18.0" layoutY="66.0" onMouseClicked="#seleccionarElementos" prefHeight="158.0" prefWidth="308.0" AnchorPane.bottomAnchor="148.4" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.80000000000001" AnchorPane.topAnchor="66.0">
+                                    <TableView fx:id="tableUsuario" layoutX="18.0" layoutY="66.0" onMouseClicked="#seleccionarElementos" prefHeight="158.0" prefWidth="308.0" AnchorPane.bottomAnchor="133.4" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.80000000000001" AnchorPane.topAnchor="73.0">
                                     <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
                                       <columns>
                                         <TableColumn fx:id="colCodigoUsuario" prefWidth="75.0" text="CÓDIGO" />
@@ -275,7 +248,7 @@
                                        <font>
                                           <Font name="System Italic" size="12.0" />
                                        </font></Label>
-                                    <GridPane layoutX="16.0" layoutY="30.0" prefHeight="26.0" prefWidth="446.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="52.0">
+                                    <GridPane layoutX="16.0" layoutY="30.0" prefHeight="26.0" prefWidth="446.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="36.0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0" minWidth="10.0" prefWidth="228.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.60003662109375" minWidth="10.0" prefWidth="84.0" />
@@ -284,12 +257,12 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
+                                          <ComboBox fx:id="cmbCodigoUsuario" editable="true" prefHeight="26.0" prefWidth="245.0" />
                                           <JFXButton fx:id="btnBuscar" buttonType="RAISED" onMouseClicked="#btnBuscar" prefHeight="26.0" prefWidth="83.0" styleClass="boton" text="BUSCAR" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                                              <GridPane.margin>
                                                 <Insets left="15.0" />
                                              </GridPane.margin>
                                           </JFXButton>
-                                          <ComboBox fx:id="cmbCodigoUsuario" prefHeight="26.0" prefWidth="245.0" styleClass="combo" />
                                        </children>
                                     </GridPane>
                                  </children></AnchorPane>

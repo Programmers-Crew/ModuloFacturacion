@@ -13,6 +13,10 @@ public class Usuario {
         this.TipoUsuario = TipoUsuario;
     }
 
+    public Usuario() {
+    }
+    
+
     public int getUsuarioId() {
         return UsuarioId;
     }

@@ -56,7 +56,7 @@ public class LoginViewController implements Initializable {
     public Preferences prefsUsuario = Preferences.userRoot().node(this.getClass().getName());
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+      txtUsuario.requestFocus();
         FadeTransition ft = new FadeTransition();
        ft.setFromValue(0);
        ft.setToValue(1);
@@ -152,6 +152,7 @@ public class LoginViewController implements Initializable {
                     noti.hideAfter(Duration.seconds(4));
                     noti.darkStyle();
                     noti.show();
+                    txtUsuario.requestFocus();
                     txtUsuario.setText("");
                     txtContraseña.setText("");
                }

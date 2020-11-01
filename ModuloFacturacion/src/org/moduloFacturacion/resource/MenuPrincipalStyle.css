@@ -95,10 +95,7 @@
 .table-view .column-header{
     -fx-background-color: #212121;
 }
-.table-view:row-selection .table-row-cell:filled:selected { 
-    -fx-background-color: #cc0066;
-    
-}
+
 .table-view .column-header  .text{
     -fx-fill: white;
 }
