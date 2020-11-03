@@ -214,7 +214,7 @@ public class ProductosViewController implements Initializable {
             codigo = colCodigoCategoria.getCellData(index);
             
         }catch(Exception e){
-        
+            e.printStackTrace();
         }
     }
 

@@ -15,11 +15,10 @@ create table EstadoProductos(
 
 
 create table Proveedores(
-	proveedorId int(100) primary key auto_increment,
+	proveedorId int(100) primary key,
     proveedorNombre varchar(50) unique not null,
 	proveedorTelefono varchar(8) unique not null
 );
-
 
 create table CategoriaProductos(
 	categoriaId int(100) primary key,
@@ -29,7 +28,7 @@ create table CategoriaProductos(
 
 create table Productos(
 	productoId	int(100) primary key,
-    productoDesc varchar(50) unique not null,
+    productoDesc varchar(50) not null,
 	proveedorId int(100) not null,
     categoriaId int(100) not null,
     productoPrecio decimal(10,2) not null,
@@ -40,13 +39,11 @@ create table Productos(
 
 
 create table InventarioProductos(
-	inventarioProductoId int(100) primary key,
+	inventarioProductoId int(100) primary key auto_increment,
     inventarioProductoCant int(100) not null,
-    proveedorId int(100) not null,
     productoId int(100) not null,
     estadoProductoId tinyint(1) not null,
     
-	CONSTRAINT FK_ProveedorInventario FOREIGN KEY (proveedorId) REFERENCES Proveedores(proveedorId),
 	CONSTRAINT FK_ProductoInventario FOREIGN KEY (productoId) REFERENCES Productos(productoId),
 	CONSTRAINT FK_EstadoProductoInventario FOREIGN KEY (estadoProductoId) REFERENCES EstadoProductos(estadoProductoId)
 );
