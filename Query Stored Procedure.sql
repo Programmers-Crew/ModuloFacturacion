@@ -330,28 +330,29 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpListarUsuario()
 		BEGIN 
-			select usuarioId, usuarioNombre, usuarioPassword
-				from Usuarios;
+			select usuarioId, usuarioNombre, usuarioPassword, tipoUsuario
+				from Usuarios, tipousuario 
+					where Usuarios.tipoUsuarioId = tipousuario.tipoUsuarioId order by usuarioId ASC;
         END $$
 DELIMITER ;
 
 
 
 DELIMITER $$
-	create procedure SpAgregarUsuario(nombre varchar(30), pass varchar(40))
+	create procedure SpAgregarUsuario(nombre varchar(30), pass varchar(40), tipoUsuario tinyint(1))
 		BEGIN
-			insert into Usuarios(usuarioNombre, usuarioPassword)
-				values(nombre, pass);
+			insert into Usuarios(usuarioNombre, usuarioPassword,tipoUsuarioId)
+				values(nombre, pass,tipousuario);
         END $$
 DELIMITER ;
 
 
 
 DELIMITER $$
-	create procedure SpActualizarUsuario(idBuscado int(100), nombre varchar(30), pass varchar(30))
+	create procedure SpActualizarUsuario(idBuscado int(100), nombre varchar(30), pass varchar(30),tipoUsuario tinyint(1))
 		BEGIN
 			update Usuarios
-				set usuarioNombre = nombre, usuarioPassword = pass
+				set usuarioNombre = nombre, usuarioPassword = pass, tipoUsuarioId = tipoUsuario
 					where usuarioId = idBuscado;
         END $$
 DELIMITER ;
@@ -361,9 +362,9 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarUsuario(idBuscado int(100))
 		BEGIN
-			select usuarioId, usuarioNombre, usuarioPassword
-				from Usuarios
-					where usuarioId = idBuscado;
+			select usuarioId, usuarioNombre, usuarioPassword, tipoUsuario
+				from Usuarios,tipousuario
+					where usuarioId = idBuscado and tipousuario.tipoUsuarioId = usuarios.tipoUsuarioId;
         END $$
 DELIMITER ;
 
@@ -377,7 +378,13 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-
+#------------------ ENTIDAD TIPO USUARIO
+DELIMITER $$
+	CREATE PROCEDURE spListarTipoUsuario()
+		BEGIN
+			SELECT * FROM tipoUsuario;
+        END $$
+DELIMITER ;
 
 #-------------------- Entidad Facturas
 DELIMITER $$
@@ -582,3 +589,23 @@ DELIMITER $$
 											where f.facturaFecha between fechaInicio and FechaFinal;
         END $$
 DELIMITER ;
+
+	DELIMITER $$
+
+	CREATE PROCEDURE  SpLogin(usuarioNom varchar(30), pass varchar(40))
+		BEGIN
+			select u.usuarioNombre, u.usuarioPassword
+				from usuarios as u
+					where u.usuarioNombre = usuarioNom and u.usuarioPassword = pass;
+		END $$
+	DELIMITER ;
+
+	DELIMITER $$
+
+	CREATE PROCEDURE  SpLoginValidar(usuarioNom varchar(30))
+		BEGIN
+			select u.tipoUsuarioId
+				from usuarios as u
+					where u.usuarioNombre = usuarioNom;
+		END $$
+	DELIMITER ;

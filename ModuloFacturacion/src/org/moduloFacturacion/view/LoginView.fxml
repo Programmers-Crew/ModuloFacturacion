@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="420.0" prefWidth="568.0" styleClass="anchor" stylesheets="@../resource/loginStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.moduloFacturacion.controller.LoginViewController">
+<AnchorPane id="AnchorPane" fx:id="anchor" onKeyReleased="#atajosLogin" prefHeight="420.0" prefWidth="568.0" styleClass="anchor" stylesheets="@../resource/loginStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.moduloFacturacion.controller.LoginViewController">
    <children>
       <SplitPane dividerPositions="0.3964059196617336" prefHeight="420.0" prefWidth="569.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -37,20 +37,20 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Label layoutX="18.0" layoutY="381.0" prefHeight="18.0" prefWidth="146.0" text="© PROGRAMMERS CREW" AnchorPane.bottomAnchor="18.99999999999998" AnchorPane.leftAnchor="18.0" />
+                  <Label layoutX="18.0" layoutY="381.0" prefHeight="18.0" prefWidth="278.0" text="© PROGRAMMERS CREW" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="18.0" />
                   <HBox alignment="CENTER" prefHeight="420.0" prefWidth="339.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <VBox alignment="CENTER" prefHeight="418.0" prefWidth="236.0">
                            <children>
-                              <Pane prefHeight="205.0" prefWidth="226.0">
+                              <Pane fx:id="panelTransicion" prefHeight="205.0" prefWidth="226.0">
                                  <children>
-                                    <JFXTextField layoutX="45.0" layoutY="56.0" prefHeight="26.0" prefWidth="169.0">
+                                    <JFXTextField fx:id="txtUsuario" layoutX="45.0" layoutY="56.0" prefHeight="26.0" prefWidth="169.0">
                                        <tooltip>
                                           <Tooltip text="campo de usuario" />
                                        </tooltip>
                                     </JFXTextField>
                                     <Label layoutX="16.0" layoutY="101.0" text="Ingrese su Contraseña" />
-                                    <JFXPasswordField layoutX="48.0" layoutY="130.0" prefHeight="26.0" prefWidth="169.0">
+                                    <JFXPasswordField fx:id="txtContraseña" layoutX="48.0" layoutY="130.0" prefHeight="26.0" prefWidth="169.0">
                                        <tooltip>
                                           <Tooltip text="campo de Contraseña" />
                                        </tooltip>
@@ -66,10 +66,13 @@
                                        </image>
                                     </ImageView>
                                     <Label layoutX="9.0" layoutY="26.0" text="Ingrese su Usuario:" />
-                                    <JFXButton buttonType="RAISED" layoutX="95.0" layoutY="181.0" onMouseClicked="#btnIngresar" styleClass="boton" text="INGRESAR" textFill="WHITE">
+                                    <JFXButton fx:id="btnIngresar" buttonType="RAISED" layoutX="95.0" layoutY="181.0" onMouseClicked="#btnIngresar" styleClass="boton" text="INGRESAR" textFill="WHITE">
                                        <tooltip>
                                           <Tooltip text="Ingresar Sesión" />
                                        </tooltip>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </JFXButton>
                                  </children>
                               </Pane>

@@ -12,12 +12,7 @@
     -fx-background-color: #0099CC;
     -fx-cursor: hand;
 }
-.combo{
-    
-    -fx-background-color: transparent;
-    -fx-border-color: black;
-    -fx-border-width: 0 0 1 0;
-}
+
 
 .menubar{
     -fx-background-color: #0099CC;
@@ -72,9 +67,7 @@
     -fx-cursor: hand;
 }
 
-.opciones:pressed{
-    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 0, 0);
-}
+
 
 .paneBienvenida{
     -fx-background-color: whitesmoke;
@@ -95,7 +88,10 @@
 .table-view .column-header{
     -fx-background-color: #212121;
 }
-
+.table-view:row-selection .table-row-cell:filled:selected { 
+    -fx-background-color: #cc0066;
+    
+}
 .table-view .column-header  .text{
     -fx-fill: white;
 }
