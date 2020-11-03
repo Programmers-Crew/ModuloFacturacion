@@ -28,8 +28,8 @@ create table CategoriaProductos(
 
 
 create table Productos(
-	productoId	int(100) primary key,
-    productoDesc varchar(50) unique not null,
+	productoId	int(100)  primary key,
+    productoDesc varchar(50)  not null,
 	proveedorId int(100) not null,
     categoriaId int(100) not null,
     productoPrecio decimal(10,2) not null,
