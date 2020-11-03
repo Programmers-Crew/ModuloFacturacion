@@ -157,7 +157,7 @@ DELIMITER $$
 	create procedure SpListarCategoriaProductos()
 		BEGIN
 			select categoriaId, categoriaNombre
-				from CategoriaProductos;
+				from CategoriaProductos  order  by categoriaId ASC;
         END $$
 DELIMITER ;
 
@@ -185,6 +185,7 @@ DELIMITER $$
 	create procedure SpBuscarCategoriaProductos(idBuscado int(100))
 		BEGIN
 			select categoriaNombre, categoriaId
+            from categoriaproductos
 				where categoriaId = idBuscado;
 		END $$
 DELIMITER ;

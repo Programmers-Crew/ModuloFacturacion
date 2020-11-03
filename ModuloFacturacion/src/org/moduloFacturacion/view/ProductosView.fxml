@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
@@ -28,7 +29,7 @@
    <children>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="600.0" styleClass="bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane layoutX="7.0" layoutY="5.0" onMouseClicked="#regresar" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
+            <Pane fx:id="buttonInicio" layoutX="7.0" layoutY="5.0" onMouseClicked="#regresar" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -36,7 +37,7 @@
                   <Reflection />
                </effect>
             </Pane>
-            <Pane layoutX="60.0" layoutY="5.0" prefHeight="27.0" prefWidth="46.0" styleClass="paneProveedor">
+            <Pane fx:id="buttonProveedor" layoutX="60.0" layoutY="5.0" onMouseClicked="#buttonProveedor" prefHeight="27.0" prefWidth="46.0" styleClass="paneProveedor">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -45,7 +46,7 @@
       </Pane>
       <TabPane layoutX="10.0" layoutY="46.0" prefHeight="375.0" prefWidth="600.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
          <tabs>
-            <Tab styleClass="tabItem">
+            <Tab onSelectionChanged="#cargarProductos" styleClass="tabItem">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -158,9 +159,9 @@
                   <Tooltip text="Clientes" />
                </tooltip>
             </Tab>
-            <Tab styleClass="tabItem">
+            <Tab onSelectionChanged="#cargarCategoria" styleClass="tabItem">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosCategoria" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <SplitPane dividerPositions="0.3477141017385705" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
@@ -168,7 +169,7 @@
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <AnchorPane prefHeight="187.0" prefWidth="214.0">
+                                          <AnchorPane prefHeight="118.0" prefWidth="279.0">
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="7.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
@@ -179,23 +180,23 @@
                                                       </Label>
                                                    </children>
                                                 </HBox>
-                                                <Label layoutX="14.0" layoutY="40.0" text="CÓDIGO:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="130.6" AnchorPane.topAnchor="46.0" />
-                                                <Label layoutX="27.0" layoutY="95.0" prefHeight="18.0" prefWidth="61.0" text="NOMBRE:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="95.0" />
-                                                <JFXTextField layoutX="14.0" layoutY="58.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.199999999999989" AnchorPane.topAnchor="58.0" />
-                                                <JFXTextField layoutX="20.0" layoutY="108.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.199999999999989" AnchorPane.topAnchor="104.0" />
-                                                <HBox alignment="CENTER" layoutX="2.0" layoutY="260.0" prefHeight="27.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="143.0">
+                                                <Label layoutX="14.0" layoutY="27.0" prefHeight="18.0" prefWidth="127.0" text="CÓDIGO:" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="27.0" />
+                                                <JFXTextField fx:id="txtCodigoCategoria" layoutX="21.0" layoutY="45.0" onKeyReleased="#validarNombreCategoria" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="45.0" />
+                                                <Label layoutX="16.0" layoutY="58.0" prefHeight="18.0" prefWidth="61.0" text="NOMBRE:" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="86.0" />
+                                                <JFXTextField fx:id="txtNombreCategoria" layoutX="19.0" layoutY="80.0" onKeyReleased="#validarNombreCategoria" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="13.199999999999989" AnchorPane.topAnchor="104.0" />
+                                                <HBox alignment="CENTER" layoutX="2.0" layoutY="260.0" prefHeight="27.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="154.0">
                                                    <children>
-                                                      <GridPane prefHeight="19.0" prefWidth="196.0">
+                                                      <GridPane prefHeight="35.0" prefWidth="248.0">
                                                          <columnConstraints>
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.20001220703125" minWidth="10.0" prefWidth="70.99998779296875" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="57.40001220703125" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.20001220703125" minWidth="10.0" prefWidth="74.80000610351563" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="89.99999389648438" />
                                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="66.199951171875" />
                                                          </columnConstraints>
                                                          <rowConstraints>
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                          </rowConstraints>
                                                          <children>
-                                                            <JFXButton buttonType="RAISED" styleClass="boton" text="AGREGAR" textFill="WHITE">
+                                                            <JFXButton fx:id="btnAgregarCategoria" buttonType="RAISED" onMouseClicked="#btnAgregarCategoria" styleClass="boton" text="AGREGAR" textFill="WHITE">
                                                                <GridPane.margin>
                                                                   <Insets />
                                                                </GridPane.margin>
@@ -203,7 +204,7 @@
                                                                   <Font size="11.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXButton buttonType="RAISED" styleClass="boton" text="EDITAR" textFill="WHITE" GridPane.columnIndex="1">
+                                                            <JFXButton fx:id="btnEditarCategoria" buttonType="RAISED" onMouseClicked="#btnEditarCategoria" prefHeight="24.0" prefWidth="68.0" styleClass="boton" text="EDITAR" textFill="WHITE" GridPane.columnIndex="2">
                                                                <GridPane.margin>
                                                                   <Insets />
                                                                </GridPane.margin>
@@ -211,10 +212,7 @@
                                                                   <Font size="11.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXButton buttonType="RAISED" styleClass="boton" text="ELIMINAR" textFill="WHITE" GridPane.columnIndex="2">
-                                                               <GridPane.margin>
-                                                                  <Insets />
-                                                               </GridPane.margin>
+                                                            <JFXButton fx:id="btnEliminarCategoria" buttonType="RAISED" onMouseClicked="#btnEliminarCategoria" prefHeight="24.0" prefWidth="82.0" styleClass="boton" text="ELIMINAR" textFill="WHITE" GridPane.columnIndex="1">
                                                                <font>
                                                                   <Font size="11.0" />
                                                                </font>
@@ -234,17 +232,18 @@
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TableView layoutX="15.0" layoutY="82.0" prefHeight="262.0" prefWidth="347.0" AnchorPane.bottomAnchor="40.400000000000034" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.600000000000023" AnchorPane.topAnchor="82.0">
+                                    <TableView fx:id="tableCategoria" layoutX="15.0" layoutY="82.0" onMouseClicked="#seleccionarElementos" prefHeight="262.0" prefWidth="347.0" AnchorPane.bottomAnchor="40.400000000000034" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.600000000000023" AnchorPane.topAnchor="82.0">
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                        <columns>
-                                          <TableColumn prefWidth="76.00001525878906" text="CÓDIGO" />
-                                          <TableColumn prefWidth="154.4000244140625" text="NOMBRE" />
+                                          <TableColumn fx:id="colCodigoCategoria" prefWidth="76.00001525878906" text="CÓDIGO" />
+                                          <TableColumn fx:id="colNombreCategoria" prefWidth="154.4000244140625" text="NOMBRE" />
                                        </columns>
                                     </TableView>
-                                    <JFXButton buttonType="RAISED" layoutX="327.0" layoutY="46.0" styleClass="boton" text="BUSCAR" textFill="WHITE" AnchorPane.rightAnchor="15.399999999999977" AnchorPane.topAnchor="46.0" />
-                                    <JFXComboBox editable="true" layoutX="18.0" layoutY="41.0" prefHeight="26.0" prefWidth="262.0" promptText="Ingrese el valor a buscar" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="88.40000000000003" AnchorPane.topAnchor="41.0" />
+                                    <JFXButton fx:id="btnBuscarCategoria" buttonType="RAISED" layoutX="327.0" layoutY="46.0" onMouseClicked="#btnBuscarCategoria" styleClass="boton" text="BUSCAR" textFill="WHITE" AnchorPane.rightAnchor="15.399999999999977" AnchorPane.topAnchor="46.0" />
+                                    <Label layoutX="18.0" layoutY="25.0" prefHeight="18.0" prefWidth="333.0" text="CÓDIGO:" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="177.0" AnchorPane.topAnchor="25.0" />
+                                    <ComboBox fx:id="cmbCodigoCategoria" editable="true" layoutX="24.0" layoutY="45.0" onMouseClicked="#codigoBuscadoCategoria" prefHeight="26.0" prefWidth="410.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="92.80000000000007" AnchorPane.topAnchor="45.0" />
                                  </children>
                               </AnchorPane>
                            </items>
