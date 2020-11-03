@@ -211,7 +211,7 @@ DELIMITER $$
 					inner join Proveedores as p
 						on pr.proveedorId = p.proveedorId
 							inner join CategoriaProductos as cp
-								on p.categoriaId = cp.categoriaId;
+								on pr.categoriaId = cp.categoriaId order by pr.productoId ASC;
         END $$
 DELIMITER ;
 
@@ -246,11 +246,23 @@ DELIMITER $$
 					inner join Proveedores as p
 						on pr.proveedorId = p.proveedorId
 							inner join CategoriaProductos as cp
-								on p.categoriaId = cp.categoriaId
+								on pr.categoriaId = cp.categoriaId
 									where pr.productoId = idBuscado;
         END $$
 DELIMITER ;
 
+DELIMITER $$
+create procedure SpBuscarProductosNombre(nombreProductos varchar(50))
+		BEGIN
+			select pr.productoId, pr.productoDesc, p.proveedorNombre, cp.categoriaNombre , pr.productoPrecio
+				from Productos as pr
+					inner join Proveedores as p
+						on pr.proveedorId = p.proveedorId
+							inner join CategoriaProductos as cp
+								on pr.categoriaId = cp.categoriaId
+									where pr.productoDesc = nombreProductos;
+        END $$
+DELIMITER ;
 
 
 DELIMITER $$
@@ -259,6 +271,21 @@ DELIMITER $$
 			delete from Productos 
 				where productoId = idBuscado;
 		END $$
+DELIMITER ;
+
+DELIMITER $$
+	CREATE PROCEDURE spVerificarCategoria(categoria varchar(50))
+		BEGIN
+			select * from categoriaProductos as cp where cp.categoriaNombre = categoria;
+        END $$
+        
+DELIMITER ;
+DELIMITER $$
+	CREATE PROCEDURE spVerificarProveedores(proveedor varchar(50))
+		BEGIN
+			select * from proveedores as p where p.proveedorNombre = proveedor;
+        END $$
+        
 DELIMITER ;
 
 

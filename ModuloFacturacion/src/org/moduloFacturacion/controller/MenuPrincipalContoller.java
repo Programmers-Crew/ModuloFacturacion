@@ -504,9 +504,9 @@ public class MenuPrincipalContoller implements Initializable {
     @FXML
     private void AtajosConfiguracion(KeyEvent event) {
         if(cmbCodigoUsuario.isFocused()){
-            if(event.getCode() == KeyCode.ENTER){
-                buscar();
-            }
+                if(event.getCode() == KeyCode.ENTER){
+                    buscar();
+                }
         }
     }
 

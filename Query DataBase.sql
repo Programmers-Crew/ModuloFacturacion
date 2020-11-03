@@ -27,6 +27,7 @@ create table CategoriaProductos(
 
 
 create table Productos(
+
 	productoId	int(100) primary key,
     productoDesc varchar(50) not null,
 	proveedorId int(100) not null,
