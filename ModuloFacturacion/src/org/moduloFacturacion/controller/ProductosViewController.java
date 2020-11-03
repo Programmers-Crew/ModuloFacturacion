@@ -936,7 +936,7 @@ public class ProductosViewController implements Initializable {
             codigo = colCodigoCategoria.getCellData(index);
             activarTextCategoria();
         }catch(Exception e){
-        
+            e.printStackTrace();
         }
     }
 
