@@ -51,7 +51,14 @@ DELIMITER $$
 					where clienteId = idBuscado;
 		END $$
 DELIMITER ;
-call SpBuscarClientes(1);
+DELIMITER $$
+	create procedure SpBuscarClientesNIt(nit varchar(9))
+		BEGIN
+			select clienteId, clienteNit, clienteNombre
+				from Clientes
+					where clienteNit = nit;
+		END $$
+DELIMITER ;
 
 
 #------------- Entidad Estado Producto

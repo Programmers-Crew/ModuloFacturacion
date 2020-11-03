@@ -45,7 +45,7 @@ public class ProveedoresViewController implements Initializable {
     Image imgCorrecto= new Image("org/moduloFacturacion/img/correcto.png");
     int codigo;
 
-  
+    
     
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO};
     public Operacion tipoOperacionProveedores= Operacion.NINGUNO;

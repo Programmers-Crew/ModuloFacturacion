@@ -163,12 +163,10 @@ public class ProductosViewController implements Initializable {
     public void iniciarProducto(){
         Tooltip toolInicio = new Tooltip("Volver a Inicio");
         Tooltip.install(buttonInicio, toolInicio);
-        ArrayList<String> lista = new ArrayList();
         Tooltip toolProveedores = new Tooltip("Abrir Proveedores");
         Tooltip.install(buttonProveedor, toolProveedores);
         cargarDatos();
-        lista.add("CÓDIGO");
-        lista.add("NOMBRE");
+       
         tipoOperacionProducto = Operacion.CANCELAR;
         accion();
     }
@@ -812,7 +810,7 @@ public class ProductosViewController implements Initializable {
             tipoOperacionProducto = Operacion.BUSCAR;
 
             String sql = "{call SpBuscarProductos('"+cmbCodigoBuscar.getValue()+"')}";
-            tipoOperacionProducto = Operacion.BUSCAR;
+            
             accion(sql);
         }  
     }
