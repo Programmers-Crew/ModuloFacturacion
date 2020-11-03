@@ -610,7 +610,7 @@ public class ProductosViewController implements Initializable {
     private void validarCodigoProducto(KeyEvent event) {
         if(tipoOperacionProducto == Operacion.GUARDAR){
             
-                if(txtCodigoProducto.getText().matches(".*[a-z].*")){
+                if(txtCodigoProducto.getText().matches(".*[a-z].*") || txtCodigoProducto.getText().matches(".*[A-Z].*")){
                     btnAgregar.setDisable(true);
                     Notifications noti = Notifications.create();
                     noti.graphic(new ImageView(imgError));
@@ -626,7 +626,7 @@ public class ProductosViewController implements Initializable {
               
         }else{
             
-                if(txtCodigoProducto.getText().matches(".*[a-z].*")){
+                if(txtCodigoProducto.getText().matches(".*[a-z].*") || txtCodigoProducto.getText().matches(".*[A-Z].*")){
                     btnEditar.setDisable(true);
                     Notifications noti = Notifications.create();
                     noti.graphic(new ImageView(imgError));
@@ -650,7 +650,7 @@ public class ProductosViewController implements Initializable {
     private void validarPrecioProducto(KeyEvent event) {
         if(tipoOperacionProducto == Operacion.GUARDAR){
             
-                if(txtPrecioProducto.getText().matches(".*[a-z].*")){
+                if(txtPrecioProducto.getText().matches(".*[a-z].*") || txtPrecioProducto.getText().matches(".*[A-Z].*") ){
                     btnAgregar.setDisable(true);
                     Notifications noti = Notifications.create();
                     noti.graphic(new ImageView(imgError));
@@ -666,7 +666,7 @@ public class ProductosViewController implements Initializable {
               
         }else{
             
-                if(txtPrecioProducto.getText().matches(".*[a-z].*")){
+                if(txtPrecioProducto.getText().matches(".*[a-z].*")|| txtPrecioProducto.getText().matches(".*[A-Z].*")){
                     btnEditar.setDisable(true);
                     Notifications noti = Notifications.create();
                     noti.graphic(new ImageView(imgError));

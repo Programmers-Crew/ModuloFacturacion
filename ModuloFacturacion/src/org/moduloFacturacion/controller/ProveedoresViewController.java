@@ -44,6 +44,8 @@ public class ProveedoresViewController implements Initializable {
     Image imgError = new Image("org/moduloFacturacion/img/error.png");
     Image imgCorrecto= new Image("org/moduloFacturacion/img/correcto.png");
     int codigo;
+
+  
     
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO};
     public Operacion tipoOperacionProveedores= Operacion.NINGUNO;
@@ -527,5 +529,108 @@ public class ProveedoresViewController implements Initializable {
          String menu = "org/moduloFacturacion/view/menuPrincipal.fxml";
         cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
     }
+    @FXML
+
+    private void validarCodigo(KeyEvent event) {
+        if(tipoOperacionProveedores == Operacion.GUARDAR){
+            
+                if(txtCodigoProveedores.getText().matches(".*[a-z].*")||txtCodigoProveedores.getText().matches(".*[A-Z].*")){
+                    btnAgregar.setDisable(true);
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("El CAMPO DE CÓDIGO NO PUEDE LLEVAR LETRAS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+                }else{
+                    btnAgregar.setDisable(false);
+                }
+              
+        }else{
+            
+                if(txtCodigoProveedores.getText().matches(".*[a-z].*") || txtCodigoProveedores.getText().matches(".*[A-Z].*")){
+                    btnEditar.setDisable(true);
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("El CAMPO DE CÓDIGO NO PUEDE LLEVAR LETRAS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+                }else{
+                    btnEditar.setDisable(false);
+                    
+                }
+            
+        }
+    }
+
+    @FXML
+    private void validarTelefono(KeyEvent event) {
+        if(tipoOperacionProveedores == Operacion.GUARDAR){
+            
+                if(txtTelefonoProveedores.getText().matches(".*[a-z].*") || txtTelefonoProveedores.getText().matches(".*[A-Z].*")){
+                    btnAgregar.setDisable(true);
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("El CAMPO DE CÓDIGO NO PUEDE LLEVAR LETRAS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+                }else{
+                    if(txtTelefonoProveedores.getText().length() >8){
+                        btnAgregar.setDisable(true);
+                        Notifications noti = Notifications.create();
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR");
+                        noti.text("EL CAMPO DE TELÉFONO NO DEBE SER MAYOR A 8 DÍGITOS");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();   
+                        noti.show();
+                    }else{
+                        btnAgregar.setDisable(false);
+                    }
+                    
+                }
+              
+        }else{
+            
+                if(txtTelefonoProveedores.getText().matches(".*[a-z].*") || txtTelefonoProveedores.getText().matches(".*[A-Z].*")){
+                    btnEditar.setDisable(true);
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("El CAMPO DE TELÉFONO NO PUEDE LLEVAR LETRAS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+                }else{
+                    if(txtTelefonoProveedores.getText().length() >8){
+                        btnEditar.setDisable(true);
+                        Notifications noti = Notifications.create();
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR");
+                        noti.text("EL CAMPO DE TELÉFONO NO DEBE SER MAYOR A 8 DÍGITOS");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();   
+                        noti.show();
+                    }else{
+                        btnEditar.setDisable(false);
+                    }
+                    
+                    
+                }
+            
+        }
+    }
+
     
 }

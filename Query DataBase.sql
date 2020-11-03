@@ -27,13 +27,9 @@ create table CategoriaProductos(
 
 
 create table Productos(
-<<<<<<< HEAD
-	productoId	int(100)  primary key,
-    productoDesc varchar(50)  not null,
-=======
+
 	productoId	int(100) primary key,
     productoDesc varchar(50) not null,
->>>>>>> Diego-Gonzalez
 	proveedorId int(100) not null,
     categoriaId int(100) not null,
     productoPrecio decimal(10,2) not null,
