@@ -172,10 +172,12 @@ public class ProductosViewController implements Initializable {
         tipoOperacionProducto = Operacion.CANCELAR;
         accion();
     }
+    
        @FXML
     private void cargarProductos(Event event) {
         iniciarProducto();
     }
+    
      public void limpiarText(){
          txtCodigoProducto.setText("");
          txtNombreProducto.setText("");
@@ -263,6 +265,7 @@ public class ProductosViewController implements Initializable {
         new AutoCompleteComboBoxListener(cmbCategoriaProducto);
         new AutoCompleteComboBoxListener(cmbProveedorProducto);
     }
+    
     
      @FXML
     private void seleccionarElementosProductos(MouseEvent event) {
@@ -598,14 +601,6 @@ public class ProductosViewController implements Initializable {
         }
     }
     
-    
-    
-    
-    
-    
-   
-    
-    
     @FXML
     private void validarCodigoProducto(KeyEvent event) {
         if(tipoOperacionProducto == Operacion.GUARDAR){
@@ -751,10 +746,6 @@ public class ProductosViewController implements Initializable {
                            + ",'"+verficarCategoria(nuevoProducto.getCategoriaNombre())+"','"+nuevoProducto.getProductoPrecio()+"')}";
                    tipoOperacionProducto = Operacion.GUARDAR;
                    accion(sql);                   
-                   
-                   
-                   
-                   
                }
            }
         }else{
@@ -822,14 +813,9 @@ public class ProductosViewController implements Initializable {
         buscar();
     }
     
- 
-    
- 
+
     
     //EVENTOS DE LA VISTA DE CATEGORIA-----------------------------------------------------------------------------------------------------------------------
-    
-    
-    
     
     
     public void limpiarTextCategoria(){
@@ -915,14 +901,12 @@ public class ProductosViewController implements Initializable {
         accionCategoria();
     }
     
+    
     @FXML
     private void cargarCategoria(Event event) {
         cargarDatosCategoria();
     }
     
-    @FXML
-    private void validarNombreCategoria(KeyEvent event) {
-    }
 
     @FXML
     private void seleccionarElementos(MouseEvent event) {

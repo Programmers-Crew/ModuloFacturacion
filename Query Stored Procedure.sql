@@ -293,7 +293,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpListarInventarioProductos()
 		BEGIN
-			select p.productoId,ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc, p.productoId, ep.estadoProductoDesc
+			select p.productoId, ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc, ep.estadoProductoDesc
 				from InventarioProductos as ip
 					inner join Productos as p
 						on ip.productoId = p.productoId
@@ -329,7 +329,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarInventarioProductos(idBuscado int(100))
 		BEGIN
-			select p.productoId,ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc, p.productoId, ep.estadoProductoDesc
+			select p.productoId,ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc ep.estadoProductoDesc
 				from InventarioProductos as ip
 					inner join Productos as p
 						on ip.productoId = p.productoId
