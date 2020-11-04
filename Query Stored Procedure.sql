@@ -19,7 +19,7 @@ DELIMITER $$
 				value(nit, nombre);
         END $$
 DELIMITER ;
-call SpAgregarClientes("123456789", "Juan Pedro")
+
 
 
 DELIMITER $$
@@ -51,6 +51,7 @@ DELIMITER $$
 					where clienteId = idBuscado;
 		END $$
 DELIMITER ;
+
 DELIMITER $$
 	create procedure SpBuscarClientesNIt(nit varchar(9))
 		BEGIN

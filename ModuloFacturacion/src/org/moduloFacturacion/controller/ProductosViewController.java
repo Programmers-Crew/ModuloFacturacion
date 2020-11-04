@@ -918,9 +918,6 @@ public class ProductosViewController implements Initializable {
         cargarDatosCategoria();
     }
     
-    @FXML
-    private void validarNombreCategoria(KeyEvent event) {
-    }
 
     @FXML
     private void seleccionarElementos(MouseEvent event) {

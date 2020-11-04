@@ -632,8 +632,10 @@ public class ClienteViewController implements Initializable {
     }
       @FXML
     private void atajosCliente(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER){
-            buscar();
+        if(cmbCodigoBuscar.isFocused()){
+            if(event.getCode() == KeyCode.ENTER){
+                buscar();
+            }
         }
     }
 
