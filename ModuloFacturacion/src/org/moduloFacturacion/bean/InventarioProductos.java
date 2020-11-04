@@ -1,27 +1,29 @@
 package org.moduloFacturacion.bean;
 
 public class InventarioProductos {
-    private int inventarioProductoId;
+    private int productoId;
     private int inventarioProductoCant;
     private String productoDesc;
     private String estadoProductoDesc;
-
+    private String proveedorNombre;
+    
     public InventarioProductos() {
     }
 
-    public InventarioProductos(int inventarioProductoId, int inventarioProductoCant, String productoDesc, String estadoProductoDesc) {
-        this.inventarioProductoId = inventarioProductoId;
+    public InventarioProductos(int productoId, int inventarioProductoCant, String productoDesc, String estadoProductoDesc, String proveedorNombre) {
+        this.productoId = productoId;
         this.inventarioProductoCant = inventarioProductoCant;
         this.productoDesc = productoDesc;
         this.estadoProductoDesc = estadoProductoDesc;
+        this.proveedorNombre = proveedorNombre;
     }
 
-    public int getInventarioProductoId() {
-        return inventarioProductoId;
+    public int getProductoId() {
+        return productoId;
     }
 
-    public void setInventarioProductoId(int inventarioProductoId) {
-        this.inventarioProductoId = inventarioProductoId;
+    public void setProductoId(int productoId) {
+        this.productoId = productoId;
     }
 
     public int getInventarioProductoCant() {
@@ -47,6 +49,16 @@ public class InventarioProductos {
     public void setEstadoProductoDesc(String estadoProductoDesc) {
         this.estadoProductoDesc = estadoProductoDesc;
     }
+
+    public String getProveedorNombre() {
+        return proveedorNombre;
+    }
+
+    public void setProveedorNombre(String proveedorNombre) {
+        this.proveedorNombre = proveedorNombre;
+    }
+
+
 
 
 
