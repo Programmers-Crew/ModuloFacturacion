@@ -35,9 +35,14 @@ public class FacturacionViewController implements Initializable {
      Image imgError = new Image("org/moduloFacturacion/img/error.png");
     Image imgCorrecto= new Image("org/moduloFacturacion/img/correcto.png");
     Image imgWarning = new Image("org/moduloFacturacion/img/warning.png");
+    
     ObservableList<String> listaComboCliente;
+    ObservableList<String> listaComboProductos;
+
     boolean comprobarCliente = false;
     Notifications noti = Notifications.create();
+    int codigoProducto = 1;
+    
     
     @FXML
     private AnchorPane anchor;
@@ -47,10 +52,16 @@ public class FacturacionViewController implements Initializable {
     private ComboBox<String> txtNitCliente;
     @FXML
     private JFXButton btnImprimir;
+    @FXML
+    private JFXTextField txtPrecioProducto;
+    @FXML
+    private ComboBox<String> cmbNombreProducto;
 
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarComboNit();
+        llenarComboProdcutos();
     }    
 
     public void llenarComboNit(){
@@ -183,6 +194,75 @@ public class FacturacionViewController implements Initializable {
        comprobarClienteExistente();
     }
 
+    
+public int buscarCodigoProducto(int codigoProducto){
+         String sql = "{call SpBuscarClientesNit('"+codigoProducto+"')}";
+         
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                          codigoProducto = rs.getInt("productoId");
+                }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return codigoProducto;
+    }
+    
+    
+    public void buscarPrecioMetodo(){
+         String sql = "{call SpBuscarProductos('"+codigoProducto+"')}";
+         System.out.println(codigoProducto);
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                    txtPrecioProducto.setText(rs.getString("productoPrecio"));
+                    
+                }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+    }
+    
+    @FXML
+    private void buscarPrecio(ActionEvent event) {
+        buscarPrecioMetodo();
+    }
+
+    
+    public void llenarComboProdcutos(){
+        ArrayList<String> lista = new ArrayList();
+        String sql= "{call SpListarProductos()}";
+            int x =0;
+        
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                lista.add(x, rs.getString("productoDesc"));
+                x++;
+            }
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            
+            Notifications noti = Notifications.create();
+            noti.graphic(new ImageView(imgError));
+            noti.title("ERROR AL CARGAR DATOS CMB");
+            noti.text("Error al cargar la base de datos");
+            noti.position(Pos.BOTTOM_RIGHT);
+            noti.hideAfter(Duration.seconds(4));
+            noti.darkStyle();
+            noti.show();
+        }
+
+        listaComboProductos = FXCollections.observableList(lista);
+        cmbNombreProducto.setItems(listaComboProductos);
+        new AutoCompleteComboBoxListener(cmbNombreProducto);
+    }
+    
   
     
 }
