@@ -57,6 +57,8 @@ public class FacturacionViewController implements Initializable {
     private JFXTextField txtPrecioProducto;
     @FXML
     private ComboBox<String> cmbNombreProducto;
+    @FXML
+    private JFXTextField txtCantidadProducto;
 
     
     @Override
@@ -212,7 +214,6 @@ public int buscarCodigoProducto(String precioProductos){
     }
     
     
-    @FXML
     public void buscarPrecioMetodo(){
         if(cmbNombreProducto.getValue()!= ""){
                 try{

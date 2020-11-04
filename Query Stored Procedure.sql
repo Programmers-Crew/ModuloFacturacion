@@ -443,7 +443,14 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-
+DELIMITER $$
+	create procedure SpBuscarcodigoProducto(nombre varchar(50))
+			BEGIN
+				select productoId
+					from productos
+						where productoDesc = nombre;
+            END $$
+DELIMITER ;
 
 DELIMITER $$
 	create procedure SpBuscarFacturas(idBuscado int(100))
