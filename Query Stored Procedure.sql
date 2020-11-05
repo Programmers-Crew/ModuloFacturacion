@@ -337,7 +337,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarInventarioProductos(idBuscado int(100))
 		BEGIN
-			select p.productoId,ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc ep.estadoProductoDesc
+			select p.productoId,ip.inventarioProductoCant, pr.proveedorNombre , p.productoDesc, ep.estadoProductoDesc
 				from InventarioProductos as ip
 					inner join Productos as p
 						on ip.productoId = p.productoId
@@ -651,3 +651,26 @@ DELIMITER ;
 					where u.usuarioNombre = usuarioNom;
 		END $$
 	DELIMITER ;
+
+#====================================== Entidad de Backup
+
+DELIMITER $$
+	create procedure SpListarBackup()
+		BEGIN
+			select p.productoId, fdb.cantidadBackup , p.productoPrecio ,fdb.totalParcialBackup
+				from facturadetallebackup as fdb
+							inner join Productos as p
+								on fdb.productoIdBackup = p.productoId;
+        END $$
+DELIMITER ;
+
+call SpListarBackup();
+
+
+DELIMITER $$
+	create procedure SpAgregarBackup(productoId int(11), cantidad int(11), totalParcial decimal(10,2))
+		BEGIN				
+                insert into facturadetallebackup(productoIdBackup,cantidadBackup,totalParcialBackup)
+				values(productoId, cantidad, totalParcial);
+        END $$
+DELIMITER ;

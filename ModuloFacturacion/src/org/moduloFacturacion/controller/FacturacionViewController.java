@@ -15,7 +15,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -27,6 +32,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
+import org.moduloFacturacion.bean.FacturacionDetalleBackup;
 import org.moduloFacturacion.bean.Productos;
 import org.moduloFacturacion.db.Conexion;
 
@@ -36,15 +42,25 @@ public class FacturacionViewController implements Initializable {
      Image imgError = new Image("org/moduloFacturacion/img/error.png");
     Image imgCorrecto= new Image("org/moduloFacturacion/img/correcto.png");
     Image imgWarning = new Image("org/moduloFacturacion/img/warning.png");
+    @FXML
+    private JFXTextField txtFacturaId;
     
+    public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER};
+    public Operacion cancelar = Operacion.NINGUNO;
+    
+    // ==================== VARIABLES DE FACTURACION
+    public Operacion tipoOperacionFacturacion = Operacion.NINGUNO; 
+
     ObservableList<String> listaComboCliente;
     ObservableList<String> listaComboProductos;
+    ObservableList<FacturacionDetalleBackup> listaBackUp;
 
     boolean comprobarCliente = false;
     Notifications noti = Notifications.create();
     int codigoProducto;
     
     
+    // ======================= PROPIEDADES VISTA FACTURACION 
     @FXML
     private AnchorPane anchor;
     @FXML
@@ -59,14 +75,64 @@ public class FacturacionViewController implements Initializable {
     private ComboBox<String> cmbNombreProducto;
     @FXML
     private JFXTextField txtCantidadProducto;
+    @FXML
+    private TableColumn<FacturacionDetalleBackup, String> colDesProductoBackUp;
+    @FXML
+    private TableColumn<FacturacionDetalleBackup, Integer> colCantidadProductoBackUp;
+    @FXML
+    private TableColumn<FacturacionDetalleBackup, Double> colPrecioProductoBackUp;
+    @FXML
+    private TableColumn<FacturacionDetalleBackup, Double> colTotalParcialBackUp;
+    @FXML
+    private TableView<FacturacionDetalleBackup> tblBackUp;
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarComboNit();
         llenarComboProdcutos();
+        cargarDatos();
     }    
 
+    @FXML
+    private void regresar(MouseEvent event) throws IOException {
+         String menu = "org/moduloFacturacion/view/menuPrincipal.fxml";
+        cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
+    }
+    
+    // =================== CODIGO FACTURACION
+    public void limpiarTextFacturacion(){
+        cmbNombreProducto.setValue("");
+        txtPrecioProducto.setText("");
+        txtCantidadProducto.setText("");
+    }
+    
+    
+        @FXML
+    private void buscarCliente(ActionEvent event) {
+        buscarClienteMetodo();
+    }
+
+    @FXML
+    private void buscarPrecio(ActionEvent event) {
+        buscarPrecioMetodo();
+    }
+
+    
+    @FXML
+    private void AtajoCliente(KeyEvent event) {
+        if(txtNitCliente.isFocused()){
+            if(event.getCode() == KeyCode.ENTER){
+                buscarClienteMetodo();
+            }
+        }
+    }
+    
+    @FXML
+    private void btnImprimir(MouseEvent event) {
+       comprobarClienteExistente();
+    }
+    
     public void llenarComboNit(){
         ArrayList<String> lista = new ArrayList();
         String sql= "{call SpListarClientes()}";
@@ -97,13 +163,7 @@ public class FacturacionViewController implements Initializable {
         txtNitCliente.setItems(listaComboCliente);
         new AutoCompleteComboBoxListener(txtNitCliente);
     }
-    
-    
-    @FXML
-    private void regresar(MouseEvent event) throws IOException {
-         String menu = "org/moduloFacturacion/view/menuPrincipal.fxml";
-        cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
-    }
+
     
     
     public void buscarClienteMetodo(){
@@ -139,21 +199,6 @@ public class FacturacionViewController implements Initializable {
         
     }
     
-        
-    @FXML
-    private void buscarCliente(ActionEvent event) {
-        buscarClienteMetodo();
-    }
-
-    @FXML
-    private void AtajoCliente(KeyEvent event) {
-        if(txtNitCliente.isFocused()){
-            if(event.getCode() == KeyCode.ENTER){
-                buscarClienteMetodo();
-            }
-        }
-    }
-  
     
     public void comprobarClienteExistente(){
         if(comprobarCliente == false){
@@ -192,12 +237,8 @@ public class FacturacionViewController implements Initializable {
     }
     
     
-    @FXML
-    private void btnImprimir(MouseEvent event) {
-       comprobarClienteExistente();
-    }
 
-    
+
 public int buscarCodigoProducto(String precioProductos){    
         try{
             PreparedStatement sp = Conexion.getIntance().getConexion().prepareCall("{call SpBuscarcodigoProducto(?)}");
@@ -230,12 +271,6 @@ public int buscarCodigoProducto(String precioProductos){
     }
     
     
-    @FXML
-    private void buscarPrecio(ActionEvent event) {
-        buscarPrecioMetodo();
-    }
-
-    
     public void llenarComboProdcutos(){
         ArrayList<String> lista = new ArrayList();
         String sql= "{call SpListarProductos()}";
@@ -267,6 +302,109 @@ public int buscarCodigoProducto(String precioProductos){
         new AutoCompleteComboBoxListener(cmbNombreProducto);
     }
     
-  
     
+     public ObservableList<FacturacionDetalleBackup> getBackUp(){
+        ArrayList<FacturacionDetalleBackup> lista = new ArrayList();
+        String sql = "{call SpListarBackup()}";
+        int x=0;
+        
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                lista.add(new FacturacionDetalleBackup(
+                            rs.getString("productoDesc"),
+                            rs.getInt("cantidadBackup"),
+                            rs.getInt("productoPrecio"),
+                            rs.getInt("totalParcialBackup")
+                ));
+                
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        } 
+                return listaBackUp = FXCollections.observableList(lista);
+    }
+     
+    public void cargarDatos(){
+        tblBackUp.setItems(getBackUp());
+        colDesProductoBackUp.setCellValueFactory(new PropertyValueFactory("productoDesc"));
+        colCantidadProductoBackUp.setCellValueFactory(new PropertyValueFactory("cantidadBackup"));  
+        colPrecioProductoBackUp.setCellValueFactory(new PropertyValueFactory("productoPrecio"));
+        colTotalParcialBackUp.setCellValueFactory(new PropertyValueFactory("totalParcialBackup"));
+
+        
+        cmbNombreProducto.setValue("");
+        limpiarTextFacturacion();
+    }  
+    
+  public void accionEstado(String sql){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        PreparedStatement ps;
+        ResultSet rs;
+        Notifications noti = Notifications.create();
+        ButtonType buttonTypeSi = new ButtonType("Si");
+        ButtonType buttonTypeNo = new ButtonType("No");
+        
+        
+        switch(tipoOperacionFacturacion){
+            case AGREGAR:
+                    try {
+                        ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                        ps.execute();
+                        
+                        noti.graphic(new ImageView(imgCorrecto));
+                        noti.title("OPERACIÓN EXITOSA");
+                        noti.text("SE HA AGREGADO EXITOSAMENTE EL REGISTRO");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionFacturacion = Operacion.CANCELAR;
+                        cargarDatos();
+                        
+                    }catch (SQLException ex) {
+                        ex.printStackTrace();
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR AL AGREGAR");
+                        noti.text("HA OCURRIDO UN ERROR AL GUARDAR EL REGISTRO");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionFacturacion = Operacion.CANCELAR;
+                    }                
+                break;
+        }
+    }
+    
+  
+  @FXML
+    private void btnAgregarFacturaBackUp(MouseEvent event) {
+            if(cmbNombreProducto.getValue().equals("")|| txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty() || txtNombreCliente.getText().isEmpty() || txtNombreCliente.getText().isEmpty() || txtFacturaId.getText().isEmpty() ){
+                Notifications noti = Notifications.create();
+                noti.graphic(new ImageView(imgError));
+                noti.title("ERROR");
+                noti.text("HAY CAMPOS VACÍOS");
+                noti.position(Pos.BOTTOM_RIGHT);
+                noti.hideAfter(Duration.seconds(4));
+                noti.darkStyle();   
+                noti.show();
+            
+            }else{
+                    
+                    
+                   FacturacionDetalleBackup nuevoBackUp = new FacturacionDetalleBackup();
+                   nuevoBackUp.setProductoDesc(cmbNombreProducto.getValue());
+                   nuevoBackUp.setCantidadBackup(Integer.parseInt(txtCantidadProducto.getText()));
+                   nuevoBackUp.setTotalParcialBackup(Double.parseDouble(txtPrecioProducto.getText())*Integer.parseInt(txtCantidadProducto.getText()));
+
+                   String sql = "{call SpAgregarBackup('"+buscarCodigoProducto(nuevoBackUp.getProductoDesc())+"','"+ nuevoBackUp.getCantidadBackup()+"','"+nuevoBackUp.getTotalParcialBackup()+"')}";
+                   tipoOperacionFacturacion = Operacion.AGREGAR;
+                   accionEstado(sql);  
+            }
+    }
+    
+    // =================== CODIGO BUSCAR FACTURA
 }
+
