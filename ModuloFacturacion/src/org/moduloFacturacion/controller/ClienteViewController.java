@@ -36,6 +36,7 @@ import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.bean.Cliente;
+import org.moduloFacturacion.bean.ValidarStyle;
 import org.moduloFacturacion.db.Conexion;
 
 public class ClienteViewController implements Initializable {
@@ -81,7 +82,8 @@ public class ClienteViewController implements Initializable {
     private ComboBox<String> cmbFiltroCombo;
     @FXML
     private ComboBox<String> cmbCodigoBuscar;
-    
+    MenuPrincipalContoller menu = new MenuPrincipalContoller();
+    ValidarStyle validar = new ValidarStyle();
     
     public void limpiarText(){
         cmbCodigoBuscar.setValue("");
@@ -153,6 +155,7 @@ public class ClienteViewController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        validar.validarView(menu.prefs.get("dark", "root"), anchor);
         cargarDatos();
         ArrayList<String> lista = new ArrayList();
         cmbFiltroCombo.setValue("");

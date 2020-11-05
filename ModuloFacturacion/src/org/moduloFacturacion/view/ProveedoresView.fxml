@@ -24,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="466.0" prefWidth="865.0" stylesheets="@../resource/moduloStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.moduloFacturacion.controller.ProveedoresViewController">
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="466.0" prefWidth="865.0" styleClass="anchorOscuro" stylesheets="@../resource/moduloStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.moduloFacturacion.controller.ProveedoresViewController">
    <children>
       <Pane layoutY="1.0" prefHeight="36.0" prefWidth="600.0" styleClass="bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -42,11 +42,11 @@
          <tabs>
             <Tab styleClass="tabItem">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosProveedores" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosProveedores" prefHeight="180.0" prefWidth="200.0" styleClass="anchorOscuro">
                      <children>
                         <SplitPane dividerPositions="0.37267080745341613" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
@@ -113,7 +113,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <TableView fx:id="tblProveedores" layoutX="15.0" layoutY="61.0" onMouseClicked="#seleccionarElementos" prefHeight="279.0" prefWidth="310.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="61.0">
                                        <columnResizePolicy>
@@ -126,7 +126,7 @@
                                        </columns>
                                     </TableView>
                                     <JFXButton fx:id="btnBuscar" buttonType="RAISED" layoutX="258.0" layoutY="25.0" onMouseClicked="#btnBuscar" styleClass="boton" text="BUSCAR" textFill="WHITE" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="25.0" />
-                                    <ComboBox fx:id="cmbCodigoProveedores" editable="true" layoutX="14.0" layoutY="25.0" onMouseClicked="#codigoBuscadoProveedores" prefHeight="27.0" prefWidth="383.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="108.18181394466694" AnchorPane.topAnchor="25.0" />
+                                    <ComboBox fx:id="cmbCodigoProveedores" editable="true" layoutX="14.0" layoutY="25.0" onMouseClicked="#codigoBuscadoProveedores" prefHeight="27.0" prefWidth="383.0" styleClass="comboOscuro" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="108.18181394466694" AnchorPane.topAnchor="25.0" />
                                  </children>
                               </AnchorPane>
                            </items>

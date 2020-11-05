@@ -27,7 +27,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
-import org.moduloFacturacion.bean.Productos;
+import org.moduloFacturacion.bean.ValidarStyle;
 import org.moduloFacturacion.db.Conexion;
 
 
@@ -59,10 +59,13 @@ public class FacturacionViewController implements Initializable {
     private ComboBox<String> cmbNombreProducto;
     @FXML
     private JFXTextField txtCantidadProducto;
-
+    
+       MenuPrincipalContoller menu = new MenuPrincipalContoller();
+    ValidarStyle validar = new ValidarStyle();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+         validar.validarView(menu.prefs.get("dark", "root"), anchor);
         llenarComboNit();
         llenarComboProdcutos();
     }    

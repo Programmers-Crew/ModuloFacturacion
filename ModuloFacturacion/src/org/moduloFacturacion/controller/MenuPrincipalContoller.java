@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 
 
@@ -25,7 +26,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -46,6 +49,7 @@ import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.bean.Usuario;
+import org.moduloFacturacion.bean.ValidarStyle;
 import org.moduloFacturacion.db.Conexion;
 
 
@@ -53,8 +57,16 @@ public class MenuPrincipalContoller implements Initializable {
     
     LoginViewController login = new LoginViewController();
     CambioScene cambioScene = new CambioScene();
+    @FXML
+    private Button off;
+    @FXML
+    private Button on;
+    @FXML
+    private CheckBox checkBox;
 
+    
 
+   
 
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO};
     public Operacion tipoOperacion= Operacion.NINGUNO;
@@ -116,8 +128,19 @@ public class MenuPrincipalContoller implements Initializable {
     @FXML
     private ComboBox<String> cmbTipoUsuario;
     
+    public Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
+    public Preferences prefsUsuario = Preferences.userRoot().node(this.getClass().getName());
+     ValidarStyle validar = new ValidarStyle();
     
     
+    @FXML
+    private void recordarContraseña(ActionEvent event) {
+        if(checkBox.isSelected()){
+            prefsUsuario.put("validar", "recordar");
+        }else{
+            prefsUsuario.put("validar", "no recordar");
+        }
+    }
     
     public void limpiarText(){
         txtUsuario.setText("");
@@ -219,6 +242,7 @@ public class MenuPrincipalContoller implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+         validar.validarMenu(prefs.get("dark", "root"), anchor);
         labelUsuario.setText("¡Bienvenido "+login.prefsUsuario.get("usuario","root")+"!");
         cmbCodigoUsuario.setValue("");
         if(login.prefsLogin.get("tipo","root").equals("empleado")){
@@ -227,6 +251,11 @@ public class MenuPrincipalContoller implements Initializable {
             itemInventario.setDisable(true);
         }
         
+        if(prefsUsuario.get("validar", "root").equals("recordar")){
+            checkBox.setSelected(true);
+        }else{
+                checkBox.setSelected(false);
+        }
         // caja de bienvenida
          FadeTransition ft = new FadeTransition();
        ft.setFromValue(0);
@@ -908,12 +937,17 @@ public class MenuPrincipalContoller implements Initializable {
         
     }
     
-    
-    
+     @FXML
+    private void off(MouseEvent event) {
+         prefs.put("dark", "oscuro");
+        validar.validarMenu(prefs.get("dark", "root"), anchor);
+    }
 
-
-    
-
+    @FXML
+    private void on(MouseEvent event) {
+        prefs.put("dark", "claro");
+        validar.validarMenu(prefs.get("dark", "root"), anchor);
+    }
 
  }
 

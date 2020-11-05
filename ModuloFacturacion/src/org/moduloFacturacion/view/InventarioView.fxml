@@ -57,7 +57,7 @@
                      <children>
                         <SplitPane dividerPositions="0.30635188308038225" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
@@ -76,13 +76,13 @@
                                                 <Label layoutX="19.0" layoutY="80.0" prefHeight="18.0" prefWidth="72.0" text="CANTIDAD:" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="114.0" AnchorPane.topAnchor="76.0" />
                                                 <Label layoutX="19.0" layoutY="126.0" text="PROVEEDOR:" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="122.0" />
                                                 <JFXTextField fx:id="txtCantidadInventario" layoutX="21.0" layoutY="85.0" onAction="#validarCantidadProducto" prefHeight="26.0" prefWidth="166.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="89.0" />
-                                                <HBox alignment="CENTER" layoutX="5.0" layoutY="264.0" prefHeight="27.0" prefWidth="208.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="293.0">
+                                                <HBox alignment="CENTER" layoutX="5.0" layoutY="294.0" prefHeight="27.0" prefWidth="208.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="294.0">
                                                    <children>
-                                                      <GridPane prefHeight="19.0" prefWidth="196.0">
+                                                      <GridPane prefHeight="26.0" prefWidth="212.0">
                                                          <columnConstraints>
                                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.20001220703125" minWidth="10.0" prefWidth="70.99998779296875" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="57.40001220703125" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="66.199951171875" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="78.00002441406251" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="57.999975585937506" />
                                                          </columnConstraints>
                                                          <rowConstraints>
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -96,7 +96,7 @@
                                                                   <Font size="11.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXButton fx:id="btnEditarInventario" buttonType="RAISED" onMouseClicked="#btnEditar" styleClass="boton" text="EDITAR" textFill="WHITE" GridPane.columnIndex="1">
+                                                            <JFXButton fx:id="btnEditarInventario" buttonType="RAISED" onMouseClicked="#btnEditar" prefHeight="24.0" prefWidth="58.0" styleClass="boton" text="EDITAR" textFill="WHITE" GridPane.columnIndex="2">
                                                                <GridPane.margin>
                                                                   <Insets />
                                                                </GridPane.margin>
@@ -104,10 +104,7 @@
                                                                   <Font size="11.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXButton fx:id="btnEliminarInventario" buttonType="RAISED" onMouseClicked="#btnEliminar" styleClass="boton" text="ELIMINAR" textFill="WHITE" GridPane.columnIndex="2">
-                                                               <GridPane.margin>
-                                                                  <Insets />
-                                                               </GridPane.margin>
+                                                            <JFXButton fx:id="btnEliminarInventario" buttonType="RAISED" onMouseClicked="#btnEliminar" prefHeight="24.0" prefWidth="72.0" styleClass="boton" text="ELIMINAR" textFill="WHITE" GridPane.columnIndex="1">
                                                                <font>
                                                                   <Font size="11.0" />
                                                                </font>
@@ -118,10 +115,10 @@
                                                 </HBox>
                                                 <Label layoutX="19.0" layoutY="179.0" text="PRODUCTO" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="182.0" />
                                                 <Label layoutX="19.0" layoutY="230.0" text="ESTADO:" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="235.0" />
-                                                <ComboBox fx:id="cmbNombreEstado" layoutX="21.0" layoutY="252.0" prefHeight="27.0" prefWidth="205.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="252.0" />
+                                                <ComboBox fx:id="cmbNombreEstado" editable="true" layoutX="24.0" layoutY="253.0" prefHeight="27.0" prefWidth="207.0" styleClass="comboOscuro" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="256.0" />
                                                 <JFXTextField fx:id="txtProveedorInventario" layoutX="19.0" layoutY="131.0" prefHeight="27.0" prefWidth="205.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="20.272725910785823" AnchorPane.topAnchor="140.0" />
                                                 <JFXTextField fx:id="txtProductoInventario" layoutX="21.0" layoutY="191.0" prefHeight="27.0" prefWidth="210.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="196.0" />
-                                                <ComboBox fx:id="cmbCodigoProductoInventario" editable="true" layoutX="19.0" layoutY="45.0" onAction="#buscarProducto" prefHeight="27.0" prefWidth="212.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="8.290907971090547" AnchorPane.topAnchor="45.0" />
+                                                <ComboBox fx:id="cmbCodigoProductoInventario" editable="true" layoutX="19.0" layoutY="45.0" onAction="#buscarProducto" prefHeight="27.0" prefWidth="212.0" styleClass="comboOscuro" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="8.290907971090547" AnchorPane.topAnchor="45.0" />
                                              </children>
                                              <padding>
                                                 <Insets left="5.0" />
@@ -131,7 +128,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosInventario" prefHeight="362.0" prefWidth="444.0">
+                              <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosInventario" prefHeight="362.0" prefWidth="444.0" styleClass="anchorOscuro">
                                  <children>
                                     <TableView fx:id="tblInventario" layoutX="15.0" layoutY="73.0" onMouseClicked="#seleccionarElementosProductos" prefHeight="336.0" prefWidth="529.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="73.0">
                                        <columnResizePolicy>
@@ -146,7 +143,7 @@
                                        </columns>
                                     </TableView>
                                     <JFXButton fx:id="btnBuscarInventario" buttonType="RAISED" layoutX="479.0" layoutY="32.0" onMouseClicked="#btnBuscar" styleClass="boton" text="BUSCAR" textFill="WHITE" AnchorPane.rightAnchor="16.70907371836313" AnchorPane.topAnchor="32.0" />
-                                    <ComboBox fx:id="cmbFiltroCodigo" editable="true" layoutX="16.0" layoutY="32.0" prefHeight="27.0" prefWidth="431.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="111.0" AnchorPane.topAnchor="32.0" />
+                                    <ComboBox fx:id="cmbFiltroCodigo" editable="true" layoutX="16.0" layoutY="32.0" prefHeight="27.0" prefWidth="431.0" styleClass="comboOscuro" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="111.0" AnchorPane.topAnchor="32.0" />
                                  </children>
                               </AnchorPane>
                            </items>
@@ -171,7 +168,7 @@
                      <children>
                         <SplitPane dividerPositions="0.30635188308038225" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
@@ -239,7 +236,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosEstado" prefHeight="362.0" prefWidth="444.0">
+                              <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosEstado" prefHeight="362.0" prefWidth="444.0" styleClass="anchorOscuro">
                                  <children>
                                     <TableView fx:id="tblEstadoProductos" layoutX="15.0" layoutY="80.0" onMouseClicked="#seleccionarElementos" prefHeight="262.0" prefWidth="347.0" AnchorPane.bottomAnchor="42.400000000000034" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.600000000000023" AnchorPane.topAnchor="80.0">
                                        <columnResizePolicy>
