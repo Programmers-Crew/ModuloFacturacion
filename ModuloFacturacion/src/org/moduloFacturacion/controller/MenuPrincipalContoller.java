@@ -38,6 +38,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -64,7 +65,7 @@ public class MenuPrincipalContoller implements Initializable {
     @FXML
     private CheckBox checkBox;
 
-    
+ 
 
    
 
@@ -169,6 +170,32 @@ public class MenuPrincipalContoller implements Initializable {
         btnEditar.setDisable(false);
         
     }
+    
+     @FXML
+    private void validarUsuario(KeyEvent event) {
+        char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isLetterOrDigit(letra)){
+            event.consume();
+        }else{
+        
+        }
+    }
+
+    @FXML
+    private void validarcontraseña(KeyEvent event) {
+        char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isLetterOrDigit(letra)){
+            event.consume();
+        }else{
+        
+        }
+    }
+
+    
+
+    
     
     public ObservableList<Usuario> getUsuario(){
         ArrayList<Usuario> lista = new ArrayList();

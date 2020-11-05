@@ -22,6 +22,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -64,7 +65,6 @@ public class LoginViewController implements Initializable {
        ft.setNode(panelTransicion);
        ft.setCycleCount(1);
        ft.play();
-       
        
        TranslateTransition tt = new TranslateTransition();
        tt.setFromY(-100);
@@ -185,5 +185,30 @@ public class LoginViewController implements Initializable {
             }
         }
     }
+
+    @FXML
+    private void validarUsuario(KeyEvent event) {
+        
+        char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isLetterOrDigit(letra)){
+            event.consume();
+        }else{
+        
+        }
+    }
+
+    @FXML
+    private void validarContraseña(KeyEvent event) {
+        char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isLetterOrDigit(letra)){
+            event.consume();
+        }else{
+        
+        }
+    }
+
+ 
     
 }

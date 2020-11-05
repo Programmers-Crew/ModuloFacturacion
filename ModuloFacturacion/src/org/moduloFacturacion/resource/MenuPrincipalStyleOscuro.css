@@ -143,6 +143,22 @@
     -fx-background-color: #2E2E2E;
     -fx-text-fill: white;
 }
+.comboOscuro:editable .list-view .list-cell{
+    -fx-background-color: #2E2E2E;
+    -fx-text-fill: white;
+    
+}
+.comboOscuro:editable .list-view .list-cell:hover{
+    -fx-background-color: #212121;
+    -fx-text-fill: white;
+    
+}
+
+.comboOscuro:editable .list-view .list-cell:selected{
+    -fx-background-color: #212121;
+    -fx-text-fill: white;
+    
+}
 
 .comboOscuro:editable .arrow-button {
     -fx-background-color: #2E2E2E;

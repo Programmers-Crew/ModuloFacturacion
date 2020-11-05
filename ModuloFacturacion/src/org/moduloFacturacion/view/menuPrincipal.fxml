@@ -211,12 +211,12 @@
                                                    <font>
                                                       <Font name="System Italic" size="12.0" />
                                                    </font></Label>
-                                                <JFXTextField fx:id="txtUsuario" layoutX="16.0" layoutY="58.0" prefHeight="26.0" prefWidth="163.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
+                                                <JFXTextField fx:id="txtUsuario" layoutX="16.0" layoutY="58.0" onKeyTyped="#validarUsuario" prefHeight="26.0" prefWidth="163.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
                                                 <Label layoutX="18.0" layoutY="93.0" text="PASSWORD" AnchorPane.leftAnchor="18.0">
                                                    <font>
                                                       <Font name="System Italic" size="12.0" />
                                                    </font></Label>
-                                                <JFXPasswordField fx:id="txtPassword" layoutX="16.0" layoutY="111.0" prefHeight="26.0" prefWidth="240.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
+                                                <JFXPasswordField fx:id="txtPassword" layoutX="16.0" layoutY="111.0" onKeyTyped="#validarcontraseña" prefHeight="26.0" prefWidth="240.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
                                                 <Label layoutX="16.0" layoutY="149.0" text="TIPO USUARIO" AnchorPane.leftAnchor="16.0">
                                                    <font>
                                                       <Font name="System Italic" size="12.0" />

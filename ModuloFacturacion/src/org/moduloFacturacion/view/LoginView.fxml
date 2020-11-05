@@ -44,13 +44,13 @@
                            <children>
                               <Pane fx:id="panelTransicion" prefHeight="205.0" prefWidth="226.0">
                                  <children>
-                                    <JFXTextField fx:id="txtUsuario" layoutX="45.0" layoutY="56.0" prefHeight="26.0" prefWidth="169.0">
+                                    <JFXTextField fx:id="txtUsuario" layoutX="45.0" layoutY="56.0" onKeyTyped="#validarUsuario" prefHeight="26.0" prefWidth="169.0">
                                        <tooltip>
                                           <Tooltip text="campo de usuario" />
                                        </tooltip>
                                     </JFXTextField>
                                     <Label layoutX="16.0" layoutY="101.0" text="Ingrese su Contraseña" />
-                                    <JFXPasswordField fx:id="txtContraseña" layoutX="48.0" layoutY="130.0" prefHeight="26.0" prefWidth="169.0">
+                                    <JFXPasswordField fx:id="txtContraseña" layoutX="48.0" layoutY="130.0" onKeyTyped="#validarContraseña" prefHeight="26.0" prefWidth="169.0">
                                        <tooltip>
                                           <Tooltip text="campo de Contraseña" />
                                        </tooltip>
