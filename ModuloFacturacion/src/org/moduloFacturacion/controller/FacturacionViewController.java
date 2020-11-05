@@ -32,12 +32,9 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
-<<<<<<< HEAD
 import org.moduloFacturacion.bean.FacturacionDetalleBackup;
 import org.moduloFacturacion.bean.Productos;
-=======
 import org.moduloFacturacion.bean.ValidarStyle;
->>>>>>> Davis-Roldan
 import org.moduloFacturacion.db.Conexion;
 
 
@@ -79,7 +76,6 @@ public class FacturacionViewController implements Initializable {
     private ComboBox<String> cmbNombreProducto;
     @FXML
     private JFXTextField txtCantidadProducto;
-<<<<<<< HEAD
     @FXML
     private TableColumn<FacturacionDetalleBackup, String> colDesProductoBackUp;
     @FXML
@@ -91,11 +87,9 @@ public class FacturacionViewController implements Initializable {
     @FXML
     private TableView<FacturacionDetalleBackup> tblBackUp;
 
-=======
     
        MenuPrincipalContoller menu = new MenuPrincipalContoller();
     ValidarStyle validar = new ValidarStyle();
->>>>>>> Davis-Roldan
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -470,12 +470,11 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpListarFacturaDetalle()
 		BEGIN
-			select fd.facturaDetalleId, f.facturaId, p.productoId, fd.cantidad, fd.precios
+			select fd.facturaDetalleId, p.productoId, fd.cantidad, fd.totalParcial
 				from FacturaDetalle as fd
-					inner join Facturas as f
-						on fd.facturaId = f.facturaId
 							inner join Productos as p
-								on fd.productoId = p.productoId;
+								on fd.productoId = p.productoId
+									order by fd.facturaDetalleId asc;
         END $$
 DELIMITER ;
 
@@ -664,7 +663,6 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-call SpListarBackup();
 
 DELIMITER $$
 	create procedure SpAgregarBackup(productoId int(11), cantidad int(11), totalParcial decimal(10,2))
@@ -674,4 +672,12 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-call SpAgregarBackup(1, 5, 25);
+
+DELIMITER $$
+	create procedure SpTransferirBackup()
+		BEGIN 
+			insert into facturadetalle(facturaDetalleId,productoId,cantidad,totalParcial)
+				select facturaDetalleIdBackup,productoIdBackup,cantidadBackup,totalParcialBackup 
+					from facturadetallebackup;
+		END $$
+DELIMITER ;
