@@ -38,6 +38,7 @@ import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.bean.CategoriaProducto;
 import org.moduloFacturacion.bean.Productos;
+import org.moduloFacturacion.bean.ValidarStyle;
 import org.moduloFacturacion.db.Conexion;
 
 
@@ -134,13 +135,14 @@ public class ProductosViewController implements Initializable {
     @FXML
     private JFXTextField txtCodigoCategoria;
     
-    
+    MenuPrincipalContoller menu = new MenuPrincipalContoller();
+    ValidarStyle validar = new ValidarStyle();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        validar.validarView(menu.prefs.get("dark", "root"), anchor);
        iniciarProducto();
-       
+         
          
     }    
     

@@ -34,12 +34,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.swing.JOptionPane;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.bean.EstadoProductos;
 import org.moduloFacturacion.bean.InventarioProductos;
+import org.moduloFacturacion.bean.ValidarStyle;
 import org.moduloFacturacion.db.Conexion;
 
 
@@ -54,7 +54,10 @@ public class InventarioViewController implements Initializable {
     private Pane btnProductos;
     @FXML
     private Pane btnInicio;
-
+    
+    MenuPrincipalContoller menu = new MenuPrincipalContoller();
+    ValidarStyle validar = new ValidarStyle();
+    
     @FXML
     private void validarCantidadProducto(ActionEvent event) {
     }
@@ -295,6 +298,7 @@ public class InventarioViewController implements Initializable {
     }
     
     public void iniciarInventario(){
+       
         Tooltip toolInicio = new Tooltip("Volver a Inicio");
         Tooltip.install(btnInicio, toolInicio);
         
@@ -1206,6 +1210,7 @@ public class InventarioViewController implements Initializable {
     //=========================================================================================================================================
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+         validar.validarView(menu.prefs.get("dark", "root"), anchor);
         iniciarInventario();
         cmbCodigoProductoInventario.setValue("");
         cmbNombreEstado.setValue("");

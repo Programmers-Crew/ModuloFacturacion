@@ -34,6 +34,7 @@ import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.bean.Proveedores;
+import org.moduloFacturacion.bean.ValidarStyle;
 import org.moduloFacturacion.db.Conexion;
 
 
@@ -46,7 +47,8 @@ public class ProveedoresViewController implements Initializable {
     int codigo;
 
     
-    
+     MenuPrincipalContoller menu = new MenuPrincipalContoller();
+    ValidarStyle validar = new ValidarStyle();
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO};
     public Operacion tipoOperacionProveedores= Operacion.NINGUNO;
     public Operacion cancelar = Operacion.NINGUNO;
@@ -522,6 +524,7 @@ public class ProveedoresViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarDatosProveedores();
+        validar.validarView(menu.prefs.get("dark", "root"), anchor);
     }    
 
     @FXML

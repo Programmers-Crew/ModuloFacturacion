@@ -107,3 +107,15 @@
 .boton:pressed{
     -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 0, 0);
 }
+
+.off{    
+    -fx-cursor: hand;
+}
+
+.on{
+    visibility: false;
+}
+.paneMode{
+    -fx-background-color: #eee;
+    
+}
