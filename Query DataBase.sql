@@ -65,6 +65,7 @@ create table Usuarios(
 
 create table Facturas(
 	facturaId int(100) primary key,
+	facturaDetalleId int(100) not null, 
     clienteId int(100) not null,
     facturaFecha date not null,
     usuarioId int(100) not null,
@@ -72,6 +73,7 @@ create table Facturas(
     facturaTotalIva decimal(10,2) not null,
     facturaTotal decimal(10,2) not null,
     
+	CONSTRAINT FK_facturaDetalle FOREIGN KEY (facturaDetalleId) REFERENCES Facturas(facturaId),
 	CONSTRAINT FK_clienteFactura FOREIGN KEY (clienteId) REFERENCES Clientes(clienteId),
 	CONSTRAINT FK_usuarioFactura FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId)
 );
@@ -79,12 +81,19 @@ create table Facturas(
 
 create table FacturaDetalle(
 	facturaDetalleId int(100) primary key,
-    facturaId int(100) not null, 
     productoId int(100) not null,
     cantidad int(100) not null, 
-    precios decimal(10,2),
+    totalParcial decimal(10,2),
     
-	CONSTRAINT FK_facturaDetalle FOREIGN KEY (facturaId) REFERENCES Facturas(facturaId),
 	CONSTRAINT FK_productoFacDetalle FOREIGN KEY (productoId) REFERENCES Productos(productoId)
 
+);
+
+create table FacturaDetalleBackUp(
+	facturaDetalleIdBackup int primary key auto_increment,
+    productoIdBackup int(100) not null,
+    cantidadBackup int(100) not null, 
+    totalParcialBackup decimal(10,2) not null,
+    
+	CONSTRAINT FK_productoFacDetalleBackup FOREIGN KEY (productoIdBackup) REFERENCES Productos(productoId)
 );
