@@ -1,7 +1,7 @@
 create database ProgrammersBilling;
 
 create table Clientes(
-	clienteId	int(100) primary key auto_increment,
+	clienteId	int(5)  UNSIGNED ZEROFILL primary key auto_increment,
 	clienteNit	varchar(9) unique not null,
 	clienteNombre varchar(25) not null
 
@@ -15,23 +15,23 @@ create table EstadoProductos(
 
 
 create table Proveedores(
-	proveedorId int(100) primary key,
+	proveedorId int(5) UNSIGNED ZEROFILL primary key,
     proveedorNombre varchar(50) unique not null,
 	proveedorTelefono varchar(8) unique not null
 );
 
 create table CategoriaProductos(
-	categoriaId int(100) primary key,
+	categoriaId int(5) UNSIGNED ZEROFILL primary key,
     categoriaNombre varchar(50) unique not null
 );
 
 
 create table Productos(
 
-	productoId	int(100) primary key,
+	productoId	int(5) UNSIGNED ZEROFILL primary key,
     productoDesc varchar(50) not null,
-	proveedorId int(100) not null,
-    categoriaId int(100) not null,
+	proveedorId int(5) UNSIGNED ZEROFILL not null,
+    categoriaId int(5) UNSIGNED ZEROFILL not null,
     productoPrecio decimal(10,2) not null,
 
     CONSTRAINT FK_ProveedorProductos FOREIGN KEY (proveedorId) REFERENCES Proveedores(proveedorId),
@@ -40,9 +40,9 @@ create table Productos(
 
 
 create table InventarioProductos(
-	inventarioProductoId int(100) primary key auto_increment,
-    inventarioProductoCant int(100) not null,
-    productoId int(100) not null,
+	inventarioProductoId int(5) UNSIGNED ZEROFILL primary key auto_increment,
+    inventarioProductoCant int(5) UNSIGNED ZEROFILL not null,
+    productoId int(5) UNSIGNED ZEROFILL not null,
     estadoProductoId tinyint(1) not null,
     
 	CONSTRAINT FK_ProductoInventario FOREIGN KEY (productoId) REFERENCES Productos(productoId),
@@ -64,11 +64,11 @@ create table Usuarios(
 
 
 create table Facturas(
-	facturaId int(100) primary key,
-	facturaDetalleId int(100) not null, 
-    clienteId int(100) not null,
+	facturaId int(5) UNSIGNED ZEROFILL primary key,
+	facturaDetalleId int(5) UNSIGNED ZEROFILL not null, 
+    clienteId int(5) UNSIGNED ZEROFILL not null,
     facturaFecha date not null,
-    usuarioId int(100) not null,
+    usuarioId int(5) UNSIGNED ZEROFILL not null,
     facturaTotalNeto decimal(10,2) not null,
     facturaTotalIva decimal(10,2) not null,
     facturaTotal decimal(10,2) not null,
@@ -80,9 +80,9 @@ create table Facturas(
 
 
 create table FacturaDetalle(
-	facturaDetalleId int(100) primary key,
-    productoId int(100) not null,
-    cantidad int(100) not null, 
+	facturaDetalleId int(5) UNSIGNED ZEROFILL primary key,
+    productoId int(5) UNSIGNED ZEROFILL not null,
+    cantidad int(5) UNSIGNED ZEROFILL not null, 
     totalParcial decimal(10,2),
     
 	CONSTRAINT FK_productoFacDetalle FOREIGN KEY (productoId) REFERENCES Productos(productoId)
@@ -90,9 +90,9 @@ create table FacturaDetalle(
 );
 
 create table FacturaDetalleBackUp(
-	facturaDetalleIdBackup int primary key auto_increment,
-    productoIdBackup int(100) not null,
-    cantidadBackup int(100) not null, 
+	facturaDetalleIdBackup int(5)UNSIGNED ZEROFILL primary key auto_increment ,
+    productoIdBackup int(5) UNSIGNED ZEROFILL not null,
+    cantidadBackup int(5) UNSIGNED ZEROFILL not null, 
     totalParcialBackup decimal(10,2) not null,
     
 	CONSTRAINT FK_productoFacDetalleBackup FOREIGN KEY (productoIdBackup) REFERENCES Productos(productoId)
