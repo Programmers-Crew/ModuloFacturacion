@@ -143,7 +143,7 @@
                                           <Font size="11.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXTextField layoutX="151.0" layoutY="410.0" prefHeight="26.0" prefWidth="249.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="150.6" AnchorPane.rightAnchor="107.0" />
+                                    <JFXTextField fx:id="txtTotalFactura" layoutX="151.0" layoutY="410.0" prefHeight="26.0" prefWidth="249.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="150.6" AnchorPane.rightAnchor="107.0" />
                                     <Label layoutX="15.0" layoutY="414.0" text="TOTAL DE FACTURA" AnchorPane.bottomAnchor="15.20000000000001" AnchorPane.leftAnchor="15.0" />
                                  </children>
                               </AnchorPane>

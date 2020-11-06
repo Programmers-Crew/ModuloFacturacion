@@ -7,6 +7,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -32,16 +33,11 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
-<<<<<<< HEAD
 
-import org.moduloFacturacion.bean.ValidarStyle;
 import org.moduloFacturacion.bean.FacturacionDetalleBackup;
 
-=======
-import org.moduloFacturacion.bean.FacturacionDetalleBackup;
-import org.moduloFacturacion.bean.Productos;
 import org.moduloFacturacion.bean.ValidarStyle;
->>>>>>> Diego-Gonzalez
+
 import org.moduloFacturacion.db.Conexion;
 
 
@@ -52,6 +48,8 @@ public class FacturacionViewController implements Initializable {
     Image imgWarning = new Image("org/moduloFacturacion/img/warning.png");
     @FXML
     private JFXTextField txtFacturaId;
+    @FXML
+    private JFXTextField txtTotalFactura;
     
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER};
     public Operacion cancelar = Operacion.NINGUNO;
@@ -83,14 +81,16 @@ public class FacturacionViewController implements Initializable {
     private ComboBox<String> cmbNombreProducto;
     @FXML
     private JFXTextField txtCantidadProducto;
-<<<<<<< HEAD
-
     
-       MenuPrincipalContoller menu = new MenuPrincipalContoller();
+    java.util.Date d = new java.util.Date();  
+    SimpleDateFormat plantilla = new SimpleDateFormat("dd/MM/yyyy H:mm");
+    String tiempo = plantilla.format(d);
+    java.sql.Date date2 = new java.sql.Date(d.getTime());
+    MenuPrincipalContoller menu = new MenuPrincipalContoller();
+    LoginViewController login = new LoginViewController();
+    
     ValidarStyle validar = new ValidarStyle();
 
-=======
->>>>>>> Diego-Gonzalez
     @FXML
     private TableColumn<FacturacionDetalleBackup, String> colDesProductoBackUp;
     @FXML
@@ -102,12 +102,22 @@ public class FacturacionViewController implements Initializable {
     @FXML
     private TableView<FacturacionDetalleBackup> tblBackUp;
 
-<<<<<<< HEAD
-=======
+    double totalFactura=0;
     
-       MenuPrincipalContoller menu = new MenuPrincipalContoller();
-    ValidarStyle validar = new ValidarStyle();
->>>>>>> Diego-Gonzalez
+    public void valorTotalFactura(){
+        String sql = "{call SpSumarBackup()}";
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                totalFactura =  rs.getDouble("sum(totalParcialBackup)");
+            }
+            
+            txtTotalFactura.setText(String.valueOf(totalFactura));
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -115,6 +125,7 @@ public class FacturacionViewController implements Initializable {
         llenarComboNit();
         llenarComboProdcutos();
         cargarDatos();
+        valorTotalFactura();
     }    
 
     @FXML
@@ -151,11 +162,7 @@ public class FacturacionViewController implements Initializable {
         }
     }
     
-    @FXML
-    private void btnImprimir(MouseEvent event) {
-       comprobarClienteExistente();
-    }
-    
+
     public void llenarComboNit(){
         ArrayList<String> lista = new ArrayList();
         String sql= "{call SpListarClientes()}";
@@ -330,6 +337,7 @@ public int buscarCodigoProducto(String precioProductos){
         ArrayList<FacturacionDetalleBackup> lista = new ArrayList();
         String sql = "{call SpListarBackup()}";
         int x=0;
+        double totalParcial=0;
         
         try{
             PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
@@ -338,14 +346,16 @@ public int buscarCodigoProducto(String precioProductos){
                 lista.add(new FacturacionDetalleBackup(
                             rs.getString("productoDesc"),
                             rs.getInt("cantidadBackup"),
-                            rs.getInt("productoPrecio"),
-                            rs.getInt("totalParcialBackup")
+                            rs.getDouble("productoPrecio"),
+                            rs.getDouble("totalParcialBackup")
                 ));
-                
+                totalParcial = rs.getDouble("totalParcialBackup");
             }
         }catch(SQLException ex){
             ex.printStackTrace();
         } 
+            totalFactura = totalFactura+totalParcial;
+            txtTotalFactura.setText(String.valueOf(totalFactura));
                 return listaBackUp = FXCollections.observableList(lista);
     }
      
@@ -428,6 +438,90 @@ public int buscarCodigoProducto(String precioProductos){
             }
     }
     
-    // =================== CODIGO BUSCAR FACTURA
+    
+    public int getClienteId(){
+        int codigoCliente=0;
+            
+        String sql = "{call SpBuscarClientesNit('"+txtNitCliente.getValue()+"')}";
+        
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                codigoCliente = rs.getInt("clienteId");
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+            
+            
+        return codigoCliente;
+    }
+    
+    public int getUsuarioId(){
+        int codigoUsuario=0;
+        System.out.println(login.prefsUsuario.get("usuario", "root"));
+        String sql = "{call SpBuscarUsuarioId('"+login.prefsUsuario.get("usuario", "root")+"')}";
+        
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                codigoUsuario = rs.getInt("usuarioId");
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        System.out.println(codigoUsuario);
+        return codigoUsuario;
+    }
+    
+        @FXML
+    private void btnImprimir(MouseEvent event) {
+       
+       comprobarClienteExistente();
+       
+       double totalNeto = Double.parseDouble(txtTotalFactura.getText())/1.12;
+       double totalIva = totalNeto*0.12;
+       
+       String sql = "{call SpTransferirBackup()}";
+       String sqlEliminar = "{call SpEliminarBackup()}";
+       String sqlFactura = "{call SpAgregarFactura('"+txtFacturaId.getText()+"','"+getClienteId()+"','"+date2+"','"+getUsuarioId()+"','"+totalNeto+"','"+totalIva+"','"+txtTotalFactura.getText()+"')}";
+       try{
+           PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+           ps.execute();
+           
+           PreparedStatement psFactura = Conexion.getIntance().getConexion().prepareCall(sqlFactura);
+               psFactura.execute();
+           
+           PreparedStatement psEliminar = Conexion.getIntance().getConexion().prepareCall(sqlEliminar);
+           psEliminar.execute();
+           
+            Notifications noti = Notifications.create();
+            noti.graphic(new ImageView(imgCorrecto));
+            noti.title("OPERACIÓN EXITOSA");
+            noti.text("SE HA IMPRESO Y REGISTRADO CON ÉXITO");
+            noti.position(Pos.BOTTOM_RIGHT);
+            noti.hideAfter(Duration.seconds(4));
+            noti.darkStyle();
+            noti.show();
+           cargarDatos();
+       }catch(SQLException ex){
+           ex.printStackTrace();
+           Notifications noti = Notifications.create();
+            noti.graphic(new ImageView(imgError));
+            noti.title("ERROR");
+            noti.text("HUBO UN ERROR AL REGISTRAR EN LA BASE DE DATOS");
+            noti.position(Pos.BOTTOM_RIGHT);
+            noti.hideAfter(Duration.seconds(4));
+            noti.darkStyle();
+            noti.show();
+       }
+       
+    }
+    
+
 }
 

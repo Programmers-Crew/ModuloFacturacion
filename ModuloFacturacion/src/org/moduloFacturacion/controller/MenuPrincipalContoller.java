@@ -38,7 +38,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -130,16 +129,16 @@ public class MenuPrincipalContoller implements Initializable {
     private ComboBox<String> cmbTipoUsuario;
     
     public Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
-    public Preferences prefsUsuario = Preferences.userRoot().node(this.getClass().getName());
+    public Preferences prefsUsuario1 = Preferences.userRoot().node(this.getClass().getName());
      ValidarStyle validar = new ValidarStyle();
     
     
     @FXML
     private void recordarContraseña(ActionEvent event) {
         if(checkBox.isSelected()){
-            prefsUsuario.put("validar", "recordar");
+            prefsUsuario1.put("validar", "recordar");
         }else{
-            prefsUsuario.put("validar", "no recordar");
+            prefsUsuario1.put("validar", "no recordar");
         }
     }
     
@@ -278,7 +277,7 @@ public class MenuPrincipalContoller implements Initializable {
             itemInventario.setDisable(true);
         }
         
-        if(prefsUsuario.get("validar", "root").equals("recordar")){
+        if(prefsUsuario1.get("validar", "root").equals("recordar")){
             checkBox.setSelected(true);
         }else{
                 checkBox.setSelected(false);
