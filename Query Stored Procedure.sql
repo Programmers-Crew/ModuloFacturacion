@@ -641,6 +641,7 @@ DELIMITER ;
 		END $$
 	DELIMITER ;
 
+
 	DELIMITER $$
 
 	CREATE PROCEDURE  SpLoginValidar(usuarioNom varchar(30))
