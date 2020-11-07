@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 import javafx.animation.FadeTransition;
@@ -35,6 +37,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.db.Conexion;
+import org.moduloFacturacion.system.MainApp;
 
 
 public class LoginViewController implements Initializable {
@@ -54,8 +57,12 @@ public class LoginViewController implements Initializable {
     private JFXButton btnIngresar;
     public Preferences prefsLogin = Preferences.userRoot().node(this.getClass().getName());
     public Preferences prefsUsuario = Preferences.userRoot().node(this.getClass().getName());
+    
+   
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
       txtUsuario.requestFocus();
         FadeTransition ft = new FadeTransition();
        ft.setFromValue(0);
@@ -64,7 +71,6 @@ public class LoginViewController implements Initializable {
        ft.setNode(panelTransicion);
        ft.setCycleCount(1);
        ft.play();
-       
        
        TranslateTransition tt = new TranslateTransition();
        tt.setFromY(-100);
@@ -77,6 +83,28 @@ public class LoginViewController implements Initializable {
        
        
     }    
+    
+    
+    public boolean validacion(String usuario){
+        boolean validacion=false;
+        String sql = "{call spBuscarUsuairo('"+usuario+"')}";
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.first()){
+                System.out.println("hay");
+                validacion = true;
+            }else{
+                System.out.println("no hay");
+                validacion = false;
+            }
+        }catch(SQLException ex){
+            
+        }
+        
+        return validacion;
+    }
     
     public void validarLogin(){
         String sql = "{call SpLoginValidar('"+txtUsuario.getText()+"')}";
@@ -185,5 +213,30 @@ public class LoginViewController implements Initializable {
             }
         }
     }
+
+    @FXML
+    private void validarUsuario(KeyEvent event) {
+        
+        char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isLetterOrDigit(letra)){
+            event.consume();
+        }else{
+        
+        }
+    }
+
+    @FXML
+    private void validarContraseña(KeyEvent event) {
+        char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isLetterOrDigit(letra)){
+            event.consume();
+        }else{
+        
+        }
+    }
+
+ 
     
 }

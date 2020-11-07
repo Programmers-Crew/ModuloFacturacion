@@ -404,6 +404,16 @@ DELIMITER $$
 DELIMITER ;
 
 
+DELIMITER $$
+	create procedure SpBuscarUsuarioId(usuarioNombre varchar(30))
+		BEGIN
+			select usuarioId, usuarioNombre, usuarioPassword, tipoUsuario
+				from Usuarios,tipousuario
+					where usuarioNombre= Usuarios.usuarioNombre and tipousuario.tipoUsuarioId = usuarios.tipoUsuarioId;
+        END $$
+DELIMITER ;
+
+
 
 DELIMITER $$
 	create procedure SpEliminarUsuarios(idBuscado int(100))
@@ -682,3 +692,32 @@ DELIMITER $$
 					from facturadetallebackup;
 		END $$
 DELIMITER ;
+
+DELIMITER $$
+	create procedure SpEliminarBackup()
+		BEGIN 
+			delete from facturadetallebackup where facturaDetalleIdBackup>0;
+		END $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure SpAgregarFactura(codigoFactura int(5),clienteId int(5), facturaFecha date, usuarioId int(5), facturaTotalNeto decimal(10,2), facturaTotalIva decimal(10,2), facturaTotal decimal(10,2))
+		BEGIN 
+			insert into facturas (facturaId, facturaDetalleId, clienteId, facturaFecha, usuarioId,facturaTotalNeto,facturaTotalIva,facturaTotal)
+            select codigoFactura, fb.facturaDetalleIdBackup, clienteId, facturaFecha, usuarioId,facturaTotalNeto,facturaTotalIva,facturaTotal
+            from facturadetallebackup as fb;
+		END $$
+DELIMITER ;
+
+
+DELIMITER $$
+	CREATE PROCEDURE SpSumarBackup()
+		BEGIN
+			select sum(totalParcialBackup) from facturadetallebackup;
+        END $$
+DELIMITER ;
+
+insert into tipousuario values(0,"Administrador"),(0,"Empleado");
+
+insert into usuarios values(0,"admin", "admin", 1);

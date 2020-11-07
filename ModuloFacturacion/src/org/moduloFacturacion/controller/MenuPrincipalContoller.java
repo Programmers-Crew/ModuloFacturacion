@@ -64,7 +64,7 @@ public class MenuPrincipalContoller implements Initializable {
     @FXML
     private CheckBox checkBox;
 
-    
+ 
 
    
 
@@ -129,16 +129,16 @@ public class MenuPrincipalContoller implements Initializable {
     private ComboBox<String> cmbTipoUsuario;
     
     public Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
-    public Preferences prefsUsuario = Preferences.userRoot().node(this.getClass().getName());
+    public Preferences prefsUsuario1 = Preferences.userRoot().node(this.getClass().getName());
      ValidarStyle validar = new ValidarStyle();
     
     
     @FXML
     private void recordarContraseña(ActionEvent event) {
         if(checkBox.isSelected()){
-            prefsUsuario.put("validar", "recordar");
+            prefsUsuario1.put("validar", "recordar");
         }else{
-            prefsUsuario.put("validar", "no recordar");
+            prefsUsuario1.put("validar", "no recordar");
         }
     }
     
@@ -169,6 +169,32 @@ public class MenuPrincipalContoller implements Initializable {
         btnEditar.setDisable(false);
         
     }
+    
+     @FXML
+    private void validarUsuario(KeyEvent event) {
+        char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isLetterOrDigit(letra)){
+            event.consume();
+        }else{
+        
+        }
+    }
+
+    @FXML
+    private void validarcontraseña(KeyEvent event) {
+        char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isLetterOrDigit(letra)){
+            event.consume();
+        }else{
+        
+        }
+    }
+
+    
+
+    
     
     public ObservableList<Usuario> getUsuario(){
         ArrayList<Usuario> lista = new ArrayList();
@@ -251,7 +277,7 @@ public class MenuPrincipalContoller implements Initializable {
             itemInventario.setDisable(true);
         }
         
-        if(prefsUsuario.get("validar", "root").equals("recordar")){
+        if(prefsUsuario1.get("validar", "root").equals("recordar")){
             checkBox.setSelected(true);
         }else{
                 checkBox.setSelected(false);

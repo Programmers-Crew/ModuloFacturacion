@@ -55,29 +55,12 @@ create table TipoUsuario(
 );
 
 create table Usuarios(
-	usuarioId int(10) primary key not null auto_increment,
+	usuarioId int(5) UNSIGNED ZEROFILL primary key not null auto_increment,
     usuarioNombre varchar(30) not null unique,
     usuarioPassword varchar(40)  not null,
     tipoUsuarioId tinyint(1) not null,
     CONSTRAINT FK_UsuariosTipoUsuario FOREIGN KEY (tipoUsuarioId) REFERENCES TipoUsuario(tipoUsuarioId)
 );
-
-
-create table Facturas(
-	facturaId int(5) UNSIGNED ZEROFILL primary key,
-	facturaDetalleId int(5) UNSIGNED ZEROFILL not null, 
-    clienteId int(5) UNSIGNED ZEROFILL not null,
-    facturaFecha date not null,
-    usuarioId int(5) UNSIGNED ZEROFILL not null,
-    facturaTotalNeto decimal(10,2) not null,
-    facturaTotalIva decimal(10,2) not null,
-    facturaTotal decimal(10,2) not null,
-    
-	CONSTRAINT FK_facturaDetalle FOREIGN KEY (facturaDetalleId) REFERENCES Facturas(facturaId),
-	CONSTRAINT FK_clienteFactura FOREIGN KEY (clienteId) REFERENCES Clientes(clienteId),
-	CONSTRAINT FK_usuarioFactura FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId)
-);
-
 
 create table FacturaDetalle(
 	facturaDetalleId int(5) UNSIGNED ZEROFILL primary key,
@@ -97,3 +80,21 @@ create table FacturaDetalleBackUp(
     
 	CONSTRAINT FK_productoFacDetalleBackup FOREIGN KEY (productoIdBackup) REFERENCES Productos(productoId)
 );
+
+create table Facturas(
+	codigo int(5) UNSIGNED ZEROFILL PRIMARY KEY,
+	facturaId int(5) UNSIGNED ZEROFILL,
+	facturaDetalleId int(5) UNSIGNED ZEROFILL not null, 
+    clienteId int(5) UNSIGNED ZEROFILL not null,
+    facturaFecha date not null,
+    usuarioId int(5) UNSIGNED ZEROFILL not null,
+    facturaTotalNeto decimal(10,2) not null,
+    facturaTotalIva decimal(10,2) not null,
+    facturaTotal decimal(10,2) not null,
+    
+	CONSTRAINT FK_facturaDetalle FOREIGN KEY (facturaDetalleId) REFERENCES facturadetalle(facturaDetalleId),
+	CONSTRAINT FK_clienteFactura FOREIGN KEY (clienteId) REFERENCES Clientes(clienteId),
+	CONSTRAINT FK_usuarioFactura FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId)
+);
+
+
