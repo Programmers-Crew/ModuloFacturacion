@@ -12,6 +12,12 @@
     -fx-background-color: #0099CC;
 }
 
+.paneBienvenida{
+    -fx-background-color: #2E2E2E;
+    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2); 
+}
+
+
 .paneInicio:hover{
    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2);
     

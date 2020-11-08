@@ -3,6 +3,7 @@ package org.moduloFacturacion.bean;
 
 public class FacturacionDetalleBackup {
     
+    private int facturaDetalleIdBackup;
     private String productoDesc;
     private int cantidadBackup;
     private double productoPrecio;
@@ -11,11 +12,20 @@ public class FacturacionDetalleBackup {
     public FacturacionDetalleBackup() {
     }
 
-    public FacturacionDetalleBackup(String productoDesc, int cantidadBackup, double productoPrecio, double totalParcialBackup) {
+    public FacturacionDetalleBackup(int facturaDetalleIdBackup, String productoDesc, int cantidadBackup, double productoPrecio, double totalParcialBackup) {
+        this.facturaDetalleIdBackup = facturaDetalleIdBackup;
         this.productoDesc = productoDesc;
         this.cantidadBackup = cantidadBackup;
         this.productoPrecio = productoPrecio;
         this.totalParcialBackup = totalParcialBackup;
+    }
+
+    public int getFacturaDetalleIdBackup() {
+        return facturaDetalleIdBackup;
+    }
+
+    public void setFacturaDetalleIdBackup(int facturaDetalleIdBackup) {
+        this.facturaDetalleIdBackup = facturaDetalleIdBackup;
     }
 
     public String getProductoDesc() {
@@ -50,6 +60,12 @@ public class FacturacionDetalleBackup {
         this.totalParcialBackup = totalParcialBackup;
     }
 
+    @Override
+    public String toString() {
+        return "FacturacionDetalleBackup{" + "facturaDetalleIdBackup=" + facturaDetalleIdBackup + ", productoDesc=" + productoDesc + ", cantidadBackup=" + cantidadBackup + ", productoPrecio=" + productoPrecio + ", totalParcialBackup=" + totalParcialBackup + '}';
+    }
+
+    
     
     
 }

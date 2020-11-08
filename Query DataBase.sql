@@ -82,7 +82,7 @@ create table FacturaDetalleBackUp(
 );
 
 create table Facturas(
-	codigo int(5) UNSIGNED ZEROFILL PRIMARY KEY,
+	codigo int(5) UNSIGNED ZEROFILL PRIMARY KEY auto_increment,
 	facturaId int(5) UNSIGNED ZEROFILL,
 	facturaDetalleId int(5) UNSIGNED ZEROFILL not null, 
     clienteId int(5) UNSIGNED ZEROFILL not null,

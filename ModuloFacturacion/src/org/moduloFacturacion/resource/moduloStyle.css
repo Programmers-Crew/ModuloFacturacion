@@ -12,6 +12,22 @@
     -fx-background-color: #33b5e5;
 }
 
+
+.opciones:hover{
+    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 7, 7); 
+    -fx-cursor: hand;
+}
+
+.opciones:pressed{
+    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 0, 0);
+}
+
+.paneBienvenida{
+    -fx-background-color: whitesmoke;
+    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2); 
+}
+
+
 .paneInicio:hover{
    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2);
     
