@@ -1,9 +1,12 @@
 package org.moduloFacturacion.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +17,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -36,6 +40,8 @@ import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 
 import org.moduloFacturacion.bean.FacturacionDetalleBackup;
+import org.moduloFacturacion.bean.FacturasBuscadas;
+import org.moduloFacturacion.bean.ProductoBuscado;
 
 import org.moduloFacturacion.bean.ValidarStyle;
 
@@ -51,6 +57,7 @@ public class FacturacionViewController implements Initializable {
     private JFXTextField txtFacturaId;
     @FXML
     private JFXTextField txtTotalFactura;
+<<<<<<< HEAD
     @FXML
     private JFXButton btnEditar;
     @FXML
@@ -65,7 +72,15 @@ public class FacturacionViewController implements Initializable {
 
   
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER};
+=======
+
+
+    
+    public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER,FILTRAR,CARGAR};
+>>>>>>> Diego-Gonzalez
     public Operacion cancelar = Operacion.NINGUNO;
+    
+
     
     // ==================== VARIABLES DE FACTURACION
     public Operacion tipoOperacionFacturacion = Operacion.NINGUNO; 
@@ -77,6 +92,17 @@ public class FacturacionViewController implements Initializable {
     boolean comprobarCliente = false;
     Notifications noti = Notifications.create();
     int codigoProducto;
+    
+    // ================= VARIABLES PRA BUSCAR FACTURAS
+        public Operacion tipoOperacionBusquedaFacturas = Operacion.NINGUNO; 
+
+        ObservableList<String> listaNumeroFactura;
+        ObservableList<FacturasBuscadas> listaFacturasBuscadas;
+        ObservableList<ProductoBuscado> listaProductoBuscado;
+
+    int codigoFacturas;
+
+
     
     
     // ======================= PROPIEDADES VISTA FACTURACION 
@@ -116,6 +142,48 @@ public class FacturacionViewController implements Initializable {
     private TableView<FacturacionDetalleBackup> tblBackUp;
 
     double totalFactura=0;
+    
+    // ============================ PROPIEDADES DE BUSQUEDA DE FACTURAS 
+    @FXML
+    private TableView<FacturasBuscadas> tblResultadoFactura;
+    @FXML
+    private TableColumn<FacturasBuscadas,Integer> colNumeroFacBuscado;
+    @FXML
+    private TableColumn<FacturasBuscadas, Double> colTotlalNeto;
+    @FXML
+    private TableColumn<FacturasBuscadas, Double> colTotalIva;
+    @FXML
+    private TableColumn<FacturasBuscadas, Double> colTotalBuscado;
+    @FXML
+    private TableColumn<FacturasBuscadas, Date> colFechaBuscada;
+    @FXML
+    private JFXComboBox<String> txtBusquedaCodigoFac;
+    @FXML
+    private JFXButton btnBuscarFactura;
+    @FXML
+    private JFXButton btnFiltrarFactura;
+    @FXML
+    private JFXButton btnCargarFacturas;
+    @FXML
+    private JFXDatePicker txtFechaInicio;
+    @FXML
+    private JFXDatePicker txtFechaFinal;
+    @FXML
+    private JFXButton btnCorteDeCaja;
+    @FXML
+    private TableView<ProductoBuscado> tblResultadoProducto;
+    @FXML
+    private TableColumn<ProductoBuscado, String> colProductoBuscado;
+    @FXML
+    private TableColumn<ProductoBuscado, Integer> colCantidadBuscada;
+    @FXML
+    private TableColumn<ProductoBuscado, Double> colPrecioUnitBuscado;
+    @FXML
+    private JFXTextField txtResultadoNit;
+    @FXML
+    private JFXTextField txtResultadoNombre;
+    
+    
     
     public void valorTotalFactura(){
         String sql = "{call SpSumarBackup()}";
@@ -599,6 +667,7 @@ public int buscarCodigoProducto(String precioProductos){
       limpiarTextEfectivo();
     }
     
+<<<<<<< HEAD
       @FXML
     private void btnEditar(MouseEvent event) {
         if(cmbNombreProducto.getValue().equals("") || txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty()){
@@ -731,6 +800,311 @@ public int buscarCodigoProducto(String precioProductos){
         }
         txtCambio.setText(String.valueOf(total));
     }
+=======
+// ================================ CODIGO BUSQUEDA FACTURAS
+    
+    public ObservableList<FacturasBuscadas> getFacturasBuscadas(){
+        ArrayList<FacturasBuscadas> lista = new ArrayList();
+        ArrayList<String> comboNumeroFacturas = new ArrayList();
+        String sql = "{call SpListarBusquedasFacturas()}";
+        int x=0;
+        
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                lista.add(new FacturasBuscadas(
+                            rs.getInt("facturaId"),
+                            rs.getDouble("facturaTotalNeto"),
+                            rs.getDouble("facturaTotalIva"),
+                            rs.getDouble("facturaTotal"),
+                            rs.getDate("facturaFecha")
+                ));
+                comboNumeroFacturas.add(x, rs.getString("facturaId"));
+                x++;
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        listaNumeroFactura = FXCollections.observableList(comboNumeroFacturas);
+        txtBusquedaCodigoFac.setItems(listaNumeroFactura);
+        return listaFacturasBuscadas = FXCollections.observableList(lista);
+    }
+ 
+    
+    public void cargarFacturasBuscadas(){
+        tblResultadoFactura.setItems(getFacturasBuscadas());
+        
+        colNumeroFacBuscado.setCellValueFactory(new PropertyValueFactory("facturaId"));
+        colTotlalNeto.setCellValueFactory(new PropertyValueFactory("facturaTotalNeto"));  
+        colTotalIva.setCellValueFactory(new PropertyValueFactory("facturaTotalIva"));
+        colTotalBuscado.setCellValueFactory(new PropertyValueFactory("facturaTotal"));
+        colFechaBuscada.setCellValueFactory(new PropertyValueFactory("facturaFecha"));
+        
+        txtBusquedaCodigoFac.setValue("");
+    }  
+    
+    
+    @FXML
+    private void cargarFacturasBuscadas(Event event) {
+        cargarFacturasBuscadas();
+    }
+    
+    public void accion(String sql){
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        PreparedStatement ps;
+        ResultSet rs;
+        Notifications noti = Notifications.create();
+        ButtonType buttonTypeSi = new ButtonType("Si");
+        ButtonType buttonTypeNo = new ButtonType("No");
+        switch(tipoOperacionBusquedaFacturas){
+            case FILTRAR:
+                 try{
+                    ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                    rs = ps.executeQuery();
+                    int numero=0;
+                    while(rs.next()){
+                        colNumeroFacBuscado.setText(rs.getString("facturaId"));
+                        colTotlalNeto.setText(rs.getString("facturaTotalNeto"));
+                        colTotalIva.setText(rs.getString("facturaTotalIva"));
+                        colTotalBuscado.setText(rs.getString("facturaTotal"));
+                        colFechaBuscada.setText(rs.getString("facturaFecha"));
+                        
+                        codigoFacturas = rs.getInt("facturaId");
+                        
+                    }                    
+                    if(rs.first()){
+                        for(int i=0; i<tblResultadoFactura.getItems().size(); i++){
+                            if(colNumeroFacBuscado.getCellData(i) == codigoFacturas){
+                                tblResultadoFactura.getSelectionModel().select(i);
+                                break;
+                            }
+                        }
+                        noti.graphic(new ImageView(imgCorrecto));
+                        noti.title("OPERACIÓN EXITOSA");
+                        noti.text("SU OPERACIÓN SE HA REALIZADO CON EXITO");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                    }else{
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR AL BUSCAR");
+                        noti.text("NO SE HA ENCONTRADO EN LA BASE DE DATOS");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+                    }
+                }catch(SQLException ex){
+                    ex.printStackTrace();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR AL BUSCAR");
+                    noti.text("HA OCURRIDO UN ERROR EN LA BASE DE DATOS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+                    tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+                }
+                break;
+            case CARGAR:
+                 alert.setTitle("VOLVER A CARGAR DATOS");
+                alert.setHeaderText("VOLVER A CARGAR DATOS");
+                alert.setContentText("¿Está seguro que desea cargar todos los datos de nuevo?");
+               
+                alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
+                
+                Optional<ButtonType> resultactualizar = alert.showAndWait();
+                if(resultactualizar.get() == buttonTypeSi ){
+                    try {
+                        ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                        ps.execute();
+                        
+                        noti.graphic(new ImageView(imgCorrecto));
+                        noti.title("OPERACIÓN EXITOSA");
+                        noti.text("SE HAN CARGADO EXITOSAMENTE SUS REGISTROS");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+                        cargarFacturasBuscadas();
+                    }catch (SQLException ex) {
+                        ex.printStackTrace();
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR AL CARGAR SUS REGISTROS");
+                        noti.text("HA OCURRIDO UN ERROR AL MOMENTO DE CARGAR TODOS LOS REGISTROS");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+                    }
+                }else{  
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("OPERACIÓN CANCELADA");
+                    noti.text("NO SE HAN PODIDO CARGAR TODOS LOS REGISTROS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+                    tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+                }
+                break;
+            case BUSCAR:
+                 try{
+                    ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                    rs = ps.executeQuery();
+                    int numero=0;
+                    while(rs.next()){
+                        colNumeroFacBuscado.setText(rs.getString("facturaId"));
+                        colTotlalNeto.setText(rs.getString("facturaTotalNeto"));
+                        colTotalIva.setText(rs.getString("facturaTotalIva"));
+                        colTotalBuscado.setText(rs.getString("facturaTotal"));
+                        colFechaBuscada.setText(rs.getString("facturaFecha"));
+                        
+                        codigoFacturas = rs.getInt("facturaId");
+                        
+                    }                    
+                    if(rs.first()){
+                        for(int i=0; i<tblResultadoFactura.getItems().size(); i++){
+                            if(colNumeroFacBuscado.getCellData(i) == codigoFacturas){
+                                tblResultadoFactura.getSelectionModel().select(i);
+                                break;
+                            }
+                        }
+                        noti.graphic(new ImageView(imgCorrecto));
+                        noti.title("OPERACIÓN EXITOSA");
+                        noti.text("SU OPERACIÓN SE HA REALIZADO CON EXITO");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                    }else{
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR AL BUSCAR");
+                        noti.text("NO SE HA ENCONTRADO EN LA BASE DE DATOS");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+                    }
+                }catch(SQLException ex){
+                    ex.printStackTrace();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR AL BUSCAR");
+                    noti.text("HA OCURRIDO UN ERROR EN LA BASE DE DATOS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+                    tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+                }
+                break;
+        }
+    }
+    
+     public void buscarFactura(){
+      if(txtBusquedaCodigoFac.getValue().equals("")){
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("El CAMPO DE BUSQUEDA ESTA VACÍO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+        }else{
+            tipoOperacionBusquedaFacturas = Operacion.BUSCAR;
+
+            String sql = "{call SpListarBusquedasFacturasPorId('"+txtBusquedaCodigoFac.getValue()+"')}";
+            accion(sql);
+        }  
+    }
+     
+    public void buscarPorFechas(){
+      if(txtFechaInicio.getValue().equals("") || txtFechaFinal.getValue().equals("")){
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("El CAMPO DE BUSQUEDA ESTA VACÍO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+        }else{
+            tipoOperacionBusquedaFacturas = Operacion.FILTRAR;
+
+            String sql = "{call SpBuscarDetalleFacturasFecha('"+txtFechaInicio.getValue()+"','"+txtFechaFinal.getValue()+"')}";
+            accion(sql);
+        }  
+    }
+    
+    public void buscarProducto(){
+
+            String sql = "{call SpBuscarClienteFacturaFecha('"+colNumeroFacBuscado.getText()+"')}";
+            accion(sql);
+            
+            PreparedStatement ps;
+            ResultSet rs;
+            
+            try{
+                    ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                    rs = ps.executeQuery();
+                    int numero=0;
+                    
+                    while(rs.next()){
+                        colNumeroFacBuscado.setText(rs.getString("facturaId"));
+                        colTotlalNeto.setText(rs.getString("facturaTotalNeto"));
+                        colTotalIva.setText(rs.getString("facturaTotalIva"));
+                        colTotalBuscado.setText(rs.getString("facturaTotal"));
+                        colFechaBuscada.setText(rs.getString("facturaFecha"));
+                        
+                        codigoFacturas = rs.getInt("facturaId");
+                        
+                    }                    
+                    if(rs.first()){
+                        for(int i=0; i<tblResultadoFactura.getItems().size(); i++){
+                            if(colNumeroFacBuscado.getCellData(i) == codigoFacturas){
+                                tblResultadoFactura.getSelectionModel().select(i);
+                                break;
+                            }
+                        }
+                        noti.graphic(new ImageView(imgCorrecto));
+                        noti.title("OPERACIÓN EXITOSA");
+                        noti.text("SU OPERACIÓN SE HA REALIZADO CON EXITO");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                    }else{
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR AL BUSCAR");
+                        noti.text("NO SE HA ENCONTRADO EN LA BASE DE DATOS");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+                    }
+                }catch(SQLException ex){
+                    ex.printStackTrace();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR AL BUSCAR");
+                    noti.text("HA OCURRIDO UN ERROR EN LA BASE DE DATOS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+                    tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+                }
+        }  
+>>>>>>> Diego-Gonzalez
     
 }
+
+
 

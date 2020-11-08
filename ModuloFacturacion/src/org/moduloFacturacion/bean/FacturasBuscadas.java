@@ -1,0 +1,67 @@
+package org.moduloFacturacion.bean;
+
+import java.sql.Date;
+
+public class FacturasBuscadas {
+    
+    private int facturaId;
+    private double facturaTotalNeto;
+    private double facturaTotalIva;
+    private double facturaTotal;
+    private Date facturaFecha;
+
+    public FacturasBuscadas() {
+    }
+
+    public FacturasBuscadas(int facturaId, double facturaTotalNeto, double facturaTotalIva, double facturaTotal, Date facturaFecha) {
+        this.facturaId = facturaId;
+        this.facturaTotalNeto = facturaTotalNeto;
+        this.facturaTotalIva = facturaTotalIva;
+        this.facturaTotal = facturaTotal;
+        this.facturaFecha = facturaFecha;
+    }
+
+    public int getFacturaId() {
+        return facturaId;
+    }
+
+    public void setFacturaId(int facturaId) {
+        this.facturaId = facturaId;
+    }
+
+    public double getFacturaTotalNeto() {
+        return facturaTotalNeto;
+    }
+
+    public void setFacturaTotalNeto(double facturaTotalNeto) {
+        this.facturaTotalNeto = facturaTotalNeto;
+    }
+
+    public double getFacturaTotalIva() {
+        return facturaTotalIva;
+    }
+
+    public void setFacturaTotalIva(double facturaTotalIva) {
+        this.facturaTotalIva = facturaTotalIva;
+    }
+
+    public double getFacturaTotal() {
+        return facturaTotal;
+    }
+
+    public void setFacturaTotal(double facturaTotal) {
+        this.facturaTotal = facturaTotal;
+    }
+
+    public Date getFacturaFecha() {
+        return facturaFecha;
+    }
+
+    public void setFacturaFecha(Date facturaFecha) {
+        this.facturaFecha = facturaFecha;
+    }
+
+    
+
+    
+}

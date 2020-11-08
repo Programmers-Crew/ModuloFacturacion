@@ -211,7 +211,7 @@
                   <Tooltip text="Factura" />
                </tooltip>
             </Tab>
-            <Tab styleClass="tabItem">
+            <Tab onSelectionChanged="#cargarEstado" styleClass="tabItem">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -219,20 +219,20 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="232.0" styleClass="anchorOscuro">
                                  <children>
-                                    <TableView layoutX="16.0" layoutY="116.0" prefHeight="264.0" prefWidth="350.0" AnchorPane.bottomAnchor="69.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="116.0">
+                                    <TableView fx:id="tblResultadoFactura" layoutX="16.0" layoutY="116.0" prefHeight="264.0" prefWidth="350.0" AnchorPane.bottomAnchor="69.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="116.0">
                                         <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                       <columns>
-                                        <TableColumn prefWidth="85.59997940063477" text="NO. FACTURA" />
-                                        <TableColumn prefWidth="86.39996337890625" text="PRECIO NETO" />
-                                          <TableColumn prefWidth="75.0" text="IVA" />
-                                          <TableColumn prefWidth="75.0" text="TOTAL" />
-                                          <TableColumn prefWidth="75.0" text="FECHA" />
+                                        <TableColumn fx:id="colNumeroFacBuscado" prefWidth="85.59997940063477" text="NO. FACTURA" />
+                                        <TableColumn fx:id="colTotlalNeto" prefWidth="86.39996337890625" text="PRECIO NETO" />
+                                          <TableColumn fx:id="colTotalIva" prefWidth="75.0" text="IVA" />
+                                          <TableColumn fx:id="colTotalBuscado" prefWidth="75.0" text="TOTAL" />
+                                          <TableColumn fx:id="colFechaBuscada" prefWidth="75.0" text="FECHA" />
                                       </columns>
                                     </TableView>
-                                    <JFXComboBox editable="true" layoutX="16.0" layoutY="76.0" prefHeight="26.0" prefWidth="283.0" promptText="Ingrese el No. Factura para buscar" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="82.40000000000003" AnchorPane.topAnchor="76.0" />
-                                    <JFXButton buttonType="RAISED" layoutX="307.0" layoutY="80.0" styleClass="boton" text="BUSCAR" textFill="WHITE" AnchorPane.rightAnchor="17.800000000000026" AnchorPane.topAnchor="80.0">
+                                    <JFXComboBox fx:id="txtBusquedaCodigoFac" editable="true" layoutX="16.0" layoutY="76.0" prefHeight="26.0" prefWidth="283.0" promptText="Ingrese el No. Factura para buscar" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="82.40000000000003" AnchorPane.topAnchor="76.0" />
+                                    <JFXButton fx:id="btnBuscarFactura" buttonType="RAISED" layoutX="307.0" layoutY="80.0" styleClass="boton" text="BUSCAR" textFill="WHITE" AnchorPane.rightAnchor="17.800000000000026" AnchorPane.topAnchor="80.0">
                                        <font>
                                           <Font size="11.0" />
                                        </font>
@@ -242,12 +242,12 @@
                                           <Font name="Arial Bold Italic" size="19.0" />
                                        </font>
                                     </Label>
-                                    <JFXButton buttonType="RAISED" layoutX="381.0" layoutY="36.0" styleClass="boton" text="FILTRAR" textFill="WHITE" AnchorPane.leftAnchor="381.0" AnchorPane.topAnchor="36.0">
+                                    <JFXButton fx:id="btnFiltrarFactura" buttonType="RAISED" layoutX="381.0" layoutY="36.0" styleClass="boton" text="FILTRAR" textFill="WHITE" AnchorPane.leftAnchor="381.0" AnchorPane.topAnchor="36.0">
                                        <font>
                                           <Font size="11.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton buttonType="RAISED" layoutX="289.0" layoutY="387.0" styleClass="boton" text="VOLVER A CARGAR DATOS" textFill="WHITE" AnchorPane.bottomAnchor="37.80000000000001" AnchorPane.rightAnchor="18.19999999999999">
+                                    <JFXButton fx:id="btnCargarFacturas" buttonType="RAISED" layoutX="289.0" layoutY="387.0" styleClass="boton" text="VOLVER A CARGAR DATOS" textFill="WHITE" AnchorPane.bottomAnchor="37.80000000000001" AnchorPane.rightAnchor="18.19999999999999">
                                        <font>
                                           <Font size="11.0" />
                                        </font>
@@ -263,22 +263,27 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <JFXDatePicker prefHeight="28.0" prefWidth="148.0" GridPane.hgrow="ALWAYS" />
-                                          <JFXDatePicker prefHeight="28.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+                                          <JFXDatePicker fx:id="txtFechaInicio" prefHeight="28.0" prefWidth="148.0" GridPane.hgrow="ALWAYS" />
+                                          <JFXDatePicker fx:id="txtFechaFinal" prefHeight="28.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
                                        </children>
                                     </GridPane>
+                                    <JFXButton fx:id="btnCorteDeCaja" buttonType="RAISED" layoutX="31.0" layoutY="460.0" styleClass="boton" text="CORTE DE CAJA " textFill="WHITE">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </JFXButton>
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
-                                    <TableView layoutX="23.0" layoutY="184.0" prefHeight="200.0" prefWidth="305.0" AnchorPane.bottomAnchor="64.80000000000001" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="22.599999999999966" AnchorPane.topAnchor="184.0">
+                                    <TableView fx:id="tblResultadoProducto" layoutX="23.0" layoutY="184.0" prefHeight="200.0" prefWidth="305.0" AnchorPane.bottomAnchor="64.80000000000001" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="22.599999999999966" AnchorPane.topAnchor="184.0">
                                         <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="PRODUCTO" />
-                                        <TableColumn prefWidth="75.0" text="CANTIDAD" />
-                                          <TableColumn prefWidth="75.0" text="PRECIO UNIT." />
+                                        <TableColumn fx:id="colProductoBuscado" prefWidth="75.0" text="PRODUCTO" />
+                                        <TableColumn fx:id="colCantidadBuscada" prefWidth="75.0" text="CANTIDAD" />
+                                          <TableColumn fx:id="colPrecioUnitBuscado" prefWidth="75.0" text="PRECIO UNIT." />
                                       </columns>
                                     </TableView>
                                     <HBox alignment="CENTER" prefHeight="27.0" prefWidth="247.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="14.0">
@@ -292,8 +297,8 @@
                                     </HBox>
                                     <Label text="NIT:" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="136.6" AnchorPane.topAnchor="42.0" />
                                     <Label text="NOMBRE:" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="104.0" />
-                                    <JFXTextField layoutX="20.0" layoutY="61.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.19999999999999" />
-                                    <JFXTextField layoutX="23.0" layoutY="135.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.19999999999999" />
+                                    <JFXTextField fx:id="txtResultadoNit" layoutX="20.0" layoutY="61.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.19999999999999" />
+                                    <JFXTextField fx:id="txtResultadoNombre" layoutX="23.0" layoutY="135.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.19999999999999" />
                                  </children>
                               </AnchorPane>
                           </items>
