@@ -34,6 +34,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.moduloFacturacion.bean.Animations;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.bean.CategoriaProducto;
@@ -88,8 +89,16 @@ public class ProductosViewController implements Initializable {
     private TableColumn<Productos, String> colProveedorProductos;
     @FXML
     private JFXTextField txtPrecioProducto;
+    @FXML
+    private AnchorPane anchor1;
+    @FXML
+    private AnchorPane anchor2;
+    @FXML
+    private AnchorPane anchor3;
+    @FXML
+    private AnchorPane anchor4;
 
-    
+    Animations animacion = new Animations();
 
    
     
@@ -163,6 +172,7 @@ public class ProductosViewController implements Initializable {
     
     //EVENTOS DE LA VISTA PRODUCTOS --------------------------------------------------------------------------------------------------------------------------------
     public void iniciarProducto(){
+         animacion.animacion(anchor1, anchor2);
         Tooltip toolInicio = new Tooltip("Volver a Inicio");
         Tooltip.install(buttonInicio, toolInicio);
         Tooltip toolProveedores = new Tooltip("Abrir Proveedores");
@@ -904,6 +914,7 @@ public class ProductosViewController implements Initializable {
     
     @FXML
     private void cargarCategoria(Event event) {
+         animacion.animacion(anchor3, anchor4);
         cargarDatosCategoria();
     }
     

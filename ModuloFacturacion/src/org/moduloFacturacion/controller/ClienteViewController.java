@@ -33,6 +33,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.moduloFacturacion.bean.Animations;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.bean.Cliente;
@@ -43,6 +44,10 @@ public class ClienteViewController implements Initializable {
     CambioScene cambioScene = new CambioScene();
     Image imgError = new Image("org/moduloFacturacion/img/error.png");
     Image imgCorrecto= new Image("org/moduloFacturacion/img/correcto.png");
+    @FXML
+    private AnchorPane anchor2;
+    @FXML
+    private AnchorPane anchor1;
 
   
    
@@ -84,6 +89,8 @@ public class ClienteViewController implements Initializable {
     private ComboBox<String> cmbCodigoBuscar;
     MenuPrincipalContoller menu = new MenuPrincipalContoller();
     ValidarStyle validar = new ValidarStyle();
+    Animations animacion = new Animations();
+    
     
     public void limpiarText(){
         cmbCodigoBuscar.setValue("");
@@ -163,6 +170,7 @@ public class ClienteViewController implements Initializable {
         lista.add(1,"NIT");
         listaFiltro = FXCollections.observableList(lista);
         cmbFiltroCombo.setItems(listaFiltro);
+        animacion.animacion(anchor1, anchor2);
     }    
 
     @FXML

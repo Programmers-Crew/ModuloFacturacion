@@ -44,13 +44,13 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosProveedores" prefHeight="180.0" prefWidth="200.0" styleClass="anchorOscuro">
                      <children>
-                        <SplitPane dividerPositions="0.37267080745341613" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.37267080745341613" prefHeight="386.0" prefWidth="582.0" styleClass="anchorOscuro" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <AnchorPane prefHeight="266.0" prefWidth="198.0">
+                                          <AnchorPane fx:id="anchor1" prefHeight="266.0" prefWidth="198.0">
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="7.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
@@ -113,7 +113,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
+                              <AnchorPane fx:id="anchor2" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <TableView fx:id="tblProveedores" layoutX="15.0" layoutY="61.0" onMouseClicked="#seleccionarElementos" prefHeight="279.0" prefWidth="310.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="61.0">
                                        <columnResizePolicy>
