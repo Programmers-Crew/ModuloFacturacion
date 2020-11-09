@@ -75,14 +75,14 @@ public class InventarioViewController implements Initializable {
     ObservableList<String> listaCodigoFiltro;
 
     int buscarCodigoEstado = 0;
-    int codigoProducto = 0;
+    String codigoProducto = "";
 
     //Variables para Estado
     public Operacion tipoOperacionEstado= Operacion.NINGUNO; 
    
     ObservableList<EstadoProductos> listaEstadoProductos;
     ObservableList<String> listaCodigoEstadoProductos;
-    int codigoEstado = 0;
+    String codigoEstado = "";
     
     //Propiedades Inventario
     @FXML
@@ -106,7 +106,7 @@ public class InventarioViewController implements Initializable {
     @FXML
     private TableView<InventarioProductos> tblInventario;
     @FXML
-    private TableColumn<InventarioProductos, Integer> colCodigoProductoInventario;
+    private TableColumn<InventarioProductos, String> colCodigoProductoInventario;
     @FXML
     private TableColumn<InventarioProductos, Integer> colCantidadInventario;
     @FXML
@@ -134,7 +134,7 @@ public class InventarioViewController implements Initializable {
     @FXML
     private TableView<EstadoProductos> tblEstadoProductos;
     @FXML
-    private TableColumn<EstadoProductos, Integer> colCodigoEstadoCodigo;
+    private TableColumn<EstadoProductos, String> colCodigoEstadoCodigo;
     @FXML
     private TableColumn<EstadoProductos, String> colDescEstadoProductos;
     @FXML
@@ -199,7 +199,7 @@ public class InventarioViewController implements Initializable {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new InventarioProductos(
-                            rs.getInt("productoId"),
+                            rs.getString("productoId"),
                             rs.getInt("inventarioProductoCant"),
                             rs.getString("productoDesc"),
                             rs.getString("estadoProductoDesc"),
@@ -541,7 +541,7 @@ public class InventarioViewController implements Initializable {
                         txtProductoInventario.setText(rs.getString("productoDesc"));
                         cmbNombreEstado.setValue(rs.getString("estadoProductoDesc"));
 
-                        codigoProducto = rs.getInt("productoId");
+                        codigoProducto = rs.getString("productoId");
                         
                     }                    
                     if(rs.first()){
@@ -656,7 +656,7 @@ public class InventarioViewController implements Initializable {
                     noti.show();
            }else{
                    InventarioProductos nuevoInventario = new InventarioProductos();
-                   nuevoInventario.setProductoId(Integer.parseInt(cmbCodigoProductoInventario.getValue()));
+                   nuevoInventario.setProductoId(cmbCodigoProductoInventario.getValue());
                    nuevoInventario.setInventarioProductoCant(Integer.parseInt(txtCantidadInventario.getText()));
                    nuevoInventario.setEstadoProductoDesc(cmbNombreEstado.getValue());
 
@@ -779,7 +779,7 @@ public class InventarioViewController implements Initializable {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new EstadoProductos(
-                            rs.getInt("estadoProductoId"),
+                            rs.getString("estadoProductoId"),
                             rs.getString("estadoProductoDesc")
                 ));
                 comboCodigoFiltro.add(x, rs.getString("estadoProductoId"));
@@ -1020,7 +1020,7 @@ public class InventarioViewController implements Initializable {
                     while(rs.next()){
                         txtCodigoEstadoProducto.setText(rs.getString("estadoProductoId"));
                         txtDescEstadoProducto.setText(rs.getString("estadoProductoDesc"));
-                        codigoEstado = rs.getInt("estadoProductoId");
+                        codigoEstado = rs.getString("estadoProductoId");
                         
                     }                    
                     if(rs.first()){
@@ -1110,7 +1110,7 @@ public class InventarioViewController implements Initializable {
     @FXML
     private void btnEditarEstado(MouseEvent event) {
         EstadoProductos nuevaEstado = new EstadoProductos();
-        nuevaEstado.setEstadoProductoId(Integer.parseInt(txtCodigoEstadoProducto.getText()));
+        nuevaEstado.setEstadoProductoId(txtCodigoEstadoProducto.getText());
         nuevaEstado.setEstadoProductoDesc(txtDescEstadoProducto.getText());
         
         tipoOperacionEstado = Operacion.ACTUALIZAR;

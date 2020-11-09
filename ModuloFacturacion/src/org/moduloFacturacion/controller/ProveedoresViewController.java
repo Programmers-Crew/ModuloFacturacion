@@ -44,7 +44,7 @@ public class ProveedoresViewController implements Initializable {
     ObservableList<String> listaCodigoProveedores;
     Image imgError = new Image("org/moduloFacturacion/img/error.png");
     Image imgCorrecto= new Image("org/moduloFacturacion/img/correcto.png");
-    int codigo;
+    String codigo;
 
     
      MenuPrincipalContoller menu = new MenuPrincipalContoller();
@@ -71,7 +71,7 @@ public class ProveedoresViewController implements Initializable {
     @FXML
     private TableView<Proveedores> tblProveedores;
     @FXML
-    private TableColumn<Proveedores, Integer> colCodigoProveedores;
+    private TableColumn<Proveedores, String> colCodigoProveedores;
     @FXML
     private TableColumn<Proveedores, String> colNombreProveedores;
     @FXML
@@ -119,7 +119,7 @@ public class ProveedoresViewController implements Initializable {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new Proveedores(
-                              rs.getInt("proveedorId"),
+                              rs.getString("proveedorId"),
                               rs.getString("proveedorNombre"),
                               rs.getString("proveedorTelefono")
                 ));
@@ -370,7 +370,7 @@ public class ProveedoresViewController implements Initializable {
                         txtCodigoProveedores.setText(rs.getString("proveedorId"));
                         txtNombreProveedores.setText(rs.getString("proveedorNombre"));
                         txtTelefonoProveedores.setText(rs.getString("proveedorTelefono"));
-                        codigo = rs.getInt("proveedorId");
+                        codigo = rs.getString("proveedorId");
                     }                    
                     if(rs.first()){
                         for(int i=0; i<tblProveedores.getItems().size(); i++){
@@ -433,7 +433,7 @@ public class ProveedoresViewController implements Initializable {
             }else{
                 if(txtNombreProveedores.getText().length()<50){
                     Proveedores nuevoProveedor = new Proveedores();
-                    nuevoProveedor.setProveedorId(Integer.parseInt(txtCodigoProveedores.getText()));
+                    nuevoProveedor.setProveedorId(txtCodigoProveedores.getText());
                     nuevoProveedor.setProveedorNombre(txtNombreProveedores.getText());
                     nuevoProveedor.setProveedorTelefono(txtTelefonoProveedores.getText());                    
                     String sql = "{call SpAgregarProveedores('"+nuevoProveedor.getProveedorId()+"','"+nuevoProveedor.getProveedorNombre()+"','"+nuevoProveedor.getProveedorTelefono()+"')}";
@@ -459,7 +459,7 @@ public class ProveedoresViewController implements Initializable {
     @FXML
     private void btnEditar(MouseEvent event) {
         Proveedores nuevoProveedor = new Proveedores();
-        nuevoProveedor.setProveedorId(Integer.parseInt(txtCodigoProveedores.getText()));
+        nuevoProveedor.setProveedorId(txtCodigoProveedores.getText());
         nuevoProveedor.setProveedorNombre(txtNombreProveedores.getText());
         nuevoProveedor.setProveedorTelefono(txtTelefonoProveedores.getText());
         

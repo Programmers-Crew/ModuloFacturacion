@@ -1,10 +1,10 @@
 package org.moduloFacturacion.bean;
 
 public class CategoriaProducto {
-    int categoriaId;
+    String categoriaId;
     String categoriaNombre;
 
-    public CategoriaProducto(int categoriaId, String categoriaNombre) {
+    public CategoriaProducto(String categoriaId, String categoriaNombre) {
         this.categoriaId = categoriaId;
         this.categoriaNombre = categoriaNombre;
     }
@@ -12,11 +12,11 @@ public class CategoriaProducto {
     public CategoriaProducto() {
     }
 
-    public int getCategoriaId() {
+    public String getCategoriaId() {
         return categoriaId;
     }
 
-    public void setCategoriaId(int categoriaId) {
+    public void setCategoriaId(String categoriaId) {
         this.categoriaId = categoriaId;
     }
 

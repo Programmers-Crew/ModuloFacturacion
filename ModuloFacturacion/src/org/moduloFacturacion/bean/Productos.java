@@ -1,13 +1,13 @@
 package org.moduloFacturacion.bean;
 
 public class Productos {
-    int productoId;
+    String productoId;
     String productoDesc;
     String proveedorNombre;
     String categoriaNombre;
     Double productoPrecio;
 
-    public Productos(int productoId, String productoDesc, String proveedorNombre, String categoriaNombre, Double productoPrecio) {
+    public Productos(String productoId, String productoDesc, String proveedorNombre, String categoriaNombre, Double productoPrecio) {
         this.productoId = productoId;
         this.productoDesc = productoDesc;
         this.proveedorNombre = proveedorNombre;
@@ -18,11 +18,11 @@ public class Productos {
     public Productos() {
     }
 
-    public int getProductoId() {
+    public String getProductoId() {
         return productoId;
     }
 
-    public void setProductoId(int productoId) {
+    public void setProductoId(String productoId) {
         this.productoId = productoId;
     }
 

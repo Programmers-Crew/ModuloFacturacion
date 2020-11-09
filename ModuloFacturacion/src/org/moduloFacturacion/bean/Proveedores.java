@@ -2,24 +2,24 @@ package org.moduloFacturacion.bean;
 
 
 public class Proveedores {
-        private int proveedorId;
+        private String proveedorId;
         private String proveedorNombre;
         private String proveedorTelefono;
 
     public Proveedores() {
     }
 
-    public Proveedores(int proveedorId, String proveedorNombre, String proveedorTelefono) {
+    public Proveedores(String proveedorId, String proveedorNombre, String proveedorTelefono) {
         this.proveedorId = proveedorId;
         this.proveedorNombre = proveedorNombre;
         this.proveedorTelefono = proveedorTelefono;
     }
 
-    public int getProveedorId() {
+    public String getProveedorId() {
         return proveedorId;
     }
 
-    public void setProveedorId(int proveedorId) {
+    public void setProveedorId(String proveedorId) {
         this.proveedorId = proveedorId;
     }
 

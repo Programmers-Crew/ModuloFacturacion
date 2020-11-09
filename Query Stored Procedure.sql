@@ -764,4 +764,13 @@ insert into tipousuario values(0,"Administrador"),(0,"Empleado");
 
 insert into usuarios values(0,"admin", "admin", 1);
 
+DELIMITER $$
+	create procedure SpBuscarCodigoEstado(nombre varchar(100))
+		BEGIN
+			select estadoProductoId
+				from estadoproductos
+					where estadoProductoDesc = nombre;
+        END $$
+DELIMITER ;
+
 

@@ -73,7 +73,7 @@ public class ProductosViewController implements Initializable {
     @FXML
     private TableView<Productos> tableProductos;
     @FXML
-    private TableColumn<Productos, Integer> colCodigoProductos;
+    private TableColumn<Productos, String> colCodigoProductos;
     @FXML
     private TableColumn<Productos, String> colNombreProductos;
     @FXML
@@ -105,8 +105,8 @@ public class ProductosViewController implements Initializable {
     
     public Operacion tipoOperacionProducto = Operacion.NINGUNO;
     
-    int codigo;
-    int codigoProducto;
+    String codigo;
+    String codigoProducto;
     
     @FXML
     private AnchorPane anchor;
@@ -119,7 +119,7 @@ public class ProductosViewController implements Initializable {
     @FXML
     private TableView<CategoriaProducto> tableCategoria;
     @FXML
-    private TableColumn<CategoriaProducto, Integer> colCodigoCategoria;
+    private TableColumn<CategoriaProducto, String> colCodigoCategoria;
     @FXML
     private TableColumn<CategoriaProducto, String> colNombreCategoria;
     @FXML
@@ -229,7 +229,7 @@ public class ProductosViewController implements Initializable {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new Productos(
-                            rs.getInt("productoId"),
+                            rs.getString("productoId"),
                             rs.getString("productoDesc"),
                             rs.getString("proveedorNombre"),
                             rs.getString("categoriaNombre"),
@@ -551,7 +551,7 @@ public class ProductosViewController implements Initializable {
                         cmbCategoriaProducto.setValue(rs.getString("categoriaNombre"));
                         cmbProveedorProducto.setValue(rs.getString("proveedorNombre"));
                         txtPrecioProducto.setText(rs.getString("productoPrecio"));
-                        codigoProducto = rs.getInt("productoId");
+                        codigoProducto = rs.getString("productoId");
                         
                     }                    
                     if(rs.first()){
@@ -736,7 +736,7 @@ public class ProductosViewController implements Initializable {
                     noti.show();
                }else{
                    Productos nuevoProducto = new Productos();
-                   nuevoProducto.setProductoId(Integer.parseInt(txtCodigoProducto.getText()));
+                   nuevoProducto.setProductoId(txtCodigoProducto.getText());
                    nuevoProducto.setProductoDesc(txtNombreProducto.getText());
                    nuevoProducto.setCategoriaNombre(cmbCategoriaProducto.getValue());
                    nuevoProducto.setProveedorNombre(cmbProveedorProducto.getValue());
@@ -770,7 +770,7 @@ public class ProductosViewController implements Initializable {
     @FXML
     private void btnEditar(MouseEvent event) {
         Productos nuevoProducto = new Productos();
-       nuevoProducto.setProductoId(Integer.parseInt(txtCodigoProducto.getText()));
+       nuevoProducto.setProductoId(txtCodigoProducto.getText());
        nuevoProducto.setProductoDesc(txtNombreProducto.getText());
        nuevoProducto.setProductoPrecio(Double.parseDouble(txtPrecioProducto.getText()));
 
@@ -862,7 +862,7 @@ public class ProductosViewController implements Initializable {
             
             while(rs.next()){
                 lista.add(new CategoriaProducto(
-                              rs.getInt("categoriaId"),
+                              rs.getString("categoriaId"),
                               rs.getString("categoriaNombre")
                 ));
                 
@@ -1130,7 +1130,7 @@ public class ProductosViewController implements Initializable {
                     while(rs.next()){
                         txtCodigoCategoria.setText(rs.getString("categoriaId"));
                         txtNombreCategoria.setText(rs.getString("categoriaNombre"));
-                        codigo = rs.getInt("categoriaId");
+                        codigo = rs.getString("categoriaId");
                         
                     }                    
                     if(rs.first()){
@@ -1198,7 +1198,7 @@ public class ProductosViewController implements Initializable {
             }else{
                 if(txtNombreCategoria.getText().length()<50){
                     CategoriaProducto nuevaCategoria = new CategoriaProducto();
-                    nuevaCategoria.setCategoriaId(Integer.parseInt(txtCodigoCategoria.getText()));
+                    nuevaCategoria.setCategoriaId(txtCodigoCategoria.getText());
                     nuevaCategoria.setCategoriaNombre(txtNombreCategoria.getText());
                     String sql = "{call SpAgregarCategoriaProductos('"+nuevaCategoria.getCategoriaId()+"','"+nuevaCategoria.getCategoriaNombre()+"')}";
                     accionCategoria(sql);
@@ -1223,7 +1223,7 @@ public class ProductosViewController implements Initializable {
     @FXML
     private void btnEditarCategoria(MouseEvent event) {
         CategoriaProducto nuevaCategoria = new CategoriaProducto();
-        nuevaCategoria.setCategoriaId(Integer.parseInt(txtCodigoCategoria.getText()));
+        nuevaCategoria.setCategoriaId(txtCodigoCategoria.getText());
         nuevaCategoria.setCategoriaNombre(txtNombreCategoria.getText());
         
         tipoOperacionCategoria = Operacion.ACTUALIZAR;
