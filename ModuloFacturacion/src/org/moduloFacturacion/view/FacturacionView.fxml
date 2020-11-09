@@ -232,7 +232,7 @@
                                       </columns>
                                     </TableView>
                                     <JFXComboBox fx:id="txtBusquedaCodigoFac" editable="true" layoutX="16.0" layoutY="76.0" prefHeight="26.0" prefWidth="283.0" promptText="Ingrese el No. Factura para buscar" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="82.40000000000003" AnchorPane.topAnchor="76.0" />
-                                    <JFXButton fx:id="btnBuscarFactura" buttonType="RAISED" layoutX="307.0" layoutY="80.0" onMouseClicked="#btnBuscarFactura" styleClass="boton" text="BUSCAR" textFill="WHITE" AnchorPane.rightAnchor="17.800000000000026" AnchorPane.topAnchor="80.0">
+                                    <JFXButton fx:id="btnBuscarFactura" buttonType="RAISED" layoutX="307.0" layoutY="80.0" onMouseClicked="#buscarFactura" styleClass="boton" text="BUSCAR" textFill="WHITE" AnchorPane.rightAnchor="17.800000000000026" AnchorPane.topAnchor="80.0">
                                        <font>
                                           <Font size="11.0" />
                                        </font>
@@ -242,7 +242,7 @@
                                           <Font name="Arial Bold Italic" size="19.0" />
                                        </font>
                                     </Label>
-                                    <JFXButton fx:id="btnFiltrarFactura" buttonType="RAISED" layoutX="381.0" layoutY="36.0" onMouseClicked="#btnFiltrarFactura" styleClass="boton" text="FILTRAR" textFill="WHITE" AnchorPane.leftAnchor="381.0" AnchorPane.topAnchor="36.0">
+                                    <JFXButton fx:id="btnFiltrarFactura" buttonType="RAISED" layoutX="381.0" layoutY="36.0" onMouseClicked="#buscarPorFechas" styleClass="boton" text="FILTRAR" textFill="WHITE" AnchorPane.leftAnchor="381.0" AnchorPane.topAnchor="36.0">
                                        <font>
                                           <Font size="11.0" />
                                        </font>
