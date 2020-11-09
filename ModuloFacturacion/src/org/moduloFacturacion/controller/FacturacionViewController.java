@@ -57,10 +57,27 @@ public class FacturacionViewController implements Initializable {
     private JFXTextField txtFacturaId;
     @FXML
     private JFXTextField txtTotalFactura;
+<<<<<<< HEAD
+    @FXML
+    private JFXButton btnEditar;
+    @FXML
+    private JFXTextField txtEfectivo;
+    @FXML
+    private JFXTextField txtCambio;
+    @FXML
+    private JFXButton btnVender;
+    @FXML
+    private TableColumn<FacturacionDetalleBackup, Integer> colCodigoFactura;
+
+
+  
+    public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER};
+=======
 
 
     
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER,FILTRAR,CARGAR};
+>>>>>>> Diego-Gonzalez
     public Operacion cancelar = Operacion.NINGUNO;
     
 
@@ -189,6 +206,7 @@ public class FacturacionViewController implements Initializable {
         llenarComboNit();
         llenarComboProdcutos();
         cargarDatos();
+        btnEditar.setDisable(true);
         valorTotalFactura();
     }    
 
@@ -205,16 +223,23 @@ public class FacturacionViewController implements Initializable {
         txtCantidadProducto.setText("");
     }
     
+    public void limpiarTextCliente(){
+        txtFacturaId.setText("");
+        txtNitCliente.setValue("");
+        txtNombreCliente.setText("");
+    }
+    public void limpiarTextEfectivo(){
+        txtNombreCliente.setText("");
+        txtEfectivo.setText("");
+        txtCambio.setText("");
+        txtTotalFactura.setText("");
+    }
     
         @FXML
     private void buscarCliente(ActionEvent event) {
         buscarClienteMetodo();
     }
 
-    @FXML
-    private void buscarPrecio(ActionEvent event) {
-        buscarPrecioMetodo();
-    }
 
     
     @FXML
@@ -225,7 +250,15 @@ public class FacturacionViewController implements Initializable {
             }
         }
     }
-    
+    @FXML
+    private void atajoProducto(KeyEvent event) {
+        if(cmbNombreProducto.isFocused()){
+            if(event.getCode() == KeyCode.ENTER){
+                buscarPrecioMetodo();
+                System.out.println("hola");
+            }
+        }
+    }
 
     public void llenarComboNit(){
         ArrayList<String> lista = new ArrayList();
@@ -261,38 +294,91 @@ public class FacturacionViewController implements Initializable {
     
     
     public void buscarClienteMetodo(){
-         String sql = "{call SpBuscarClientesNit('"+txtNitCliente.getValue()+"')}";
-         
-        try{
-            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                    txtNombreCliente.setText(rs.getString("clienteNombre"));
-                    
-                }
-            if(rs.first()){
-                txtNombreCliente.setEditable(false);
-                  
-            }else{
-                comprobarCliente=true;
-                txtNombreCliente.setText("");
-                txtNombreCliente.setEditable(true);
+        if(txtNitCliente.getValue().equals("")){
+            
+        }else{
+            
+              String sql = "{call SpBuscarClientesNit('"+txtNitCliente.getValue()+"')}";
+            try{
+                PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                        txtNombreCliente.setText(rs.getString("clienteNombre"));
 
-                noti.graphic(new ImageView(imgWarning));
-                noti.title("USUARIO NO EXISTE");
-                noti.text("DEBERÁ INGRESAR EL CAMPO NOMBRE");
-                noti.position(Pos.BOTTOM_RIGHT);
-                noti.hideAfter(Duration.seconds(4));
-                noti.darkStyle();
-                noti.show();
-                
+                    }
+                if(rs.first()){
+                    txtNombreCliente.setEditable(false);
+
+                }else{
+                    comprobarCliente=true;
+                    txtNombreCliente.setText("");
+                    txtNombreCliente.setEditable(true);
+
+                    noti.graphic(new ImageView(imgWarning));
+                    noti.title("USUARIO NO EXISTE");
+                    noti.text("DEBERÁ INGRESAR EL CAMPO NOMBRE");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+
+                }
+            }catch(SQLException ex){
+                System.out.println(ex);
             }
-        }catch(SQLException ex){
-            System.out.println(ex);
         }
+       
         
     }
-    
+         @FXML
+    private void buscarPrecio(ActionEvent event) {
+        
+        buscarPrecioMetodo();
+    }
+
+    public void buscarPrecioMetodo(){
+        if(cmbNombreProducto.getValue()!= ""){
+               
+                try{
+                     PreparedStatement sp = Conexion.getIntance().getConexion().prepareCall("{call SpBuscarProductos(?)}");
+                    sp.setInt(1, buscarCodigoProducto(cmbNombreProducto.getValue()));
+                     ResultSet resultado = sp.executeQuery(); 
+                        while(resultado.next()){
+                            txtPrecioProducto.setText(resultado.getString("productoPrecio"));
+                        }  
+                        if(resultado.first()){
+                            txtPrecioProducto.setEditable(false);
+                            if(tipoOperacionFacturacion == Operacion.ACTUALIZAR){
+                                btnVender.setDisable(true);
+                            }else{
+                                 btnVender.setDisable(false);
+                            }
+                           
+                        }else{
+                            txtPrecioProducto.setText("");
+                            btnVender.setDisable(true);
+                            noti.graphic(new ImageView(imgError));
+                            noti.title("ESTE PRODUCTO NO EXISTE");
+                            noti.text("DEBERÁ AGREGARLO EN EL MODULO DE PRODUCTOS");
+                            noti.position(Pos.BOTTOM_RIGHT);
+                            noti.hideAfter(Duration.seconds(4));
+                            noti.darkStyle();
+                            noti.show();
+                        }
+                }catch(Exception e){
+                    e.printStackTrace();
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR AL BUSCAR EL PRODUCTO");
+                    noti.text("HA OCURRIDO UN ERROR EN LA BASE DE DATOS"+e);
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+
+                }
+            }
+    }
     
     public void comprobarClienteExistente(){
         if(comprobarCliente == false){
@@ -348,21 +434,7 @@ public int buscarCodigoProducto(String precioProductos){
         return codigoProducto;
     }
     
-    
-    public void buscarPrecioMetodo(){
-        if(cmbNombreProducto.getValue()!= ""){
-                try{
-                     PreparedStatement sp = Conexion.getIntance().getConexion().prepareCall("{call SpBuscarProductos(?)}");
-                    sp.setInt(1, buscarCodigoProducto(cmbNombreProducto.getValue()));
-                     ResultSet resultado = sp.executeQuery(); 
-                        while(resultado.next()){
-                            txtPrecioProducto.setText(resultado.getString("productoPrecio"));
-                        }  
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-    }
+   
     
     
     public void llenarComboProdcutos(){
@@ -408,6 +480,7 @@ public int buscarCodigoProducto(String precioProductos){
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new FacturacionDetalleBackup(
+                            rs.getInt("facturaDetalleIdBackup"),
                             rs.getString("productoDesc"),
                             rs.getInt("cantidadBackup"),
                             rs.getDouble("productoPrecio"),
@@ -425,6 +498,7 @@ public int buscarCodigoProducto(String precioProductos){
      
     public void cargarDatos(){
         tblBackUp.setItems(getBackUp());
+        colCodigoFactura.setCellValueFactory(new PropertyValueFactory("facturaDetalleIdBackup"));
         colDesProductoBackUp.setCellValueFactory(new PropertyValueFactory("productoDesc"));
         colCantidadProductoBackUp.setCellValueFactory(new PropertyValueFactory("cantidadBackup"));  
         colPrecioProductoBackUp.setCellValueFactory(new PropertyValueFactory("productoPrecio"));
@@ -542,12 +616,9 @@ public int buscarCodigoProducto(String precioProductos){
         return codigoUsuario;
     }
     
-        @FXML
-    private void btnImprimir(MouseEvent event) {
-       
-       comprobarClienteExistente();
-       
-       double totalNeto = Double.parseDouble(txtTotalFactura.getText())/1.12;
+    
+    public void guardarFactura(){
+        double totalNeto = Double.parseDouble(txtTotalFactura.getText())/1.12;
        double totalIva = totalNeto*0.12;
        
        String sql = "{call SpTransferirBackup()}";
@@ -583,9 +654,153 @@ public int buscarCodigoProducto(String precioProductos){
             noti.darkStyle();
             noti.show();
        }
+    }
+        @FXML
+    private void btnImprimir(MouseEvent event) {
        
+       comprobarClienteExistente();
+       
+       guardarFactura();
+       
+       limpiarTextCliente();
+       
+      limpiarTextEfectivo();
     }
     
+<<<<<<< HEAD
+      @FXML
+    private void btnEditar(MouseEvent event) {
+        if(cmbNombreProducto.getValue().equals("") || txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty()){
+            Notifications noti = Notifications.create();
+            noti.graphic(new ImageView(imgError));
+            noti.title("ERROR");
+            noti.text("HAY UN CAMPO VACÍO");
+            noti.position(Pos.BOTTOM_RIGHT);
+            noti.hideAfter(Duration.seconds(4));
+            noti.darkStyle();
+            noti.show();
+        }else{
+            int index = tblBackUp.getSelectionModel().getSelectedIndex();
+            FacturacionDetalleBackup nuevaFactura = new FacturacionDetalleBackup();
+            nuevaFactura.setFacturaDetalleIdBackup(colCodigoFactura.getCellData(index));
+            nuevaFactura.setProductoDesc(cmbNombreProducto.getValue());
+            
+            nuevaFactura.setCantidadBackup(Integer.parseInt(txtCantidadProducto.getText()));
+            nuevaFactura.setTotalParcialBackup(Double.parseDouble(txtPrecioProducto.getText())*Integer.parseInt(txtCantidadProducto.getText()));
+            
+            
+           String sql = "{call spEditarBackup('"+nuevaFactura.getFacturaDetalleIdBackup()+"','"+buscarCodigoProducto(nuevaFactura.getProductoDesc())+"','"+nuevaFactura.getCantidadBackup()+"','"+nuevaFactura.getTotalParcialBackup()+"')}";
+           try{
+               PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+               ps.execute();
+               
+                noti.graphic(new ImageView(imgCorrecto));
+                noti.title("OPERACIÓN EXITOSA");
+                noti.text("SE HA EDITADO EXITOSAMENTE EL REGISTRO");
+                noti.position(Pos.BOTTOM_RIGHT);
+                noti.hideAfter(Duration.seconds(4));
+                noti.darkStyle();
+                noti.show();
+                tipoOperacionFacturacion = Operacion.NINGUNO;
+                cargarDatos();
+                btnEditar.setDisable(true);
+                valorTotalFactura();
+           }catch(SQLException ex){
+               ex.printStackTrace();
+                 Notifications noti = Notifications.create();
+                noti.graphic(new ImageView(imgError));
+                noti.title("ERROR");
+                noti.text("NO SE HA PODIDO ACTUALIZAR EL CAMPO");
+                noti.position(Pos.BOTTOM_RIGHT);
+                noti.hideAfter(Duration.seconds(4));
+                noti.darkStyle();
+                noti.show();
+           }
+        }
+    }
+    
+    
+    @FXML
+    private void seleccionarElementos(MouseEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        ButtonType buttonTypeSi = new ButtonType("Si");
+        ButtonType buttonTypeNo = new ButtonType("No");
+        
+        alert.setTitle("WARNING");
+        alert.setHeaderText("EDITAR REGISTRO DE FACTURA");
+        alert.setContentText("¿Está seguro que desea editar este registro?");
+
+        alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == buttonTypeSi){
+            try{
+                int index  = tblBackUp.getSelectionModel().getSelectedIndex();
+                cmbNombreProducto.setValue(colDesProductoBackUp.getCellData(index));
+                txtCantidadProducto.setText(colCantidadProductoBackUp.getCellData(index).toString());
+                
+                btnEditar.setDisable(false);
+                btnVender.setDisable(true);
+                btnImprimir.setDisable(true);
+                tipoOperacionFacturacion = Operacion.ACTUALIZAR;
+            }catch(Exception e){
+            
+            }
+        }else{
+            tblBackUp.getSelectionModel().clearSelection();
+        }
+    }
+    
+    
+    
+    
+    @FXML
+    private void validarLetras(KeyEvent event) {
+           char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(letra)){
+            event.consume();
+        }else{
+        
+        }
+        
+    }
+    
+    @FXML
+    private void validarEfectivo(KeyEvent event) {
+        
+          char letra = event.getCharacter().charAt(0);
+          
+        if(!Character.isDigit(letra)){
+            if(letra != '.'){
+                event.consume();
+            }
+            
+            
+        }else{
+        
+        }
+        
+        
+        
+            
+    }
+  
+
+    @FXML
+    private void cambio(KeyEvent event) {
+        double  totalFactura = Double.parseDouble(txtTotalFactura.getText());
+        double efectivo = Double.parseDouble(txtEfectivo.getText());
+        
+        double total = efectivo -totalFactura;
+        if(total<0){
+            btnImprimir.setDisable(true);
+        }else{
+            btnImprimir.setDisable(false);
+        }
+        txtCambio.setText(String.valueOf(total));
+    }
+=======
 // ================================ CODIGO BUSQUEDA FACTURAS
     
     public ObservableList<FacturasBuscadas> getFacturasBuscadas(){
@@ -887,6 +1102,7 @@ public int buscarCodigoProducto(String precioProductos){
                     tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
                 }
         }  
+>>>>>>> Diego-Gonzalez
     
 }
 

@@ -30,7 +30,7 @@ DELIMITER $$
 					where clienteId = idBuscado;
         END $$
 DELIMITER ;
-call SpActualizarClientes(1, "123456788", "Juan Pedro");
+
 
 
 DELIMITER $$
@@ -40,7 +40,7 @@ DELIMITER $$
 				where clienteId = idBuscado;
         END $$
 DELIMITER ;
-call SpEliminarClientes(1);
+
 
 
 DELIMITER $$
@@ -698,10 +698,18 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpListarBackup()
 		BEGIN
-			select p.productoDesc, fdb.cantidadBackup , p.productoPrecio ,fdb.totalParcialBackup
+			select fdb.facturaDetalleIdBackup, p.productoDesc, fdb.cantidadBackup , p.productoPrecio ,fdb.totalParcialBackup
 				from facturadetallebackup as fdb
 							inner join Productos as p
 								on fdb.productoIdBackup = p.productoId;
+        END $$
+DELIMITER ;
+DELIMITER $$
+	create procedure spEditarBackup(idBuscado INT(5),prodId INT(5), cantidad INT(5), totalParcial decimal(10,2) )
+		BEGIN
+			update facturadetallebackup
+				set productoIdBackup = prodId, productoIdBackup = prodId, cantidadBackup = cantidad, totalParcialBackup = totalParcial
+					where facturaDetalleIdBackup = idBuscado;
         END $$
 DELIMITER ;
 

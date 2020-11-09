@@ -63,8 +63,8 @@ public class LoginViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-      txtUsuario.requestFocus();
-        FadeTransition ft = new FadeTransition();
+       txtUsuario.requestFocus();
+       FadeTransition ft = new FadeTransition();
        ft.setFromValue(0);
        ft.setToValue(1);
        ft.setDuration(Duration.seconds(2));
