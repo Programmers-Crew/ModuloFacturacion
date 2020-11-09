@@ -97,7 +97,7 @@ public class FacturacionViewController implements Initializable {
         ObservableList<FacturasBuscadas> listaFacturasBuscadas;
         ObservableList<ProductoBuscado> listaProductoBuscado;
 
-    int codigoFacturas;
+    String codigoFacturas;
     int clienteNit;
 
 
@@ -145,7 +145,7 @@ public class FacturacionViewController implements Initializable {
     @FXML
     private TableView<FacturasBuscadas> tblResultadoFactura;
     @FXML
-    private TableColumn<FacturasBuscadas, Integer> colNumeroFacBuscado;
+    private TableColumn<FacturasBuscadas, String> colNumeroFacBuscado;
     @FXML
     private TableColumn<FacturasBuscadas, Double> colTotlalNeto;
     @FXML
@@ -811,7 +811,7 @@ public int buscarCodigoProducto(String precioProductos){
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new FacturasBuscadas(
-                            rs.getInt("facturaId"),
+                            rs.getString("facturaId"),
                             rs.getDouble("facturaTotalNeto"),
                             rs.getDouble("facturaTotalIva"),
                             rs.getDouble("facturaTotal"),
@@ -853,7 +853,7 @@ public int buscarCodigoProducto(String precioProductos){
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new FacturasBuscadas(
-                            rs.getInt("facturaId"),
+                            rs.getString("facturaId"),
                             rs.getDouble("facturaTotalNeto"),
                             rs.getDouble("facturaTotalIva"),
                             rs.getDouble("facturaTotal"),
@@ -891,7 +891,7 @@ public int buscarCodigoProducto(String precioProductos){
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new FacturasBuscadas(
-                            rs.getInt("facturaId"),
+                            rs.getString("facturaId"),
                             rs.getDouble("facturaTotalNeto"),
                             rs.getDouble("facturaTotalIva"),
                             rs.getDouble("facturaTotal"),
