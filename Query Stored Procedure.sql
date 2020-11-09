@@ -629,7 +629,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarDetalleFacturasFecha(fechaInicio date, FechaFinal date)
 		BEGIN
-			select f.facturaId, f.facturaFecha, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal
+			select f.codigo, f.facturaFecha, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal
 				from facturas as f
 					where f.facturaFecha between fechaInicio and FechaFinal;
         END $$
@@ -639,7 +639,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarClienteFacturaFecha(idBuscado int(5))
 		BEGIN	
-			select f.facturaId, c.clienteNit, c.clienteNombre, pr.productoDesc, fd.cantidad, pr.productoPrecio
+			select f.codigo, c.clienteNit, c.clienteNombre, pr.productoDesc, fd.cantidad, pr.productoPrecio
 				from facturas as f
 					inner join clientes as c
 						on c.clienteId = f.clienteId
@@ -647,7 +647,7 @@ DELIMITER $$
 								on f.facturaDetalleId = fd.facturaDetalleId
 									inner join productos as pr
 										on pr.productoId = fd.productoId
-											where f.facturaId = idBuscado;
+											where f.codigo = idBuscado;
         END $$
 DELMITER ;
 
@@ -655,16 +655,17 @@ DELMITER ;
 DELIMITER $$
 	create procedure SpListarBusquedasFacturasPorId(idBuscado int(5))
 		BEGIN
-			select f.facturaId, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal, f.facturaFecha
+			select f.codigo, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal, f.facturaFecha
 				from facturas as f
 					where f.facturaId = idBuscado;
         END $$
 DELIMITER ;
 
+
 DELIMITER $$
 	create procedure SpListarBusquedasFacturas()
 		BEGIN
-			select f.facturaId, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal, f.facturaFecha
+			select f.codigo, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal, f.facturaFecha
 				from facturas as f;
 		END $$
 DELIMITER ;
