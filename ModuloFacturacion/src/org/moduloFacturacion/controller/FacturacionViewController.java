@@ -62,10 +62,7 @@ public class FacturacionViewController implements Initializable {
     private JFXTextField txtFacturaId;
     @FXML
     private JFXTextField txtTotalFactura;
-<<<<<<< HEAD
-=======
 
->>>>>>> Davis-Roldan
     @FXML
     private JFXButton btnEditar;
     @FXML
@@ -98,19 +95,8 @@ public class FacturacionViewController implements Initializable {
     }
 
 
-<<<<<<< HEAD
-=======
-  
-
-
-
->>>>>>> Davis-Roldan
-
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER,FILTRAR,CARGAR};
-<<<<<<< HEAD
-=======
 
->>>>>>> Davis-Roldan
     public Operacion cancelar = Operacion.NINGUNO;
     
 
@@ -702,10 +688,7 @@ public int buscarCodigoProducto(String precioProductos){
       limpiarTextEfectivo();
     }
     
-<<<<<<< HEAD
-=======
 
->>>>>>> Davis-Roldan
       @FXML
     private void btnEditar(MouseEvent event) {
         if(cmbNombreProducto.getValue().equals("") || txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty()){
@@ -838,11 +821,7 @@ public int buscarCodigoProducto(String precioProductos){
         }
         txtCambio.setText(String.valueOf(total));
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> Davis-Roldan
 // ================================ CODIGO BUSQUEDA FACTURAS
     
     public ObservableList<FacturasBuscadas> getFacturasBuscadas(){
@@ -1245,10 +1224,7 @@ public int buscarCodigoProducto(String precioProductos){
                     tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
                 }
         }  
-<<<<<<< HEAD
-=======
 
->>>>>>> Davis-Roldan
     
     
     @FXML
