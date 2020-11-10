@@ -10,8 +10,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -24,6 +27,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -58,7 +62,10 @@ public class FacturacionViewController implements Initializable {
     private JFXTextField txtFacturaId;
     @FXML
     private JFXTextField txtTotalFactura;
+<<<<<<< HEAD
 
+=======
+>>>>>>> Diego-Gonzalez
     @FXML
     private JFXButton btnEditar;
     @FXML
@@ -91,14 +98,19 @@ public class FacturacionViewController implements Initializable {
     }
 
 
+<<<<<<< HEAD
   
 
 
 
+=======
+>>>>>>> Diego-Gonzalez
 
-    
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER,FILTRAR,CARGAR};
+<<<<<<< HEAD
 
+=======
+>>>>>>> Diego-Gonzalez
     public Operacion cancelar = Operacion.NINGUNO;
     
 
@@ -121,7 +133,8 @@ public class FacturacionViewController implements Initializable {
         ObservableList<FacturasBuscadas> listaFacturasBuscadas;
         ObservableList<ProductoBuscado> listaProductoBuscado;
 
-    int codigoFacturas;
+    String codigoFacturas;
+    int clienteNit;
 
 
     
@@ -168,7 +181,7 @@ public class FacturacionViewController implements Initializable {
     @FXML
     private TableView<FacturasBuscadas> tblResultadoFactura;
     @FXML
-    private TableColumn<FacturasBuscadas,Integer> colNumeroFacBuscado;
+    private TableColumn<FacturasBuscadas, String> colNumeroFacBuscado;
     @FXML
     private TableColumn<FacturasBuscadas, Double> colTotlalNeto;
     @FXML
@@ -689,7 +702,10 @@ public int buscarCodigoProducto(String precioProductos){
       limpiarTextEfectivo();
     }
     
+<<<<<<< HEAD
 
+=======
+>>>>>>> Diego-Gonzalez
       @FXML
     private void btnEditar(MouseEvent event) {
         if(cmbNombreProducto.getValue().equals("") || txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty()){
@@ -822,7 +838,11 @@ public int buscarCodigoProducto(String precioProductos){
         }
         txtCambio.setText(String.valueOf(total));
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> Diego-Gonzalez
 // ================================ CODIGO BUSQUEDA FACTURAS
     
     public ObservableList<FacturasBuscadas> getFacturasBuscadas(){
@@ -836,7 +856,7 @@ public int buscarCodigoProducto(String precioProductos){
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new FacturasBuscadas(
-                            rs.getInt("facturaId"),
+                            rs.getString("facturaId"),
                             rs.getDouble("facturaTotalNeto"),
                             rs.getDouble("facturaTotalIva"),
                             rs.getDouble("facturaTotal"),
@@ -852,8 +872,8 @@ public int buscarCodigoProducto(String precioProductos){
         txtBusquedaCodigoFac.setItems(listaNumeroFactura);
         return listaFacturasBuscadas = FXCollections.observableList(lista);
     }
- 
     
+    @FXML
     public void cargarFacturasBuscadas(){
         tblResultadoFactura.setItems(getFacturasBuscadas());
         
@@ -866,9 +886,121 @@ public int buscarCodigoProducto(String precioProductos){
         txtBusquedaCodigoFac.setValue("");
     }  
     
+        
+    public ObservableList<FacturasBuscadas> getFacturasBuscadasPorId(){
+        ArrayList<FacturasBuscadas> lista = new ArrayList();
+        ArrayList<String> comboNumeroFacturas = new ArrayList();
+        String sql = "{call SpListarBusquedasFacturasPorId('"+txtBusquedaCodigoFac.getValue()+"')}";
+        int x=0;
+        
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                lista.add(new FacturasBuscadas(
+                            rs.getString("facturaId"),
+                            rs.getDouble("facturaTotalNeto"),
+                            rs.getDouble("facturaTotalIva"),
+                            rs.getDouble("facturaTotal"),
+                            rs.getDate("facturaFecha")
+                ));
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return listaFacturasBuscadas = FXCollections.observableList(lista);
+    }
+    
+        @FXML
+    public void cargarFacturasBuscadasPorId(){
+        tblResultadoFactura.setItems(getFacturasBuscadasPorId());
+        
+        colNumeroFacBuscado.setCellValueFactory(new PropertyValueFactory("facturaId"));
+        colTotlalNeto.setCellValueFactory(new PropertyValueFactory("facturaTotalNeto"));  
+        colTotalIva.setCellValueFactory(new PropertyValueFactory("facturaTotalIva"));
+        colTotalBuscado.setCellValueFactory(new PropertyValueFactory("facturaTotal"));
+        colFechaBuscada.setCellValueFactory(new PropertyValueFactory("facturaFecha"));
+        
+        txtBusquedaCodigoFac.setValue("");
+    }  
+    
+    
+        public ObservableList<FacturasBuscadas> getFacturasBuscadasPorFecha(){
+        ArrayList<FacturasBuscadas> lista = new ArrayList();
+        ArrayList<String> comboNumeroFacturas = new ArrayList();
+        String sql = "{call SpBuscarDetalleFacturasFecha('"+txtFechaInicio.getValue()+"','"+txtFechaFinal.getValue()+"')}";
+        int x=0;
+        
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                lista.add(new FacturasBuscadas(
+                            rs.getString("facturaId"),
+                            rs.getDouble("facturaTotalNeto"),
+                            rs.getDouble("facturaTotalIva"),
+                            rs.getDouble("facturaTotal"),
+                            rs.getDate("facturaFecha")
+                ));
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return listaFacturasBuscadas = FXCollections.observableList(lista);
+    }
+        
+    public void cargarFacturasBuscadasPorFecha(){
+        tblResultadoFactura.setItems(getFacturasBuscadasPorFecha());
+        
+        colNumeroFacBuscado.setCellValueFactory(new PropertyValueFactory("facturaId"));
+        colTotlalNeto.setCellValueFactory(new PropertyValueFactory("facturaTotalNeto"));  
+        colTotalIva.setCellValueFactory(new PropertyValueFactory("facturaTotalIva"));
+        colTotalBuscado.setCellValueFactory(new PropertyValueFactory("facturaTotal"));
+        colFechaBuscada.setCellValueFactory(new PropertyValueFactory("facturaFecha"));
+        
+        txtBusquedaCodigoFac.setValue("");
+    }   
+        
+    
+    public ObservableList<ProductoBuscado> getProductoBuscado(){
+        ArrayList<ProductoBuscado> listaProducto = new ArrayList();
+        
+        String sql = "{call SpBuscarClienteFacturaFecha('"+txtBusquedaCodigoFac.getValue()+"')}";
+        
+        try{
+            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                listaProducto.add(new ProductoBuscado(
+                            rs.getString("productoDesc"),
+                            rs.getInt("cantidad"),
+                            rs.getDouble("productoPrecio")
+                ));
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return listaProductoBuscado = FXCollections.observableList(listaProducto);
+    }
+ 
+    
+     @FXML
+    public void cargarProductosBuscados(){
+        tblResultadoProducto.setItems(getProductoBuscado());
+        
+        colProductoBuscado.setCellValueFactory(new PropertyValueFactory("productoDesc"));
+        colCantidadBuscada.setCellValueFactory(new PropertyValueFactory("cantidad"));  
+        colPrecioUnitBuscado.setCellValueFactory(new PropertyValueFactory("productoPrecio"));
+    }  
+    
+
+    
     
     private void cargarFacturasBuscadas(Event event) {
         cargarFacturasBuscadas();
+        //txtFechaInicio
+
+
     }
     
     public void accion(String sql){
@@ -884,16 +1016,7 @@ public int buscarCodigoProducto(String precioProductos){
                     ps = Conexion.getIntance().getConexion().prepareCall(sql);
                     rs = ps.executeQuery();
                     int numero=0;
-                    while(rs.next()){
-                        colNumeroFacBuscado.setText(rs.getString("facturaId"));
-                        colTotlalNeto.setText(rs.getString("facturaTotalNeto"));
-                        colTotalIva.setText(rs.getString("facturaTotalIva"));
-                        colTotalBuscado.setText(rs.getString("facturaTotal"));
-                        colFechaBuscada.setText(rs.getString("facturaFecha"));
-                        
-                        codigoFacturas = rs.getInt("facturaId");
-                        
-                    }                    
+                                     
                     if(rs.first()){
                         for(int i=0; i<tblResultadoFactura.getItems().size(); i++){
                             if(colNumeroFacBuscado.getCellData(i) == codigoFacturas){
@@ -952,6 +1075,8 @@ public int buscarCodigoProducto(String precioProductos){
                         noti.show();
                         tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
                         cargarFacturasBuscadas();
+                        txtFechaInicio.setValue(null);
+                        txtFechaFinal.setValue(null);
                     }catch (SQLException ex) {
                         ex.printStackTrace();
                         noti.graphic(new ImageView(imgError));
@@ -962,6 +1087,7 @@ public int buscarCodigoProducto(String precioProductos){
                         noti.darkStyle();
                         noti.show();
                         tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
+
                     }
                 }else{  
                     noti.graphic(new ImageView(imgError));
@@ -975,20 +1101,11 @@ public int buscarCodigoProducto(String precioProductos){
                 }
                 break;
             case BUSCAR:
-                 try{
+                try{
                     ps = Conexion.getIntance().getConexion().prepareCall(sql);
                     rs = ps.executeQuery();
                     int numero=0;
-                    while(rs.next()){
-                        colNumeroFacBuscado.setText(rs.getString("facturaId"));
-                        colTotlalNeto.setText(rs.getString("facturaTotalNeto"));
-                        colTotalIva.setText(rs.getString("facturaTotalIva"));
-                        colTotalBuscado.setText(rs.getString("facturaTotal"));
-                        colFechaBuscada.setText(rs.getString("facturaFecha"));
-                        
-                        codigoFacturas = rs.getInt("facturaId");
-                        
-                    }                    
+                                        
                     if(rs.first()){
                         for(int i=0; i<tblResultadoFactura.getItems().size(); i++){
                             if(colNumeroFacBuscado.getCellData(i) == codigoFacturas){
@@ -1024,7 +1141,10 @@ public int buscarCodigoProducto(String precioProductos){
                     noti.show();
                     tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
                 }
-                break;
+                        txtFechaInicio.setValue(null);
+                        txtFechaFinal.setValue(null);
+                break; 
+                
         }
     }
     
@@ -1040,13 +1160,13 @@ public int buscarCodigoProducto(String precioProductos){
                     noti.show();
         }else{
             tipoOperacionBusquedaFacturas = Operacion.BUSCAR;
-
-            String sql = "{call SpListarBusquedasFacturasPorId('"+txtBusquedaCodigoFac.getValue()+"')}";
-            accion(sql);
+            cargarFacturasBuscadasPorId();
+            
         }  
     }
      
     public void buscarPorFechas(){
+        try{
       if(txtFechaInicio.getValue().equals("") || txtFechaFinal.getValue().equals("")){
                     Notifications noti = Notifications.create();
                     noti.graphic(new ImageView(imgError));
@@ -1058,15 +1178,18 @@ public int buscarCodigoProducto(String precioProductos){
                     noti.show();
         }else{
             tipoOperacionBusquedaFacturas = Operacion.FILTRAR;
-
-            String sql = "{call SpBuscarDetalleFacturasFecha('"+txtFechaInicio.getValue()+"','"+txtFechaFinal.getValue()+"')}";
-            accion(sql);
+            cargarFacturasBuscadasPorFecha();
+            
         }  
+            }catch(Exception e){
+        e.printStackTrace();
+            }
     }
+
     
     public void buscarProducto(){
 
-            String sql = "{call SpBuscarClienteFacturaFecha('"+colNumeroFacBuscado.getText()+"')}";
+            String sql = "{call SpBuscarClienteFacturaFecha('"+txtBusquedaCodigoFac.getValue()+"')}";
             accion(sql);
             
             PreparedStatement ps;
@@ -1078,19 +1201,18 @@ public int buscarCodigoProducto(String precioProductos){
                     int numero=0;
                     
                     while(rs.next()){
-                        colNumeroFacBuscado.setText(rs.getString("facturaId"));
-                        colTotlalNeto.setText(rs.getString("facturaTotalNeto"));
-                        colTotalIva.setText(rs.getString("facturaTotalIva"));
-                        colTotalBuscado.setText(rs.getString("facturaTotal"));
-                        colFechaBuscada.setText(rs.getString("facturaFecha"));
+                        txtResultadoNit.setText(rs.getString("clienteNit"));
+                        txtResultadoNombre.setText(rs.getString("clienteNombre"));
+
+                        clienteNit = rs.getInt("clienteNit");
                         
-                        codigoFacturas = rs.getInt("facturaId");
-                        
-                    }                    
+                    }
+                    cargarProductosBuscados();
+                    
                     if(rs.first()){
-                        for(int i=0; i<tblResultadoFactura.getItems().size(); i++){
+                        for(int i=0; i<tblResultadoProducto.getItems().size(); i++){
                             if(colNumeroFacBuscado.getCellData(i) == codigoFacturas){
-                                tblResultadoFactura.getSelectionModel().select(i);
+                                tblResultadoProducto.getSelectionModel().select(i);
                                 break;
                             }
                         }
@@ -1123,8 +1245,51 @@ public int buscarCodigoProducto(String precioProductos){
                     tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
                 }
         }  
+<<<<<<< HEAD
 
+=======
+>>>>>>> Diego-Gonzalez
     
+    
+    @FXML
+    private void seleccionarElementosFacturasBuscadas(MouseEvent event) {
+        int index = tblResultadoFactura.getSelectionModel().getSelectedIndex();
+        try{
+
+            txtBusquedaCodigoFac.setValue(colNumeroFacBuscado.getCellData(index).toString());
+            System.out.println(txtBusquedaCodigoFac);
+            buscarProducto();
+            
+        }catch(Exception ex){
+            ex.printStackTrace();
+            Notifications noti = Notifications.create();
+            noti.graphic(new ImageView(imgError));
+            noti.title("ERROR AL CARGAR DATOS");
+            noti.text("Error al cargar la base de datos");
+            noti.position(Pos.BOTTOM_RIGHT);
+            noti.hideAfter(Duration.seconds(4));
+            noti.darkStyle();
+            noti.show();
+           
+        }
+    }
+    
+    @FXML
+    private void btnBuscarFactura(MouseEvent event) {
+        buscarFactura();
+    }
+    
+    
+    @FXML
+    private void btnFiltrarFactura(MouseEvent event) {
+        buscarPorFechas();
+    }
+    
+    @FXML
+    private void btnCargarFacturas(MouseEvent event) {
+        tipoOperacionBusquedaFacturas = Operacion.CARGAR;
+
+    }
 }
 
 

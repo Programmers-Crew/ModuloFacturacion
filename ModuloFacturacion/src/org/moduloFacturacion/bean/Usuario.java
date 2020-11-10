@@ -1,12 +1,12 @@
 package org.moduloFacturacion.bean;
 
 public class Usuario {
-    int UsuarioId;
+    String UsuarioId;
     String usuarioNombre;
     String usuarioPassword;
     String TipoUsuario;
 
-    public Usuario(int UsuarioId, String usuarioNombre, String usuarioPassword, String TipoUsuario) {
+    public Usuario(String UsuarioId, String usuarioNombre, String usuarioPassword, String TipoUsuario) {
         this.UsuarioId = UsuarioId;
         this.usuarioNombre = usuarioNombre;
         this.usuarioPassword = usuarioPassword;
@@ -17,11 +17,11 @@ public class Usuario {
     }
     
 
-    public int getUsuarioId() {
+    public String getUsuarioId() {
         return UsuarioId;
     }
 
-    public void setUsuarioId(int UsuarioId) {
+    public void setUsuarioId(String UsuarioId) {
         this.UsuarioId = UsuarioId;
     }
 

@@ -1,7 +1,7 @@
 package org.moduloFacturacion.bean;
 
 public class InventarioProductos {
-    private int productoId;
+    private String productoId;
     private int inventarioProductoCant;
     private String productoDesc;
     private String estadoProductoDesc;
@@ -10,7 +10,7 @@ public class InventarioProductos {
     public InventarioProductos() {
     }
 
-    public InventarioProductos(int productoId, int inventarioProductoCant, String productoDesc, String estadoProductoDesc, String proveedorNombre) {
+    public InventarioProductos(String productoId, int inventarioProductoCant, String productoDesc, String estadoProductoDesc, String proveedorNombre) {
         this.productoId = productoId;
         this.inventarioProductoCant = inventarioProductoCant;
         this.productoDesc = productoDesc;
@@ -18,11 +18,11 @@ public class InventarioProductos {
         this.proveedorNombre = proveedorNombre;
     }
 
-    public int getProductoId() {
+    public String getProductoId() {
         return productoId;
     }
 
-    public void setProductoId(int productoId) {
+    public void setProductoId(String productoId) {
         this.productoId = productoId;
     }
 

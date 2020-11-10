@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class FacturasBuscadas {
     
-    private int facturaId;
+    private String facturaId;
     private double facturaTotalNeto;
     private double facturaTotalIva;
     private double facturaTotal;
@@ -13,7 +13,7 @@ public class FacturasBuscadas {
     public FacturasBuscadas() {
     }
 
-    public FacturasBuscadas(int facturaId, double facturaTotalNeto, double facturaTotalIva, double facturaTotal, Date facturaFecha) {
+    public FacturasBuscadas(String facturaId, double facturaTotalNeto, double facturaTotalIva, double facturaTotal, Date facturaFecha) {
         this.facturaId = facturaId;
         this.facturaTotalNeto = facturaTotalNeto;
         this.facturaTotalIva = facturaTotalIva;
@@ -21,11 +21,11 @@ public class FacturasBuscadas {
         this.facturaFecha = facturaFecha;
     }
 
-    public int getFacturaId() {
+    public String getFacturaId() {
         return facturaId;
     }
 
-    public void setFacturaId(int facturaId) {
+    public void setFacturaId(String facturaId) {
         this.facturaId = facturaId;
     }
 

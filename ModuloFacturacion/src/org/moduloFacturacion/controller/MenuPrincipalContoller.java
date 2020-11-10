@@ -115,7 +115,7 @@ public class MenuPrincipalContoller implements Initializable {
     @FXML
     private TableView<Usuario> tableUsuario;
     @FXML
-    private TableColumn<Usuario, Integer> colCodigoUsuario;
+    private TableColumn<Usuario, String> colCodigoUsuario;
     
     @FXML
     private TableColumn<Usuario, String> colPasswordUsuario;
@@ -206,7 +206,7 @@ public class MenuPrincipalContoller implements Initializable {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new Usuario(
-                        rs.getInt("usuarioId"),
+                        rs.getString("usuarioId"),
                          rs.getString("usuarioNombre"),
                         rs.getString("usuarioPassword"),
                         rs.getString("tipoUsuario")
@@ -792,13 +792,13 @@ public class MenuPrincipalContoller implements Initializable {
                 try{
                     ps = Conexion.getIntance().getConexion().prepareCall(sql);
                     rs = ps.executeQuery();
-                    int codigo=0;
+                    String codigo="";
                     while(rs.next()){
                         cmbCodigoUsuario.setValue(rs.getString("usuarioId"));
                         txtUsuario.setText(rs.getString("usuarioNombre"));
                         txtPassword.setText(rs.getString("usuarioPassword"));
                         cmbTipoUsuario.setValue(rs.getString("tipoUsuario"));
-                        codigo = rs.getInt("usuarioId");
+                        codigo = rs.getString("usuarioId");
                         
                     }                    
                     if(rs.first()){
@@ -896,7 +896,7 @@ public class MenuPrincipalContoller implements Initializable {
     private void btnEditar(MouseEvent event) {
         int tipoUsuario;
         Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setUsuarioId(Integer.parseInt(cmbCodigoUsuario.getValue()));
+        nuevoUsuario.setUsuarioId(cmbCodigoUsuario.getValue());
         nuevoUsuario.setUsuarioNombre(txtUsuario.getText());
         nuevoUsuario.setUsuarioPassword(txtPassword.getText());
         if(cmbTipoUsuario.getValue().equals("Administrador")){

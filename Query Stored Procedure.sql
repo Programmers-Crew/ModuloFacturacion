@@ -629,7 +629,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarDetalleFacturasFecha(fechaInicio date, FechaFinal date)
 		BEGIN
-			select f.facturaId, f.facturaFecha, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal
+			select distinct f.facturaId, f.facturaFecha, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal
 				from facturas as f
 					where f.facturaFecha between fechaInicio and FechaFinal;
         END $$
@@ -655,20 +655,23 @@ DELMITER ;
 DELIMITER $$
 	create procedure SpListarBusquedasFacturasPorId(idBuscado int(5))
 		BEGIN
-			select f.facturaId, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal, f.facturaFecha
+			select distinct f.facturaId, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal, f.facturaFecha
 				from facturas as f
 					where f.facturaId = idBuscado;
         END $$
 DELIMITER ;
+call SpListarBusquedasFacturas;
+
 
 DELIMITER $$
 	create procedure SpListarBusquedasFacturas()
 		BEGIN
-			select f.facturaId, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal, f.facturaFecha
+			select distinct f.facturaId, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal, f.facturaFecha
 				from facturas as f;
 		END $$
 DELIMITER ;
-
+drop procedure SpListarBusquedasFacturas;
+call SpListarBusquedasFacturas();
 
 
 # ============ LOGIN
@@ -760,5 +763,14 @@ DELIMITER ;
 insert into tipousuario values(0,"Administrador"),(0,"Empleado");
 
 insert into usuarios values(0,"admin", "admin", 1);
+
+DELIMITER $$
+	create procedure SpBuscarCodigoEstado(nombre varchar(100))
+		BEGIN
+			select estadoProductoId
+				from estadoproductos
+					where estadoProductoDesc = nombre;
+        END $$
+DELIMITER ;
 
 

@@ -57,7 +57,7 @@ public class ClienteViewController implements Initializable {
     ObservableList<Cliente>listaCliente;
     ObservableList<String>listaFiltro;
     ObservableList<String>listaBuscar;
-    int codigo=0;
+    String codigo= "";
     
     @FXML
     private AnchorPane anchor;
@@ -76,7 +76,7 @@ public class ClienteViewController implements Initializable {
     @FXML
     private TableView<Cliente> tableCliente;
     @FXML
-    private TableColumn<Cliente, Integer> colCodigoCliente;
+    private TableColumn<Cliente, String> colCodigoCliente;
     @FXML
     private TableColumn<Cliente, String> colNitCliente;
     @FXML
@@ -127,7 +127,7 @@ public class ClienteViewController implements Initializable {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 lista.add(new Cliente(
-                        rs.getInt("clienteId"),
+                        rs.getString("clienteId"),
                         rs.getString("clienteNit"),
                         rs.getString("clienteNombre")
                 ));
@@ -419,7 +419,7 @@ public class ClienteViewController implements Initializable {
                         txtNitCliente.setText(rs.getString("clienteNit"));
                         txtNombreCliente.setText(rs.getString("clienteNombre"));
                         
-                        codigo = rs.getInt("clienteId");
+                        codigo = rs.getString("clienteId");
                         
                     }                    
                     if(rs.first()){

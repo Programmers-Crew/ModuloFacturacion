@@ -1,24 +1,24 @@
 package org.moduloFacturacion.bean;
 
 public class Cliente {
-    int clienteId;
+    String clienteId;
     String clienteNit;
     String clienteNombre;
 
     public Cliente() {
     }
 
-    public Cliente(int clienteId, String clienteNit, String clienteNombre) {
+    public Cliente(String clienteId, String clienteNit, String clienteNombre) {
         this.clienteId = clienteId;
         this.clienteNit = clienteNit;
         this.clienteNombre = clienteNombre;
     }
 
-    public int getClienteId() {
+    public String getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(int clienteId) {
+    public void setClienteId(String clienteId) {
         this.clienteId = clienteId;
     }
 

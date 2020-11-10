@@ -1,22 +1,22 @@
 package org.moduloFacturacion.bean;
 
 public class EstadoProductos {
-    private int estadoProductoId;
+    private String estadoProductoId;
     private String estadoProductoDesc;
 
     public EstadoProductos() {
     }
 
-    public EstadoProductos(int estadoProductoId, String estadoProductoDesc) {
+    public EstadoProductos(String estadoProductoId, String estadoProductoDesc) {
         this.estadoProductoId = estadoProductoId;
         this.estadoProductoDesc = estadoProductoDesc;
     }
 
-    public int getEstadoProductoId() {
+    public String getEstadoProductoId() {
         return estadoProductoId;
     }
 
-    public void setEstadoProductoId(int estadoProductoId) {
+    public void setEstadoProductoId(String estadoProductoId) {
         this.estadoProductoId = estadoProductoId;
     }
 
