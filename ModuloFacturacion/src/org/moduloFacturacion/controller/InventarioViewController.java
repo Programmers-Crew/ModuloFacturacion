@@ -35,6 +35,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.moduloFacturacion.bean.Animations;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.bean.EstadoProductos;
@@ -57,9 +58,23 @@ public class InventarioViewController implements Initializable {
     
     MenuPrincipalContoller menu = new MenuPrincipalContoller();
     ValidarStyle validar = new ValidarStyle();
+    @FXML
+    private AnchorPane anchor1;
+    @FXML
+    private AnchorPane anchor2;
+    @FXML
+    private AnchorPane anchor3;
+    @FXML
+    private AnchorPane anchor4;
+    
+    Animations animacion = new Animations();
     
     @FXML
     private void validarCantidadProducto(ActionEvent event) {
+    }
+
+    @FXML
+    private void validarCodigoEstado(ActionEvent event) {
     }
 
     
@@ -185,6 +200,7 @@ public class InventarioViewController implements Initializable {
     private void cargarProductos(Event event) {
         iniciarInventario();
         llenarComboProducto();
+        animacion.animacion(anchor1, anchor2);
     }
     
     
@@ -298,7 +314,7 @@ public class InventarioViewController implements Initializable {
     }
     
     public void iniciarInventario(){
-       
+       animacion.animacion(anchor1, anchor2);
         Tooltip toolInicio = new Tooltip("Volver a Inicio");
         Tooltip.install(btnInicio, toolInicio);
         
@@ -1155,7 +1171,6 @@ public class InventarioViewController implements Initializable {
         buscarEstado();
     }
     
-    @FXML
     private void validarCodigoEstado(KeyEvent event) {
          if(tipoOperacionEstado == Operacion.GUARDAR){
             
@@ -1196,6 +1211,7 @@ public class InventarioViewController implements Initializable {
     @FXML
     private void cargarEstado(Event event) {
         cargarDatosEstado();
+        animacion.animacion(anchor3, anchor4);
     }
     
     

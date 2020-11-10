@@ -53,15 +53,15 @@
          <tabs>
             <Tab onSelectionChanged="#cargarProductos" styleClass="tabItem">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="anchorOscuro">
                      <children>
-                        <SplitPane dividerPositions="0.30635188308038225" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.30635188308038225" prefHeight="386.0" prefWidth="582.0" styleClass="anchorOscuro" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <AnchorPane prefHeight="326.0" prefWidth="200.0">
+                                          <AnchorPane fx:id="anchor1" prefHeight="326.0" prefWidth="200.0">
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="7.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
@@ -128,7 +128,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosInventario" prefHeight="362.0" prefWidth="444.0" styleClass="anchorOscuro">
+                              <AnchorPane fx:id="anchor2" minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosInventario" prefHeight="362.0" prefWidth="444.0" styleClass="anchorOscuro">
                                  <children>
                                     <TableView fx:id="tblInventario" layoutX="15.0" layoutY="73.0" onMouseClicked="#seleccionarElementosProductos" prefHeight="336.0" prefWidth="529.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="73.0">
                                        <columnResizePolicy>
@@ -164,15 +164,15 @@
             </Tab>
             <Tab onSelectionChanged="#cargarEstado" styleClass="tabItem">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="anchorOscuro">
                      <children>
-                        <SplitPane dividerPositions="0.30635188308038225" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.30635188308038225" prefHeight="386.0" prefWidth="582.0" styleClass="anchorOscuro" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <AnchorPane prefHeight="169.0" prefWidth="215.0">
+                                          <AnchorPane fx:id="anchor3" prefHeight="169.0" prefWidth="215.0">
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="7.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
@@ -236,7 +236,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosEstado" prefHeight="362.0" prefWidth="444.0" styleClass="anchorOscuro">
+                              <AnchorPane fx:id="anchor4" minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosEstado" prefHeight="362.0" prefWidth="444.0" styleClass="anchorOscuro">
                                  <children>
                                     <TableView fx:id="tblEstadoProductos" layoutX="15.0" layoutY="80.0" onMouseClicked="#seleccionarElementos" prefHeight="262.0" prefWidth="347.0" AnchorPane.bottomAnchor="42.400000000000034" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.600000000000023" AnchorPane.topAnchor="80.0">
                                        <columnResizePolicy>

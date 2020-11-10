@@ -36,6 +36,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.moduloFacturacion.bean.Animations;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 
@@ -57,7 +58,7 @@ public class FacturacionViewController implements Initializable {
     private JFXTextField txtFacturaId;
     @FXML
     private JFXTextField txtTotalFactura;
-<<<<<<< HEAD
+
     @FXML
     private JFXButton btnEditar;
     @FXML
@@ -68,16 +69,36 @@ public class FacturacionViewController implements Initializable {
     private JFXButton btnVender;
     @FXML
     private TableColumn<FacturacionDetalleBackup, Integer> colCodigoFactura;
+    @FXML
+    private AnchorPane anchor1;
+    @FXML
+    private AnchorPane anchor2;
+    
+    Animations animacion = new Animations();
+    @FXML
+    private AnchorPane anchor3;
+    @FXML
+    private AnchorPane anchor4;
+    
+    @FXML
+    private void cargarEstado(Event event) {
+        animacion.animacion(anchor3, anchor4);
+    }
+
+    @FXML
+    private void facturacion(Event event) {
+         animacion.animacion(anchor1, anchor2);
+    }
 
 
   
-    public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER};
-=======
+
+
 
 
     
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER,FILTRAR,CARGAR};
->>>>>>> Diego-Gonzalez
+
     public Operacion cancelar = Operacion.NINGUNO;
     
 
@@ -208,6 +229,7 @@ public class FacturacionViewController implements Initializable {
         cargarDatos();
         btnEditar.setDisable(true);
         valorTotalFactura();
+        animacion.animacion(anchor1, anchor2);
     }    
 
     @FXML
@@ -667,7 +689,7 @@ public int buscarCodigoProducto(String precioProductos){
       limpiarTextEfectivo();
     }
     
-<<<<<<< HEAD
+
       @FXML
     private void btnEditar(MouseEvent event) {
         if(cmbNombreProducto.getValue().equals("") || txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty()){
@@ -800,7 +822,7 @@ public int buscarCodigoProducto(String precioProductos){
         }
         txtCambio.setText(String.valueOf(total));
     }
-=======
+
 // ================================ CODIGO BUSQUEDA FACTURAS
     
     public ObservableList<FacturasBuscadas> getFacturasBuscadas(){
@@ -845,7 +867,6 @@ public int buscarCodigoProducto(String precioProductos){
     }  
     
     
-    @FXML
     private void cargarFacturasBuscadas(Event event) {
         cargarFacturasBuscadas();
     }
@@ -1102,7 +1123,7 @@ public int buscarCodigoProducto(String precioProductos){
                     tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
                 }
         }  
->>>>>>> Diego-Gonzalez
+
     
 }
 

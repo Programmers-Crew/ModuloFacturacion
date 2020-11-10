@@ -31,6 +31,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.moduloFacturacion.bean.Animations;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.bean.Proveedores;
@@ -49,10 +50,15 @@ public class ProveedoresViewController implements Initializable {
     
      MenuPrincipalContoller menu = new MenuPrincipalContoller();
     ValidarStyle validar = new ValidarStyle();
+    @FXML
+    private AnchorPane anchor1;
+    @FXML
+    private AnchorPane anchor2;
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO};
     public Operacion tipoOperacionProveedores= Operacion.NINGUNO;
     public Operacion cancelar = Operacion.NINGUNO;
     
+    Animations animacion = new Animations();
     
     @FXML
     private AnchorPane anchor;
@@ -523,6 +529,7 @@ public class ProveedoresViewController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+          animacion.animacion(anchor1, anchor2);
         cargarDatosProveedores();
         validar.validarView(menu.prefs.get("dark", "root"), anchor);
     }    

@@ -43,19 +43,19 @@
             </Pane>
          </children>
       </Pane>
-      <TabPane layoutX="10.0" layoutY="46.0" prefHeight="375.0" prefWidth="600.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+      <TabPane layoutX="10.0" layoutY="46.0" prefHeight="375.0" prefWidth="600.0" side="LEFT" styleClass="anchorOscuro" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
          <tabs>
             <Tab onSelectionChanged="#cargarProductos" styleClass="tabItem">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosProductos" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosProductos" prefHeight="180.0" prefWidth="200.0" styleClass="anchorOscuro">
                      <children>
-                        <SplitPane dividerPositions="0.3154263183834401" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.3154263183834401" prefHeight="386.0" prefWidth="582.0" styleClass="anchorOscuro" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="429.0" prefWidth="263.0" styleClass="anchorOscuro">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="429.0" prefWidth="282.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <AnchorPane prefHeight="337.0" prefWidth="254.0">
+                                          <AnchorPane fx:id="anchor1" prefHeight="337.0" prefWidth="254.0">
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="7.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
@@ -122,7 +122,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
+                              <AnchorPane fx:id="anchor2" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <TableView fx:id="tableProductos" layoutX="14.0" layoutY="80.0" onMouseClicked="#seleccionarElementosProductos" prefHeight="334.0" prefWidth="523.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="80.0">
                                        <columnResizePolicy>
@@ -158,15 +158,15 @@
             </Tab>
             <Tab onSelectionChanged="#cargarCategoria" styleClass="tabItem">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosCategoria" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosCategoria" prefHeight="180.0" prefWidth="200.0" styleClass="anchorOscuro">
                      <children>
-                        <SplitPane dividerPositions="0.3477141017385705" prefHeight="386.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.3477141017385705" prefHeight="386.0" prefWidth="582.0" styleClass="anchorOscuro" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <AnchorPane prefHeight="118.0" prefWidth="279.0">
+                                          <AnchorPane fx:id="anchor3" prefHeight="118.0" prefWidth="279.0">
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="7.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
@@ -227,7 +227,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
+                              <AnchorPane fx:id="anchor4" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <TableView fx:id="tableCategoria" layoutX="15.0" layoutY="82.0" onMouseClicked="#seleccionarElementos" prefHeight="262.0" prefWidth="347.0" AnchorPane.bottomAnchor="40.400000000000034" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.600000000000023" AnchorPane.topAnchor="82.0">
                                        <columnResizePolicy>
