@@ -603,7 +603,17 @@ public int buscarCodigoProducto(String precioProductos){
   
   @FXML
     private void btnAgregarFacturaBackUp(MouseEvent event) {
-            if(cmbNombreProducto.getValue().equals("")|| txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty() || txtNitCliente.getValue().equals("") || txtNombreCliente.getText().isEmpty() || txtFacturaId.getText().isEmpty() ){
+        if(listaBackUp.size()>8){
+             Notifications noti = Notifications.create();
+            noti.graphic(new ImageView(imgError));
+            noti.title("ERROR");
+            noti.text("NO PUEDE LLENAR MÁS DE 9 CAMPOS A SU FACTURA YA QUE SOLO ESE VALOR LE CABEN");
+            noti.position(Pos.BOTTOM_RIGHT);
+            noti.hideAfter(Duration.seconds(4));
+            noti.darkStyle();
+            noti.show();
+        }else{
+                if(cmbNombreProducto.getValue().equals("")|| txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty() || txtNitCliente.getValue().equals("") || txtNombreCliente.getText().isEmpty() || txtFacturaId.getText().isEmpty() ){
                 Notifications noti = Notifications.create();
                 noti.graphic(new ImageView(imgError));
                 noti.title("ERROR");
@@ -626,6 +636,9 @@ public int buscarCodigoProducto(String precioProductos){
                    accionEstado(sql);  
                    txtLetrasPrecio.setText(letras.Convertir(twoDForm.format(Double.parseDouble(txtTotalFactura.getText())), true));
             }
+            
+        }
+        
     }
     
     
