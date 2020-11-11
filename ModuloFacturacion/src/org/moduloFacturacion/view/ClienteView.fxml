@@ -44,13 +44,13 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" onKeyReleased="#atajosCliente" prefHeight="180.0" prefWidth="200.0" styleClass="anchorOscuro">
                      <children>
-                        <SplitPane dividerPositions="0.37267080745341613" prefHeight="386.0" prefWidth="582.0" styleClass="anchorOscuro" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.34253326761951697" prefHeight="386.0" prefWidth="582.0" styleClass="anchorOscuro" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="anchorOscuro">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="386.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <AnchorPane fx:id="anchor1" prefHeight="210.0" prefWidth="299.0">
+                                          <AnchorPane fx:id="anchor1" prefHeight="273.0" prefWidth="275.0">
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="7.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
@@ -65,7 +65,7 @@
                                                 <Label layoutX="19.0" layoutY="89.0" text="NOMBRE:" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="89.0" />
                                                 <JFXTextField fx:id="txtNitCliente" layoutX="19.0" layoutY="55.0" onKeyReleased="#validarNit" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="7.199999999999989" AnchorPane.topAnchor="55.0" />
                                                 <JFXTextField fx:id="txtNombreCliente" layoutX="19.0" layoutY="107.0" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="7.199999999999989" />
-                                                <HBox alignment="CENTER" layoutX="5.0" layoutY="167.0" prefHeight="27.0" prefWidth="208.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="167.0">
+                                                <HBox alignment="CENTER" layoutX="5.0" layoutY="167.0" prefHeight="27.0" prefWidth="208.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="210.0">
                                                    <children>
                                                       <GridPane prefHeight="27.0" prefWidth="256.0">
                                                          <columnConstraints>
@@ -102,6 +102,8 @@
                                                       </GridPane>
                                                    </children>
                                                 </HBox>
+                                                <Label layoutX="29.0" layoutY="99.0" text="DIRECCIÓN" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="143.0" />
+                                                <JFXTextField fx:id="txtDireccionCliente" layoutX="29.0" layoutY="117.0" prefHeight="26.0" prefWidth="170.0" promptText="PUEDE DEJAR ESTE CAMPO VACÍO" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="159.0" />
                                              </children>
                                              <padding>
                                                 <Insets left="5.0" />
@@ -117,7 +119,8 @@
                                       <columns>
                                         <TableColumn fx:id="colCodigoCliente" prefWidth="76.00001525878906" text="CÓDIGO" />
                                         <TableColumn fx:id="colNitCliente" prefWidth="154.4000244140625" text="NIT" />
-                                          <TableColumn fx:id="colNombreCliente" prefWidth="136.800048828125" text="NOMBRE" />
+                                          <TableColumn fx:id="colNombreCliente" prefWidth="117.60003662109375" text="NOMBRE" />
+                                          <TableColumn fx:id="colDireccionCliente" prefWidth="120.0" text="DIRECCIÓN" />
                                       </columns>
                                     </TableView>
                                     <Label layoutX="14.0" layoutY="25.0" text="Buscar por:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="25.0" />

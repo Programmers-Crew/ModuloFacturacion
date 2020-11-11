@@ -3,8 +3,8 @@ create database ProgrammersBilling;
 create table Clientes(
 	clienteId	int(5)  UNSIGNED ZEROFILL primary key auto_increment,
 	clienteNit	varchar(9) unique not null,
-	clienteNombre varchar(25) not null
-
+	clienteNombre varchar(25) not null,
+	clienteDireccion varchar(100) not null DEFAULT 'Ciudad de Guatemala'
 );
 
 
