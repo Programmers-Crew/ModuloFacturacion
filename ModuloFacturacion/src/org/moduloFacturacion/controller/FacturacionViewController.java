@@ -110,12 +110,9 @@ public class FacturacionViewController implements Initializable {
     
 
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER,FILTRAR,CARGAR};
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> Davis-Roldan
 
     public Operacion cancelar = Operacion.NINGUNO;
     
@@ -140,7 +137,7 @@ public class FacturacionViewController implements Initializable {
         ObservableList<ProductoBuscado> listaProductoBuscado;
 
     String codigoFacturas;
-    int clienteNit;
+    String clienteNit;
 
 
     
@@ -711,6 +708,7 @@ public int buscarCodigoProducto(String precioProductos){
             noti.darkStyle();
             noti.show();
            cargarDatos();
+           txtTotalFactura.setText("");
        }catch(SQLException ex){
            ex.printStackTrace();
            Notifications noti = Notifications.create();
@@ -762,6 +760,7 @@ public int buscarCodigoProducto(String precioProductos){
                 limpiarTextCliente();
 
                limpiarTextEfectivo();
+               totalFactura = 0;
            }
             
        }
@@ -1262,7 +1261,7 @@ public int buscarCodigoProducto(String precioProductos){
                         txtResultadoNit.setText(rs.getString("clienteNit"));
                         txtResultadoNombre.setText(rs.getString("clienteNombre"));
 
-                        clienteNit = rs.getInt("clienteNit");
+                        clienteNit = rs.getString("clienteNit");
                         
                     }
                     cargarProductosBuscados();

@@ -5,14 +5,9 @@
 DELIMITER $$
 create procedure SpListarClientes()
 	BEGIN
-<<<<<<< HEAD
-		select clienteId, clienteNit, clienteNombre
+		select clienteId, clienteNit, clienteNombre, clienteDireccion
 			from clientes
 				order by clienteId asc;
-=======
-		select clienteId, clienteNit, clienteNombre, clienteDireccion
-			from clientes;
->>>>>>> Davis-Roldan
     END $$
 DELIMITER ;
 
@@ -543,12 +538,8 @@ DELIMITER $$
 						on fd.facturaDetalleId = f.facturaDetalleId
 							inner join Productos as p
 								on fd.productoId = p.productoId
-<<<<<<< HEAD
-									where facturaDetalleId = idBuscado
+									where fd.facturaDetalleId = idBuscado
 										order by fd.facturaDetalleId asc;
-=======
-									where fd.facturaDetalleId = idBuscado;
->>>>>>> Davis-Roldan
         END $$
 DELIMITER ;
 
@@ -714,10 +705,6 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-<<<<<<< HEAD
-call SpListarBusquedasFacturas;
-=======
->>>>>>> Davis-Roldan
 
 
 DELIMITER $$
@@ -728,12 +715,6 @@ DELIMITER $$
 					order by f.facturaId asc;
 		END $$
 DELIMITER ;
-
-<<<<<<< HEAD
-call SpListarBusquedasFacturas();
-=======
-
->>>>>>> Davis-Roldan
 
 
 # ============ LOGIN
