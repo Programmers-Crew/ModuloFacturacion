@@ -4,14 +4,16 @@ public class Cliente {
     String clienteId;
     String clienteNit;
     String clienteNombre;
-
+    String clienteDireccion;
+    
     public Cliente() {
     }
 
-    public Cliente(String clienteId, String clienteNit, String clienteNombre) {
+    public Cliente(String clienteId, String clienteNit, String clienteNombre, String clienteDireccion) {
         this.clienteId = clienteId;
         this.clienteNit = clienteNit;
         this.clienteNombre = clienteNombre;
+        this.clienteDireccion = clienteDireccion;
     }
 
     public String getClienteId() {
@@ -38,9 +40,18 @@ public class Cliente {
         this.clienteNombre = clienteNombre;
     }
 
+    public String getClienteDireccion() {
+        return clienteDireccion;
+    }
+
+    public void setClienteDireccion(String clienteDireccion) {
+        this.clienteDireccion = clienteDireccion;
+    }
+
     @Override
     public String toString() {
-        return "Cliente{" + "clienteId=" + clienteId + ", clienteNit=" + clienteNit + ", clienteNombre=" + clienteNombre + '}';
+        return "Cliente{" + "clienteId=" + clienteId + ", clienteNit=" + clienteNit + ", clienteNombre=" + clienteNombre + ", clienteDireccion=" + clienteDireccion + '}';
     }
-    
+
+     
 }

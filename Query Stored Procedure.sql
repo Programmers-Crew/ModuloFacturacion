@@ -5,28 +5,33 @@
 DELIMITER $$
 create procedure SpListarClientes()
 	BEGIN
-		select clienteId, clienteNit, clienteNombre
+		select clienteId, clienteNit, clienteNombre, clienteDireccion
 			from clientes;
     END $$
 DELIMITER ;
-call SpListarClientes();
 
 
 DELIMITER $$
-	create procedure SpAgregarClientes(nit varchar(9), nombre varchar(25))
+	create procedure SpAgregarClientes(nit varchar(9), nombre varchar(25), direccion varchar(100))
+		BEGIN
+			insert into Clientes(clienteNit, clienteNombre, clienteDireccion)
+				value(nit, nombre, direccion);
+        END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE SpAgregarClientesSinDireccion(nit varchar(9), nombre varchar(25))
 		BEGIN
 			insert into Clientes(clienteNit, clienteNombre)
 				value(nit, nombre);
         END $$
 DELIMITER ;
 
-
-
 DELIMITER $$
-	create procedure SpActualizarClientes(idBuscado int(100), nuevoNit varchar(9), nombre varchar(25))
+	create procedure SpActualizarClientes(idBuscado int(100), nuevoNit varchar(9), nombre varchar(25), direccion varchar(100))
 		BEGIN
 			update Clientes
-				set clienteNit = nuevoNit, clienteNombre = nombre
+				set clienteNit = nuevoNit, clienteNombre = nombre, clienteDireccion = direccion
 					where clienteId = idBuscado;
         END $$
 DELIMITER ;
@@ -46,7 +51,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarClientes(idBuscado int(100))
 		BEGIN
-			select clienteId, clienteNit, clienteNombre
+			select clienteId, clienteNit, clienteNombre, clienteDireccion
 				from Clientes
 					where clienteId = idBuscado;
 		END $$
@@ -55,7 +60,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarClientesNIt(nit varchar(9))
 		BEGIN
-			select clienteId, clienteNit, clienteNombre
+			select clienteId, clienteNit, clienteNombre, clienteDireccion
 				from Clientes
 					where clienteNit = nit;
 		END $$
@@ -502,13 +507,13 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpBuscarDetalleFacturas(idBuscado int(100))
 		BEGIN
-			select fd.facturaDetalleId, f.facturaId, p.productoId, fd.cantidad, fd.precios
+			select fd.facturaDetalleId, f.facturaId, p.productoId, fd.cantidad, fd.totalParcial
 				from FacturaDetalle as fd
 					inner join Facturas as f
-						on fd.facturaId = f.facturaId
+						on fd.facturaDetalleId = f.facturaDetalleId
 							inner join Productos as p
 								on fd.productoId = p.productoId
-									where facturaDetalleId = idBuscado;
+									where fd.facturaDetalleId = idBuscado;
         END $$
 DELIMITER ;
 
@@ -660,7 +665,7 @@ DELIMITER $$
 					where f.facturaId = idBuscado;
         END $$
 DELIMITER ;
-call SpListarBusquedasFacturas;
+
 
 
 DELIMITER $$
@@ -670,8 +675,8 @@ DELIMITER $$
 				from facturas as f;
 		END $$
 DELIMITER ;
-drop procedure SpListarBusquedasFacturas;
-call SpListarBusquedasFacturas();
+
+
 
 
 # ============ LOGIN
@@ -763,7 +768,7 @@ DELIMITER ;
 insert into tipousuario values(0,"Administrador"),(0,"Empleado");
 
 insert into usuarios values(0,"admin", "admin", 1);
-
+INSERT INTO clientes(clienteNit,clienteNombre) values("C/F","C/F");
 DELIMITER $$
 	create procedure SpBuscarCodigoEstado(nombre varchar(100))
 		BEGIN

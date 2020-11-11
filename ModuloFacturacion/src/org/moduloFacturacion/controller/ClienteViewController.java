@@ -48,6 +48,10 @@ public class ClienteViewController implements Initializable {
     private AnchorPane anchor2;
     @FXML
     private AnchorPane anchor1;
+    @FXML
+    private TableColumn<Cliente, String> colDireccionCliente;
+    @FXML
+    private JFXTextField txtDireccionCliente;
 
   
    
@@ -97,7 +101,7 @@ public class ClienteViewController implements Initializable {
         txtNitCliente.setText("");
         txtNombreCliente.setText("");
         cmbFiltroCombo.setValue("");
-        
+        txtDireccionCliente.setText("");
     }
     public void desactivarControles(){
         btnEditar.setDisable(true);
@@ -111,12 +115,13 @@ public class ClienteViewController implements Initializable {
     public void activarText(){
         txtNombreCliente.setEditable(true);
         txtNitCliente.setEditable(true);
-        
+        txtDireccionCliente.setEditable(true);
     }
     
     public void desactivarText(){
         txtNombreCliente.setEditable(false);
         txtNitCliente.setEditable(false);
+        txtDireccionCliente.setEditable(false);
     }
     
     public ObservableList<Cliente> getCliente(){
@@ -129,7 +134,8 @@ public class ClienteViewController implements Initializable {
                 lista.add(new Cliente(
                         rs.getString("clienteId"),
                         rs.getString("clienteNit"),
-                        rs.getString("clienteNombre")
+                        rs.getString("clienteNombre"),
+                        rs.getString("clienteDireccion")
                 ));
             }
             
@@ -148,9 +154,9 @@ public class ClienteViewController implements Initializable {
         colCodigoCliente.setCellValueFactory(new PropertyValueFactory("clienteId"));
         colNitCliente.setCellValueFactory(new PropertyValueFactory("clienteNit"));
         colNombreCliente.setCellValueFactory(new PropertyValueFactory("clienteNombre"));
+        colDireccionCliente.setCellValueFactory(new PropertyValueFactory("clienteDireccion"));
         limpiarText();
-       
-        
+
         desactivarControles();
         cmbCodigoBuscar.setDisable(true);
         btnBuscar.setDisable(true);
@@ -171,6 +177,7 @@ public class ClienteViewController implements Initializable {
         listaFiltro = FXCollections.observableList(lista);
         cmbFiltroCombo.setItems(listaFiltro);
         animacion.animacion(anchor1, anchor2);
+        desactivarText();
     }    
 
     @FXML
@@ -418,7 +425,7 @@ public class ClienteViewController implements Initializable {
                     while(rs.next()){
                         txtNitCliente.setText(rs.getString("clienteNit"));
                         txtNombreCliente.setText(rs.getString("clienteNombre"));
-                        
+                        txtDireccionCliente.setText("clienteDireccion");
                         codigo = rs.getString("clienteId");
                         
                     }                    
@@ -483,8 +490,10 @@ public class ClienteViewController implements Initializable {
                     noti.darkStyle();   
                     noti.show();
             }else{
+                String sql="";
                 if(txtNombreCliente.getText().length() > 25 || txtNitCliente.getText().length() > 9){
                     Notifications noti = Notifications.create();
+                    
                     noti.graphic(new ImageView(imgError));
                     noti.title("ERROR");
                     noti.text("CAMPOS FUERA DE RANGO, NOMBRE NO DEBE PASAR LOS 25 CARACTERES Y EL NIT NO DEBE PASAR LOS 9 CARACTERES");
@@ -496,7 +505,13 @@ public class ClienteViewController implements Initializable {
                     Cliente nuevocliente = new Cliente();
                     nuevocliente.setClienteNit(txtNitCliente.getText());
                     nuevocliente.setClienteNombre(txtNombreCliente.getText());
-                    String sql = "{call SpAgregarClientes('"+nuevocliente.getClienteNit()+"','"+nuevocliente.getClienteNombre()+"')}";
+                    nuevocliente.setClienteDireccion(txtDireccionCliente.getText());
+                    if(txtDireccionCliente.getText().isEmpty()){
+                         sql = "{call SpAgregarClientesSinDireccion('"+nuevocliente.getClienteNit()+"','"+nuevocliente.getClienteNombre()+"')}";                        
+                    }else{
+                        sql = "{call SpAgregarClientes('"+nuevocliente.getClienteNit()+"','"+nuevocliente.getClienteNombre()+"','"+nuevocliente.getClienteDireccion()+"')}";
+                    }
+                    
                     tipoOperacion = Operacion.GUARDAR;
                     accion(sql);
                 }
@@ -532,7 +547,8 @@ public class ClienteViewController implements Initializable {
                     Cliente nuevocliente = new Cliente();
                     nuevocliente.setClienteNit(txtNitCliente.getText());
                     nuevocliente.setClienteNombre(txtNombreCliente.getText());
-                    String sql = "{call SpActualizarClientes('"+codigo+"','"+nuevocliente.getClienteNit()+"','"+nuevocliente.getClienteNombre()+"')}";
+                    nuevocliente.setClienteDireccion(txtDireccionCliente.getText());
+                    String sql = "{call SpActualizarClientes('"+codigo+"','"+nuevocliente.getClienteNit()+"','"+nuevocliente.getClienteNombre()+"','"+nuevocliente.getClienteDireccion()+"')}";
                     tipoOperacion = Operacion.ACTUALIZAR;
                     accion(sql);
                 }

@@ -4,17 +4,22 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PrinterJob;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
+import java.text.DecimalFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
+
+
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -27,7 +32,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
+
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -46,6 +51,8 @@ import org.moduloFacturacion.bean.CambioScene;
 
 import org.moduloFacturacion.bean.FacturacionDetalleBackup;
 import org.moduloFacturacion.bean.FacturasBuscadas;
+import org.moduloFacturacion.bean.Imprimir;
+import org.moduloFacturacion.bean.Letras;
 import org.moduloFacturacion.bean.ProductoBuscado;
 
 import org.moduloFacturacion.bean.ValidarStyle;
@@ -62,10 +69,7 @@ public class FacturacionViewController implements Initializable {
     private JFXTextField txtFacturaId;
     @FXML
     private JFXTextField txtTotalFactura;
-<<<<<<< HEAD
 
-=======
->>>>>>> Diego-Gonzalez
     @FXML
     private JFXButton btnEditar;
     @FXML
@@ -86,8 +90,11 @@ public class FacturacionViewController implements Initializable {
     private AnchorPane anchor3;
     @FXML
     private AnchorPane anchor4;
-    
     @FXML
+    private JFXTextField txtDireccionCliente;
+    @FXML
+    private JFXTextField txtLetrasPrecio;
+    
     private void cargarEstado(Event event) {
         animacion.animacion(anchor3, anchor4);
     }
@@ -96,21 +103,17 @@ public class FacturacionViewController implements Initializable {
     private void facturacion(Event event) {
          animacion.animacion(anchor1, anchor2);
     }
+    
+    Letras letras = new Letras();
 
-
-<<<<<<< HEAD
-  
-
-
-
-=======
->>>>>>> Diego-Gonzalez
+    PrinterJob impresion = PrinterJob.getPrinterJob();
+    
 
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER,FILTRAR,CARGAR};
-<<<<<<< HEAD
 
-=======
->>>>>>> Diego-Gonzalez
+
+
+
     public Operacion cancelar = Operacion.NINGUNO;
     
 
@@ -216,6 +219,8 @@ public class FacturacionViewController implements Initializable {
     private JFXTextField txtResultadoNit;
     @FXML
     private JFXTextField txtResultadoNombre;
+    DecimalFormat twoDForm = new DecimalFormat("#.00");
+    
     
     
     
@@ -228,7 +233,8 @@ public class FacturacionViewController implements Initializable {
                 totalFactura =  rs.getDouble("sum(totalParcialBackup)");
             }
             
-            txtTotalFactura.setText(String.valueOf(totalFactura));
+            txtTotalFactura.setText(String.valueOf(twoDForm.format(totalFactura)));
+            txtLetrasPrecio.setText(letras.Convertir(String.valueOf(twoDForm.format(totalFactura)), true));
         }catch(SQLException ex){
             ex.printStackTrace();
         }
@@ -243,6 +249,7 @@ public class FacturacionViewController implements Initializable {
         btnEditar.setDisable(true);
         valorTotalFactura();
         animacion.animacion(anchor1, anchor2);
+        txtNitCliente.setValue("");
     }    
 
     @FXML
@@ -262,6 +269,7 @@ public class FacturacionViewController implements Initializable {
         txtFacturaId.setText("");
         txtNitCliente.setValue("");
         txtNombreCliente.setText("");
+        txtDireccionCliente.setText("");
     }
     public void limpiarTextEfectivo(){
         txtNombreCliente.setText("");
@@ -339,16 +347,16 @@ public class FacturacionViewController implements Initializable {
                 ResultSet rs = ps.executeQuery();
                 while(rs.next()){
                         txtNombreCliente.setText(rs.getString("clienteNombre"));
-
+                        txtDireccionCliente.setText(rs.getString("clienteDireccion"));
                     }
                 if(rs.first()){
                     txtNombreCliente.setEditable(false);
-
+                    txtDireccionCliente.setEditable(false);
                 }else{
                     comprobarCliente=true;
                     txtNombreCliente.setText("");
                     txtNombreCliente.setEditable(true);
-
+                    txtDireccionCliente.setEditable(true);
                     noti.graphic(new ImageView(imgWarning));
                     noti.title("USUARIO NO EXISTE");
                     noti.text("DEBERÁ INGRESAR EL CAMPO NOMBRE");
@@ -430,8 +438,14 @@ public class FacturacionViewController implements Initializable {
                 noti.show();
                 
             }else{
-                
-                String sql ="{call SpAgregarClientes('"+txtNitCliente.getValue()+"','"+txtNombreCliente.getText()+"')}";
+                String sql = "";
+                 
+                if(txtDireccionCliente.getText().isEmpty()){
+                         sql = "{call SpAgregarClientesSinDireccion('"+txtNitCliente.getValue()+"','"+txtNombreCliente.getText()+"')}";                        
+                    }else{
+                        sql = "{call SpAgregarClientes('"+txtNitCliente.getValue()+"','"+txtNombreCliente.getText()+"','"+txtDireccionCliente.getText()+"')}";
+                    }
+                    
                 try{
                     PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
                     ps.execute();
@@ -528,6 +542,7 @@ public int buscarCodigoProducto(String precioProductos){
         } 
             totalFactura = totalFactura+totalParcial;
             txtTotalFactura.setText(String.valueOf(totalFactura));
+            
                 return listaBackUp = FXCollections.observableList(lista);
     }
      
@@ -542,6 +557,7 @@ public int buscarCodigoProducto(String precioProductos){
         
         cmbNombreProducto.setValue("");
         limpiarTextFacturacion();
+        
     }  
     
   public void accionEstado(String sql){
@@ -587,7 +603,7 @@ public int buscarCodigoProducto(String precioProductos){
   
   @FXML
     private void btnAgregarFacturaBackUp(MouseEvent event) {
-            if(cmbNombreProducto.getValue().equals("")|| txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty() || txtNombreCliente.getText().isEmpty() || txtNombreCliente.getText().isEmpty() || txtFacturaId.getText().isEmpty() ){
+            if(cmbNombreProducto.getValue().equals("")|| txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty() || txtNitCliente.getValue().equals("") || txtNombreCliente.getText().isEmpty() || txtFacturaId.getText().isEmpty() ){
                 Notifications noti = Notifications.create();
                 noti.graphic(new ImageView(imgError));
                 noti.title("ERROR");
@@ -608,6 +624,7 @@ public int buscarCodigoProducto(String precioProductos){
                    String sql = "{call SpAgregarBackup('"+buscarCodigoProducto(nuevoBackUp.getProductoDesc())+"','"+ nuevoBackUp.getCantidadBackup()+"','"+nuevoBackUp.getTotalParcialBackup()+"')}";
                    tipoOperacionFacturacion = Operacion.AGREGAR;
                    accionEstado(sql);  
+                   txtLetrasPrecio.setText(letras.Convertir(twoDForm.format(Double.parseDouble(txtTotalFactura.getText())), true));
             }
     }
     
@@ -690,22 +707,52 @@ public int buscarCodigoProducto(String precioProductos){
             noti.show();
        }
     }
+    
+    
+    public void imprimir(){
+        Imprimir imprimir = new Imprimir();
+        String fecha = String.valueOf(date2);
+        imprimir.imprima(listaBackUp, txtNitCliente.getValue(), txtNombreCliente.getText(), txtDireccionCliente.getText(), fecha,txtLetrasPrecio.getText(), txtTotalFactura.getText());
+        
+        
+    }
         @FXML
     private void btnImprimir(MouseEvent event) {
+       if(txtNitCliente.getValue().equals("") || txtNombreCliente.getText().isEmpty() || txtFacturaId.getText().isEmpty()){
+             Notifications noti = Notifications.create();
+            noti.graphic(new ImageView(imgError));
+            noti.title("ERROR");
+            noti.text("HAY CAMPOS VACÍOS");
+            noti.position(Pos.BOTTOM_RIGHT);
+            noti.hideAfter(Duration.seconds(4));
+            noti.darkStyle();
+            noti.show();
+       } else{
+           if(txtEfectivo.getText().isEmpty()){
+                Notifications noti = Notifications.create();
+                noti.graphic(new ImageView(imgError));
+                noti.title("ERROR");
+                noti.text("EL CAMPO DE EFECTIVO ESTA VACÍO");
+                noti.position(Pos.BOTTOM_RIGHT);
+                noti.hideAfter(Duration.seconds(4));
+                noti.darkStyle();
+                noti.show();
+           }else{
+                imprimir();
+                comprobarClienteExistente();
+
+                guardarFactura();
+
+                limpiarTextCliente();
+
+               limpiarTextEfectivo();
+           }
+            
+       }
        
-       comprobarClienteExistente();
-       
-       guardarFactura();
-       
-       limpiarTextCliente();
-       
-      limpiarTextEfectivo();
     }
     
-<<<<<<< HEAD
 
-=======
->>>>>>> Diego-Gonzalez
       @FXML
     private void btnEditar(MouseEvent event) {
         if(cmbNombreProducto.getValue().equals("") || txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty()){
@@ -838,11 +885,7 @@ public int buscarCodigoProducto(String precioProductos){
         }
         txtCambio.setText(String.valueOf(total));
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> Diego-Gonzalez
 // ================================ CODIGO BUSQUEDA FACTURAS
     
     public ObservableList<FacturasBuscadas> getFacturasBuscadas(){
@@ -875,6 +918,7 @@ public int buscarCodigoProducto(String precioProductos){
     
     @FXML
     public void cargarFacturasBuscadas(){
+        animacion.animacion(anchor3, anchor4);
         tblResultadoFactura.setItems(getFacturasBuscadas());
         
         colNumeroFacBuscado.setCellValueFactory(new PropertyValueFactory("facturaId"));
@@ -884,6 +928,11 @@ public int buscarCodigoProducto(String precioProductos){
         colFechaBuscada.setCellValueFactory(new PropertyValueFactory("facturaFecha"));
         
         txtBusquedaCodigoFac.setValue("");
+        txtFechaInicio.setValue(null);
+        txtFechaFinal.setValue(null);
+        tblResultadoProducto.setItems(null);
+        txtResultadoNit.setText("");
+        txtResultadoNombre.setText("");
     }  
     
         
@@ -911,7 +960,6 @@ public int buscarCodigoProducto(String precioProductos){
         return listaFacturasBuscadas = FXCollections.observableList(lista);
     }
     
-        @FXML
     public void cargarFacturasBuscadasPorId(){
         tblResultadoFactura.setItems(getFacturasBuscadasPorId());
         
@@ -984,7 +1032,6 @@ public int buscarCodigoProducto(String precioProductos){
     }
  
     
-     @FXML
     public void cargarProductosBuscados(){
         tblResultadoProducto.setItems(getProductoBuscado());
         
@@ -994,14 +1041,7 @@ public int buscarCodigoProducto(String precioProductos){
     }  
     
 
-    
-    
-    private void cargarFacturasBuscadas(Event event) {
-        cargarFacturasBuscadas();
-        //txtFechaInicio
 
-
-    }
     
     public void accion(String sql){
          Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -1148,6 +1188,7 @@ public int buscarCodigoProducto(String precioProductos){
         }
     }
     
+    @FXML
      public void buscarFactura(){
       if(txtBusquedaCodigoFac.getValue().equals("")){
                     Notifications noti = Notifications.create();
@@ -1165,6 +1206,7 @@ public int buscarCodigoProducto(String precioProductos){
         }  
     }
      
+    @FXML
     public void buscarPorFechas(){
         try{
       if(txtFechaInicio.getValue().equals("") || txtFechaFinal.getValue().equals("")){
@@ -1245,10 +1287,7 @@ public int buscarCodigoProducto(String precioProductos){
                     tipoOperacionBusquedaFacturas = Operacion.CANCELAR;
                 }
         }  
-<<<<<<< HEAD
 
-=======
->>>>>>> Diego-Gonzalez
     
     
     @FXML
@@ -1274,21 +1313,20 @@ public int buscarCodigoProducto(String precioProductos){
         }
     }
     
-    @FXML
     private void btnBuscarFactura(MouseEvent event) {
         buscarFactura();
     }
     
     
-    @FXML
     private void btnFiltrarFactura(MouseEvent event) {
         buscarPorFechas();
     }
     
     @FXML
     private void btnCargarFacturas(MouseEvent event) {
-        tipoOperacionBusquedaFacturas = Operacion.CARGAR;
-
+        
+        cargarFacturasBuscadas();
+      
     }
 }
 
