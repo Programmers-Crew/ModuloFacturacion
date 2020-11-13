@@ -693,7 +693,7 @@ DELIMITER $$
 												order by f.facturaId asc;
         END $$
 DELMITER ;
-
+call SpBuscarClienteFacturaFecha(00001);
 
 DELIMITER $$
 	create procedure SpListarBusquedasFacturasPorId(idBuscado int(5))
@@ -816,4 +816,44 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
+
+DELIMITER $$
+	create procedure SpCorteDeCaja(fechaCorte date)
+		BEGIN
+			select f.facturaId, c.clienteNombre, c.clienteNit,  f.facturaFecha, u.usuarioNombre, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal
+				from facturas as f
+					inner join clientes as c
+						on f.clienteId = c.clienteId
+							inner join usuarios as u
+								on f.usuarioId = u.usuarioId
+									where facturaFecha = fechaCorte
+										order by f.facturaId asc;
+        END $$
+DELIMITER ;
+drop procedure SpCorteDeCaja;
+call SpCorteDeCaja('2020-11-10');
+call SpTotalVendio('2020-11-10');
+
+DELIMITER $$
+	create procedure SpTotalVendio(fechaCorte date)
+		BEGIN
+			select facturaFecha, sum(facturaTotalNeto) as 'Total Neto Vendido', sum(facturaTotalIva) as 'Total Iva Vendido' , sum(facturaTotal) as 'Total Vendido'
+				from facturas
+					where facturaFecha = fechaCorte;
+		END $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure SpCorteDeCajaDetalle(facturaId int)
+		BEGIN
+			select productoDesc, productoPrecio ,cantidad
+				from facturadetalle as fd
+					inner join productos as p
+						on fd.productoId = p.productoId
+							inner join facturas as f
+								on f.facturaDetalleId = fd.facturaDetalleId
+									where f.facturaId = facturaId;
+        END $$ 
+			
+DELIMITER ;
 
