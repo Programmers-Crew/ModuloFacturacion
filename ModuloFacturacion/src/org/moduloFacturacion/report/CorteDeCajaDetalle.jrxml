@@ -7,8 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[call SpCorteDeCajaDetalle($P!{facturaId});
-]]>
+		<![CDATA[call SpCorteDeCajaDetalle($P!{facturaId});]]>
 	</queryString>
 	<field name="productoDesc" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
