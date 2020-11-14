@@ -482,6 +482,15 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
+	create procedure SpAgregarFacturasPrueba(id int(100), cliente int(100),usuario int(100), neto decimal(10,2), iva decimal(10,2), total decimal(10,2))
+		BEGIN
+			insert into Facturas(facturaId, clienteId,usuarioId, facturaTotalNeto, facturaTotalIva, facturaTotal)
+				values(id, cliente,usuario, neto, iva, total);
+        END $$
+DELIMITER ;
+
+
+DELIMITER $$
 	create procedure SpBuscarcodigoProducto(nombre varchar(50))
 			BEGIN
 				select productoId
@@ -854,6 +863,29 @@ DELIMITER $$
 								on f.facturaDetalleId = fd.facturaDetalleId
 									where f.facturaId = facturaId;
         END $$ 
-			
 DELIMITER ;
 
+call SpCorteDeCajaDetalle(29);
+
+
+insert into prueba(idprueba)
+values(1);
+
+SELECT DATE_FORMAT(facturaFecha, "%H:%i:%S" ) 
+from facturas;
+
+
+    
+select*from facturas;
+
+DELIMITER $$
+	create procedure SpDatoReporteVentas(fechaCorte date)
+		BEGIN
+			select count(f.facturaId), sum(fd.cantidad)
+				from facturas as f
+					inner join facturadetalle as fd
+						on f.facturaDetalleId = fd.facturaDetalleId;
+        END $$
+DELIMITER ;
+
+call SpDatoReporteVentas('2020-11-10');
