@@ -9,12 +9,14 @@
 	<queryString>
 		<![CDATA[call SpTotalVendio($P!{FechaCorte});]]>
 	</queryString>
-	<field name="facturaFecha" class="java.sql.Date">
+	<field name="facturaFecha" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Total Neto Vendido" class="java.math.BigDecimal"/>
 	<field name="Total Iva Vendido" class="java.math.BigDecimal"/>
 	<field name="Total Vendido" class="java.math.BigDecimal"/>
+	<field name="count(f.facturaId)" class="java.lang.Long"/>
+	<field name="sum(fd.cantidad)" class="java.math.BigDecimal"/>
 	<pageHeader>
 		<band height="38" splitType="Stretch">
 			<rectangle radius="10">
