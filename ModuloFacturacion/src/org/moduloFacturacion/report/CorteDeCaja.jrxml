@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CorteDeCaja" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0753d889-ff07-4755-9f82-562b5c634a18">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteVentas" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0753d889-ff07-4755-9f82-562b5c634a18">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="64"/>
+	<property name="ireport.y" value="587"/>
 	<parameter name="FechaCorte" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -53,14 +53,14 @@
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="514" width="748" height="20" uuid="8860c345-6b08-4645-bcd9-1c2aa023fa46"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA["Este reporte es estrictamente para uso administrativo.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="534" width="752" height="20" uuid="03dcd1e7-e895-4494-8175-5edbb11e885b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Esta completamente prohibido revelar esta informacion al publico general"]]></text>
@@ -79,16 +79,16 @@
 			<staticText>
 				<reportElement x="244" y="0" width="250" height="79" uuid="d98559f9-8c9d-4bfb-b79e-3836afed76f0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="30" isBold="true" isItalic="true"/>
+					<font fontName="Bell MT" size="30" isBold="true" isItalic="false" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[CORTE DE CAJA]]></text>
+				<text><![CDATA[REPORTE VENTAS]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="88" splitType="Stretch">
+		<band height="163" splitType="Stretch">
 			<subreport>
-				<reportElement x="-24" y="20" width="752" height="54" isRemoveLineWhenBlank="true" uuid="7f47693d-f291-4829-87e4-b18439428f75">
+				<reportElement x="-20" y="20" width="752" height="54" isRemoveLineWhenBlank="true" uuid="7f47693d-f291-4829-87e4-b18439428f75">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="FechaCorte">
@@ -119,6 +119,21 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="532" y="0" width="100" height="20" uuid="39acde9a-a928-4880-99c8-205138e60766"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="-31" y="86" width="748" height="76" forecolor="#FFFFFF" backcolor="#006666" uuid="3cf87e27-7d6e-4ea2-8c16-2a31457ac0a0">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="FechaCorte">
+					<subreportParameterExpression><![CDATA[$P{FechaCorte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DatosReporteVentas.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</pageHeader>
 	<columnHeader>

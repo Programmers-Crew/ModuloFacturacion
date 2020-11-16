@@ -839,16 +839,18 @@ DELIMITER $$
 										order by f.facturaId asc;
         END $$
 DELIMITER ;
-drop procedure SpCorteDeCaja;
+drop procedure SpTotalVendio;
 call SpCorteDeCaja('2020-11-10');
 call SpTotalVendio('2020-11-10');
 
 DELIMITER $$
 	create procedure SpTotalVendio(fechaCorte date)
 		BEGIN
-			select facturaFecha, sum(facturaTotalNeto) as 'Total Neto Vendido', sum(facturaTotalIva) as 'Total Iva Vendido' , sum(facturaTotal) as 'Total Vendido'
-				from facturas
-					where facturaFecha = fechaCorte;
+			select facturaFecha, sum(facturaTotalNeto) as 'Total Neto Vendido', sum(facturaTotalIva) as 'Total Iva Vendido' , sum(facturaTotal) as 'Total Vendido', count(f.facturaId), sum(fd.cantidad)
+				from facturas as f
+					inner join facturadetalle as fd
+						on f.facturaDetalleId = fd.facturaDetalleId
+							where facturaFecha = fechaCorte;
 		END $$
 DELIMITER ;
 
@@ -867,25 +869,21 @@ DELIMITER ;
 
 call SpCorteDeCajaDetalle(29);
 
-
-insert into prueba(idprueba)
-values(1);
-
-SELECT DATE_FORMAT(facturaFecha, "%H:%i:%S" ) 
-from facturas;
-
-
-    
-select*from facturas;
-
 DELIMITER $$
-	create procedure SpDatoReporteVentas(fechaCorte date)
-		BEGIN
-			select count(f.facturaId), sum(fd.cantidad)
-				from facturas as f
-					inner join facturadetalle as fd
-						on f.facturaDetalleId = fd.facturaDetalleId;
+	create procedure SpInventarioConteo()
+		BEGIN 
+			update inventarioproductos as ip
+				inner join facturadetallebackup as fd
+					set ip.inventarioProductoCant = ip.inventarioProductoCant - fd.cantidadBackup
+						where ip.productoId = fd.productoIdBackup;
         END $$
 DELIMITER ;
 
-call SpDatoReporteVentas('2020-11-10');
+DELIMITER $$
+	create procedure SpSumaProductos(idBuscado int, cantidad int)
+		BEGIN 
+			update inventarioproductos as ip
+					set ip.inventarioProductoCant = ip.inventarioProductoCant + cantidad
+						where ip.productoId = idBuscado ;
+        END $$
+DELIMITER ;

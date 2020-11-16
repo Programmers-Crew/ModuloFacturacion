@@ -270,7 +270,12 @@
                                           <JFXDatePicker fx:id="txtFechaFinal" prefHeight="28.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
                                        </children>
                                     </GridPane>
-                                    <JFXButton fx:id="btnCorteDeCaja" buttonType="RAISED" layoutX="31.0" layoutY="460.0" styleClass="boton" text="CORTE DE CAJA " textFill="WHITE" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="31.0">
+                                    <JFXButton fx:id="btnCorteDeCaja" buttonType="RAISED" layoutX="20.0" layoutY="461.0" onMouseClicked="#generarReporteCierreCaja" styleClass="boton" text="CIERRE DE CAJA" textFill="WHITE" AnchorPane.bottomAnchor="37.327255445748904" AnchorPane.leftAnchor="20.0">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btnCorteDeCaja1" buttonType="RAISED" layoutX="127.0" layoutY="461.0" onMouseClicked="#generarReporteVentas" styleClass="boton" text="REPORTE VENTAS" textFill="WHITE" AnchorPane.bottomAnchor="37.32725544574893" AnchorPane.leftAnchor="127.0">
                                        <font>
                                           <Font size="11.0" />
                                        </font>

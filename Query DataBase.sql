@@ -41,7 +41,7 @@ create table Productos(
 
 create table InventarioProductos(
 	inventarioProductoId int(5) UNSIGNED ZEROFILL primary key auto_increment,
-    inventarioProductoCant int(5) UNSIGNED ZEROFILL not null,
+    inventarioProductoCant int(5)  not null,
     productoId int(5) UNSIGNED ZEROFILL not null,
     estadoProductoId tinyint(1) not null,
     
@@ -65,17 +65,18 @@ create table Usuarios(
 create table FacturaDetalle(
 	facturaDetalleId int(5) UNSIGNED ZEROFILL primary key,
     productoId int(5) UNSIGNED ZEROFILL not null,
-    cantidad int(5) UNSIGNED ZEROFILL not null, 
+    cantidad int(5)  not null, 
     totalParcial decimal(10,2),
     
 	CONSTRAINT FK_productoFacDetalle FOREIGN KEY (productoId) REFERENCES Productos(productoId)
 
 );
 
+
 create table FacturaDetalleBackUp(
 	facturaDetalleIdBackup int(5)UNSIGNED ZEROFILL primary key auto_increment ,
     productoIdBackup int(5) UNSIGNED ZEROFILL not null,
-    cantidadBackup int(5) UNSIGNED ZEROFILL not null, 
+    cantidadBackup int(5)  not null, 
     totalParcialBackup decimal(10,2) not null,
     
 	CONSTRAINT FK_productoFacDetalleBackup FOREIGN KEY (productoIdBackup) REFERENCES Productos(productoId)

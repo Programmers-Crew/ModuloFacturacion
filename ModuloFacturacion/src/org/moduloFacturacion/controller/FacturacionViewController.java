@@ -17,7 +17,10 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import java.util.Optional;
@@ -44,6 +47,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.JOptionPane;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.Animations;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
@@ -58,6 +62,8 @@ import org.moduloFacturacion.bean.ProductoBuscado;
 import org.moduloFacturacion.bean.ValidarStyle;
 
 import org.moduloFacturacion.db.Conexion;
+import org.moduloFacturacion.report.GenerarReporte;
+
 
 
 public class FacturacionViewController implements Initializable {
@@ -681,6 +687,15 @@ public int buscarCodigoProducto(String precioProductos){
         return codigoUsuario;
     }
     
+    public void conteoProductos(){       
+        try{
+        String sqlConteoProducto = "{call SpInventarioConteo()}";
+        PreparedStatement psConteoProductos = Conexion.getIntance().getConexion().prepareCall(sqlConteoProducto);
+        psConteoProductos.execute();   
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     
     public void guardarFactura(){
         double totalNeto = Double.parseDouble(txtTotalFactura.getText())/1.12;
@@ -690,12 +705,15 @@ public int buscarCodigoProducto(String precioProductos){
        String sqlEliminar = "{call SpEliminarBackup()}";
        String sqlFactura = "{call SpAgregarFactura('"+txtFacturaId.getText()+"','"+getClienteId()+"','"+date2+"','"+getUsuarioId()+"','"+totalNeto+"','"+totalIva+"','"+txtTotalFactura.getText()+"')}";
        try{
+
            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
            ps.execute();
            
            PreparedStatement psFactura = Conexion.getIntance().getConexion().prepareCall(sqlFactura);
                psFactura.execute();
            
+
+               
            PreparedStatement psEliminar = Conexion.getIntance().getConexion().prepareCall(sqlEliminar);
            psEliminar.execute();
            
@@ -727,9 +745,9 @@ public int buscarCodigoProducto(String precioProductos){
         Imprimir imprimir = new Imprimir();
         String fecha = String.valueOf(date2);
         imprimir.imprima(listaBackUp, txtNitCliente.getValue(), txtNombreCliente.getText(), txtDireccionCliente.getText(), fecha,txtLetrasPrecio.getText(), txtTotalFactura.getText());
-        
-        
     }
+    
+    
         @FXML
     private void btnImprimir(MouseEvent event) {
        if(txtNitCliente.getValue().equals("") || txtNombreCliente.getText().isEmpty() || txtFacturaId.getText().isEmpty()){
@@ -752,6 +770,7 @@ public int buscarCodigoProducto(String precioProductos){
                 noti.darkStyle();
                 noti.show();
            }else{
+               conteoProductos();
                 imprimir();
                 comprobarClienteExistente();
 
@@ -1343,7 +1362,54 @@ public int buscarCodigoProducto(String precioProductos){
         cargarFacturasBuscadas();
       
     }
+    
+    public void imprimirReporteVentas(){
+            try{
+                Map parametros = new HashMap();
+
+                 String FechaCorte = txtFechaInicio.getValue().toString();
+                String repuesta = "'"+FechaCorte+"'";
+                
+                parametros.put("FechaCorte", "'"+FechaCorte+"'");
+                 GenerarReporte.mostrarReporte("CorteDeCaja.jasper", "CIERRE DE CAJA", parametros);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+    }
+    
+    public void generarReporteVentas(){
+            switch(tipoOperacionBusquedaFacturas){
+                case NINGUNO:
+                    imprimirReporteVentas();
+                break;
+            }
+    }
+    
+        public void imprimirCierreDeCaja(){
+            try{
+                Map parametros = new HashMap();
+
+                 String FechaCorte = txtFechaInicio.getValue().toString();
+                String repuesta = "'"+FechaCorte+"'";
+                
+                parametros.put("FechaCorte", "'"+FechaCorte+"'");
+                 GenerarReporte.mostrarReporte("CierreDeCaja.jasper", "CIERRE DE CAJA", parametros);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+    }
+    
+    public void generarReporteCierreCaja(){
+            switch(tipoOperacionBusquedaFacturas){
+                case NINGUNO:
+                    imprimirCierreDeCaja();
+                break;
+            }
+    }
 }
+
+
+
 
 
 

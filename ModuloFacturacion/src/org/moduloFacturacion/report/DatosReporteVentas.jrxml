@@ -7,13 +7,15 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[call SpDatoReporteVentas($P!{FechaCorte});
-]]>
+		<![CDATA[call SpDatoReporteVentas($P!{FechaCorte});]]>
 	</queryString>
 	<field name="count(f.facturaId)" class="java.lang.Long"/>
 	<field name="sum(fd.cantidad)" class="java.math.BigDecimal"/>
 	<detail>
 		<band height="96" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement x="161" y="0" width="432" height="96" forecolor="#FFFFFF" backcolor="#EBEAEA" uuid="8025ad4e-f2e6-4b42-8ec5-4ff9e27d4552"/>
+			</rectangle>
 			<textField>
 				<reportElement x="438" y="54" width="117" height="19" uuid="10fcb7ab-604e-4b7e-967f-22490eb7b9dd"/>
 				<textElement>
@@ -31,16 +33,16 @@
 			<staticText>
 				<reportElement x="189" y="19" width="142" height="21" uuid="c8fb5e13-b655-4675-b484-8d6765d82f00"/>
 				<textElement verticalAlignment="Middle">
-					<font size="12"/>
+					<font fontName="Calibri Light" size="14"/>
 				</textElement>
-				<text><![CDATA[VENTAS REALIZADAS]]></text>
+				<text><![CDATA[- VENTAS REALIZADAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="189" y="54" width="226" height="19" uuid="057c864f-0857-48c1-b996-868f3358c3bd"/>
-				<textElement>
-					<font size="12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri Light" size="14"/>
 				</textElement>
-				<text><![CDATA[CANTIDAD DE ARTICULOS VENDIDOS]]></text>
+				<text><![CDATA[- CANTIDAD DE ARTICULOS VENDIDOS]]></text>
 			</staticText>
 		</band>
 	</detail>

@@ -47,6 +47,9 @@
 	</pageHeader>
 	<columnHeader>
 		<band height="25" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="5" width="752" height="20" forecolor="#D5D5D5" backcolor="#E7E7E7" uuid="a50d3b80-284c-4a86-84cb-f0074fc03b58"/>
+			</rectangle>
 			<textField>
 				<reportElement x="65" y="4" width="163" height="20" uuid="e2b516e6-e8ed-4fb7-be66-6c0c00f729e0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
