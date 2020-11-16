@@ -869,6 +869,7 @@ DELIMITER ;
 
 call SpCorteDeCajaDetalle(29);
 
+
 DELIMITER $$
 	create procedure SpInventarioConteo()
 		BEGIN 
@@ -878,6 +879,7 @@ DELIMITER $$
 						where ip.productoId = fd.productoIdBackup;
         END $$
 DELIMITER ;
+
 
 DELIMITER $$
 	create procedure SpSumaProductos(idBuscado int, cantidad int)

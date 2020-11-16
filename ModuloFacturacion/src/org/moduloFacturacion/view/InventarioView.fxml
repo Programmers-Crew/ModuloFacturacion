@@ -124,6 +124,11 @@
                                                 <Insets left="5.0" />
                                              </padding>
                                           </AnchorPane>
+                                          <JFXButton fx:id="btnAgregarInventario1" buttonType="RAISED" prefHeight="24.0" prefWidth="211.0" styleClass="boton" text="SUMAR" textFill="WHITE">
+                                             <font>
+                                                <Font size="11.0" />
+                                             </font>
+                                          </JFXButton>
                                        </children>
                                     </VBox>
                                  </children>
