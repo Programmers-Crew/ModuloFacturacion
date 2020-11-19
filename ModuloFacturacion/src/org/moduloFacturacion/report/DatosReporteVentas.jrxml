@@ -9,7 +9,10 @@
 	<queryString>
 		<![CDATA[call SpDatoReporteVentas($P!{FechaCorte});]]>
 	</queryString>
-	<field name="count(f.facturaId)" class="java.lang.Long"/>
+	<field name="facturaFecha" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="count(distinct f.facturaId)" class="java.lang.Long"/>
 	<field name="sum(fd.cantidad)" class="java.math.BigDecimal"/>
 	<detail>
 		<band height="96" splitType="Stretch">
@@ -22,13 +25,6 @@
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sum(fd.cantidad)}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="438" y="19" width="117" height="20" uuid="d3c7800a-54a5-4a06-b5f4-ba18f2b402a5"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{count(f.facturaId)}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="189" y="19" width="142" height="21" uuid="c8fb5e13-b655-4675-b484-8d6765d82f00"/>
@@ -44,6 +40,13 @@
 				</textElement>
 				<text><![CDATA[- CANTIDAD DE ARTICULOS VENDIDOS]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="438" y="19" width="117" height="21" uuid="6e6083c5-94e1-4384-9d1a-a3586786e3fa"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{count(distinct f.facturaId)}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

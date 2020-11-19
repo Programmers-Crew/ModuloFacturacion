@@ -829,7 +829,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpCorteDeCaja(fechaCorte date)
 		BEGIN
-			select f.facturaId, c.clienteNombre, c.clienteNit,  f.facturaFecha, u.usuarioNombre, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal
+			select distinct f.facturaId, c.clienteNombre, c.clienteNit,  f.facturaFecha, u.usuarioNombre, f.facturaTotalNeto, f.facturaTotalIva, f.facturaTotal
 				from facturas as f
 					inner join clientes as c
 						on f.clienteId = c.clienteId
@@ -839,7 +839,7 @@ DELIMITER $$
 										order by f.facturaId asc;
         END $$
 DELIMITER ;
-drop procedure SpTotalVendio;
+
 call SpCorteDeCaja('2020-11-10');
 call SpTotalVendio('2020-11-10');
 
@@ -889,3 +889,17 @@ DELIMITER $$
 						where ip.productoId = idBuscado ;
         END $$
 DELIMITER ;
+
+ 
+DELIMITER $$
+	create procedure SpDatoReporteVentas(fechaCorte date)
+		BEGIN 
+			select facturaFecha ,count(distinct f.facturaId), sum(fd.cantidad)
+				from facturas as f
+					inner join facturadetalle as fd
+						on f.facturaDetalleId = fd.facturaDetalleId
+							where f.facturaFecha = fechaCorte;
+        END $$
+DELIMITER ;
+
+

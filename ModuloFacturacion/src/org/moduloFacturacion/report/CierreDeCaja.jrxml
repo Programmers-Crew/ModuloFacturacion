@@ -115,7 +115,7 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="-15" y="32" width="712" height="100" isRemoveLineWhenBlank="true" uuid="7281dcdf-24cf-4317-afb7-2f76d49b303a">
+				<reportElement x="-20" y="33" width="712" height="100" isRemoveLineWhenBlank="true" uuid="7281dcdf-24cf-4317-afb7-2f76d49b303a">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="FechaCorte">

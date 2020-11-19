@@ -78,7 +78,7 @@ public class InventarioViewController implements Initializable {
     }
 
     
-    public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO};
+    public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, SUMAR};
     public Operacion cancelar = Operacion.NINGUNO;
     
     // Variables para Inventario
@@ -602,6 +602,56 @@ public class InventarioViewController implements Initializable {
                     accionInventario();
                 }
                 break;
+                 case SUMAR:
+                alert.setTitle("SUMAR PRODUCTO");
+                alert.setHeaderText("SUMAR PRODUCTO");
+                alert.setContentText("¿Está sumar esta cantidad?");
+                
+                alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
+                
+                Optional<ButtonType> resultSuma = alert.showAndWait();
+                if(resultSuma.get() == buttonTypeSi ){
+                    try {
+                        ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                        ps.execute();
+                        
+                        noti.graphic(new ImageView(imgCorrecto));
+                        noti.title("OPERACIÓN EXITOSA");
+                        noti.text("SE HA ACTUALIZADO LA CANTIDAD EXITOSAMENTE");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionInventario = Operacion.CANCELAR;
+                        accionInventario();
+                        
+                        cargarDatos();
+                        
+                    }catch (SQLException ex) {
+                        ex.printStackTrace();
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR AL SUMAR");
+                        noti.text("HA OCURRIDO UN ERROR AL SUMAR");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionInventario = Operacion.CANCELAR;
+                        accionInventario();
+                    }
+                }else{
+                    
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("OPERACIÓN CANCELADA");
+                    noti.text("NO SE HA AGREGADO EL REGISTRO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+                    tipoOperacionInventario = Operacion.CANCELAR;
+                    accionInventario();
+                }
+                break;
         }
     }
     
@@ -685,6 +735,33 @@ public class InventarioViewController implements Initializable {
                     accionInventario();
                             }
     }
+    
+    
+         @FXML
+    private void btnSumar(MouseEvent event) {
+           if(cmbCodigoProductoInventario.getValue().equals("") || txtCantidadInventario.getText().isEmpty()){
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("HAY CAMPOS VACÍOS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+           }else{
+                   InventarioProductos nuevoInventario = new InventarioProductos();
+                   nuevoInventario.setProductoId(cmbCodigoProductoInventario.getValue());
+                   nuevoInventario.setInventarioProductoCant(Integer.parseInt(txtCantidadInventario.getText()));
+
+                   String sql = "{call SpSumaProductos('"+nuevoInventario.getProductoId()+"','"+ nuevoInventario.getInventarioProductoCant()+"')}";
+                   tipoOperacionInventario = Operacion.SUMAR;
+                   accion(sql);                   
+               }
+                    accionInventario();
+                            }
+    
+    
+    
     
     @FXML
     public void buscarProducto(){

@@ -7,7 +7,8 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[call SpTotalVendio($P!{FechaCorte});]]>
+		<![CDATA[call SpTotalVendio($P!{FechaCorte});
+]]>
 	</queryString>
 	<field name="facturaFecha" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
