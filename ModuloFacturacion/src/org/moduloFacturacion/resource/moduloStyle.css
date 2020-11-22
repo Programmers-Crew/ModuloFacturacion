@@ -1,6 +1,7 @@
 .paneInicio{
     -fx-background-image: url(../img/inicioClaro.png);
     -fx-background-size: stretch;
+    
 }
 
 .paneCliente{
@@ -12,6 +13,11 @@
     -fx-background-color: #33b5e5;
 }
 
+.paneRegresar{
+     -fx-background-image: url(../img/regresar.png);
+    -fx-background-size: stretch;
+    /*visibility: false;*/
+}
 
 .opciones:hover{
     -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 7, 7); 
@@ -35,7 +41,13 @@
 .paneInicio:pressed{
     -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 0, 0);
 }
-
+.paneRegresar:hover{
+   -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2);
+    
+}
+.paneRegresar:pressed{
+    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 0, 0);
+}
 .paneCliente:hover{
    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2);
     

@@ -68,14 +68,10 @@ public class InventarioViewController implements Initializable {
     private AnchorPane anchor4;
     
     Animations animacion = new Animations();
+    @FXML
+    private JFXButton btnAgregarInventario1;
     
-    @FXML
-    private void validarCantidadProducto(ActionEvent event) {
-    }
-
-    @FXML
-    private void validarCodigoEstado(ActionEvent event) {
-    }
+  
 
     
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, SUMAR};
@@ -158,6 +154,7 @@ public class InventarioViewController implements Initializable {
     private JFXComboBox<String> cmbCodigoEstadoProductos;
     
     
+    
     //========================================== CODIGO PARA VISTA INVENTARIO =============================================================
         
     public void limpiarText(){
@@ -190,8 +187,7 @@ public class InventarioViewController implements Initializable {
     public void activarTextInventario(){
         cmbCodigoProductoInventario.setDisable(false);
         txtCantidadInventario.setEditable(true);
-        txtProveedorInventario.setEditable(true);
-        txtProductoInventario.setEditable(true);
+        
         cmbNombreEstado.setDisable(false);
     }
     
@@ -279,6 +275,7 @@ public class InventarioViewController implements Initializable {
         cmbFiltroCodigo.setValue("");
         cmbNombreEstado.setValue("");
         new AutoCompleteComboBoxListener(cmbFiltroCodigo);
+        
         new AutoCompleteComboBoxListener(cmbNombreEstado);
     }
      
@@ -300,15 +297,7 @@ public class InventarioViewController implements Initializable {
             cmbNombreEstado.setDisable(false);
             
         }catch(Exception ex){
-            ex.printStackTrace();
-            Notifications noti = Notifications.create();
-            noti.graphic(new ImageView(imgError));
-            noti.title("ERROR AL CARGAR DATOS");
-            noti.text("Error al cargar la base de datos");
-            noti.position(Pos.BOTTOM_RIGHT);
-            noti.hideAfter(Duration.seconds(4));
-            noti.darkStyle();
-            noti.show();
+            
            
         }
     }
@@ -371,6 +360,7 @@ public class InventarioViewController implements Initializable {
                 btnEliminarInventario.setText("CANCELAR");
                 btnBuscarInventario.setDisable(true);
                 btnEliminarInventario.setDisable(false);
+                
                 activarTextInventario();
                 limpiarText();
                 break;
@@ -575,8 +565,9 @@ public class InventarioViewController implements Initializable {
                         noti.hideAfter(Duration.seconds(4));
                         noti.darkStyle();
                         noti.show();
+                        cmbNombreEstado.setDisable(false);
                         activarTextInventario();
-                        cmbNombreEstado.setDisable(true);
+                        
                     }else{
                          
                         noti.graphic(new ImageView(imgError));
@@ -605,7 +596,7 @@ public class InventarioViewController implements Initializable {
                  case SUMAR:
                 alert.setTitle("SUMAR PRODUCTO");
                 alert.setHeaderText("SUMAR PRODUCTO");
-                alert.setContentText("¿Está sumar esta cantidad?");
+                alert.setContentText("¿Está seguro que desea sumar esta cantidad?");
                 
                 alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
                 
@@ -750,15 +741,15 @@ public class InventarioViewController implements Initializable {
                     noti.show();
            }else{
                    InventarioProductos nuevoInventario = new InventarioProductos();
-                   nuevoInventario.setProductoId(cmbCodigoProductoInventario.getValue());
+                   nuevoInventario.setProductoId(codigoProducto);
                    nuevoInventario.setInventarioProductoCant(Integer.parseInt(txtCantidadInventario.getText()));
 
                    String sql = "{call SpSumaProductos('"+nuevoInventario.getProductoId()+"','"+ nuevoInventario.getInventarioProductoCant()+"')}";
                    tipoOperacionInventario = Operacion.SUMAR;
                    accion(sql);                   
-               }
+                }
                     accionInventario();
-                            }
+    }
     
     
     
@@ -910,7 +901,7 @@ public class InventarioViewController implements Initializable {
             txtDescEstadoProducto.setText(colDescEstadoProductos.getCellData(index));
             btnEliminarEstadoProductos.setDisable(false);
             btnEditarEstadoProductos.setDisable(false);
-            
+            cmbNombreEstado.setDisable(false);
             codigoEstado = colCodigoEstadoCodigo.getCellData(index);
             activarTextEstado();
         }catch(Exception e){
@@ -1309,14 +1300,37 @@ public class InventarioViewController implements Initializable {
         cmbNombreEstado.setValue("");
         cmbCodigoProductoInventario.setValue("");
         llenarComboProducto();
-
-                }    
+        new AutoCompleteComboBoxListener(cmbCodigoProductoInventario);
+    }    
 
     @FXML
     private void regresar(MouseEvent event) throws IOException {
          String menu = "org/moduloFacturacion/view/menuPrincipal.fxml";
         cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
     }
+    
+      @FXML
+    private void validarCantidadProducto(ActionEvent event) {
+    }
+
+    @FXML
+    private void validarCodigoEstado(ActionEvent event) {
+    }
+
+    @FXML
+    private void btnProveedores(MouseEvent event) throws IOException {
+        menu.prefsRegresar.put("regresar", "inventario");
+        String menu1 = "org/moduloFacturacion/view/ProveedoresView.fxml";
+        cambioScene.Cambio(menu1,(Stage) anchor.getScene().getWindow());
+    }
+    
+    @FXML
+    private void btnProductos(MouseEvent event) throws IOException {
+        menu.prefsRegresarProductos.put("regresar", "inventario");
+          String menu = "org/moduloFacturacion/view/ProductosView.fxml";
+        cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
+    }
+    
     
 }
 

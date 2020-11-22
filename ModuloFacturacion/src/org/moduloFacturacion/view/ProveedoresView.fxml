@@ -28,7 +28,15 @@
    <children>
       <Pane layoutY="1.0" prefHeight="36.0" prefWidth="600.0" styleClass="bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane layoutX="7.0" layoutY="5.0" onMouseClicked="#regresar" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
+            <Pane fx:id="regresarbtn" layoutX="7.0" layoutY="5.0" onMouseClicked="#regresar" prefHeight="27.0" prefWidth="46.0" styleClass="paneRegresar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <Reflection />
+               </effect>
+            </Pane>
+            <Pane fx:id="regresarpane" layoutX="7.0" layoutY="5.0" onMouseClicked="#regresar" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

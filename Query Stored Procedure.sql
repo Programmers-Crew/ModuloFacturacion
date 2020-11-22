@@ -90,6 +90,8 @@ DELIMITER $$
 		END $$
 DELIMITER ;
 
+call spAgregarEstadoProducto("EN EXISTENCIA");
+call spAgregarEstadoProducto("AGOTADO");
 
 DELIMITER $$
 	create procedure SpActualizarEstadoProducto(idBuscado tinyint(1), nuevaDesc varchar(100))
@@ -207,6 +209,7 @@ DELIMITER $$
 	create procedure SpBuscarCategoriaProductos(idBuscado int(100))
 		BEGIN
 			select categoriaNombre, categoriaId
+            from categoriaproductos
 				where categoriaId = idBuscado
 					order by categoriaId asc;
 		END $$
@@ -840,8 +843,6 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-call SpCorteDeCaja('2020-11-10');
-call SpTotalVendio('2020-11-10');
 
 DELIMITER $$
 	create procedure SpTotalVendio(fechaCorte date)

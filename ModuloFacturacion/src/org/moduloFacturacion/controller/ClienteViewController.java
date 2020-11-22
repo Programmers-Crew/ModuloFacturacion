@@ -242,7 +242,7 @@ public class ClienteViewController implements Initializable {
         switch(tipoOperacion){
             case AGREGAR:
                 tipoOperacion = Operacion.GUARDAR;
-                
+                cmbFiltroCombo.setDisable(true);
                 desactivarControles();
                 btnAgregar.setText("GUARDAR");
                 btnEliminar.setText("CANCELAR");
@@ -266,6 +266,7 @@ public class ClienteViewController implements Initializable {
                 limpiarText();
                 cmbCodigoBuscar.setDisable(true);
                 btnBuscar.setDisable(true);
+                cmbFiltroCombo.setDisable(false);
                 break;
         }
     }
@@ -301,7 +302,7 @@ public class ClienteViewController implements Initializable {
                         noti.show();
                         tipoOperacion = Operacion.CANCELAR;
                         accion();
-                        
+                        cmbFiltroCombo.setDisable(false);
                         cargarDatos();
                         
                     }catch (SQLException ex) {
@@ -425,7 +426,7 @@ public class ClienteViewController implements Initializable {
                     while(rs.next()){
                         txtNitCliente.setText(rs.getString("clienteNit"));
                         txtNombreCliente.setText(rs.getString("clienteNombre"));
-                        txtDireccionCliente.setText("clienteDireccion");
+                        txtDireccionCliente.setText(rs.getString("clienteDireccion"));
                         codigo = rs.getString("clienteId");
                         
                     }                    
@@ -576,6 +577,7 @@ public class ClienteViewController implements Initializable {
         try{
             txtNitCliente.setText(colNitCliente.getCellData(index));
             txtNombreCliente.setText(colNombreCliente.getCellData(index));
+            txtDireccionCliente.setText(colDireccionCliente.getCellData(index));
             codigo = colCodigoCliente.getCellData(index);
             activarControles();
             activarText();

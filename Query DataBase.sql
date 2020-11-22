@@ -42,7 +42,7 @@ create table Productos(
 create table InventarioProductos(
 	inventarioProductoId int(5) UNSIGNED ZEROFILL primary key auto_increment,
     inventarioProductoCant int(5)  not null,
-    productoId int(5) UNSIGNED ZEROFILL not null,
+    productoId int(5) UNSIGNED ZEROFILL not null unique,
     estadoProductoId tinyint(1) not null,
     
 	CONSTRAINT FK_ProductoInventario FOREIGN KEY (productoId) REFERENCES Productos(productoId),

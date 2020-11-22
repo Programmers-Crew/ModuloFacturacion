@@ -130,6 +130,8 @@ public class MenuPrincipalContoller implements Initializable {
     
     public Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
     public Preferences prefsUsuario1 = Preferences.userRoot().node(this.getClass().getName());
+    public Preferences prefsRegresar = Preferences.userRoot().node(this.getClass().getName());
+    public Preferences prefsRegresarProductos = Preferences.userRoot().node(this.getClass().getName());
      ValidarStyle validar = new ValidarStyle();
     
     
@@ -268,6 +270,8 @@ public class MenuPrincipalContoller implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        prefsRegresar.put("regresar", "menu");
+        prefsRegresarProductos.put("regresar", "menu");
          validar.validarMenu(prefs.get("dark", "root"), anchor);
         labelUsuario.setText("¡Bienvenido "+login.prefsUsuario.get("usuario","root")+"!");
         cmbCodigoUsuario.setValue("");
