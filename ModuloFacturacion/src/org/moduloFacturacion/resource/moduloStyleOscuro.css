@@ -87,6 +87,13 @@
 }
 
 
+.jfxOscuro{
+     -fx-text-inner-color: white;
+    
+}
+.jfxOscuro .cell{
+    -fx-text-fill: white;
+}
 .anchorOscuro{
     -fx-background-color: #212121;
 }

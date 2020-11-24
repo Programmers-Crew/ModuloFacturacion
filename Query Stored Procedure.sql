@@ -113,7 +113,15 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-
+DELIMITER $$
+	create procedure SpBuscarEstadoNombre(nombre varchar(100))
+		BEGIN
+			select estadoProductoId, estadoProductoDesc
+				from EstadoProductos
+					where estadoProductoDesc = nombre
+						order by estadoProductoId asc;
+        END $$
+DELIMITER ;
 
 DELIMITER $$
 	create procedure SpEliminarEstadoProductos(idBuscado tinyint(1))
@@ -868,18 +876,7 @@ DELIMITER $$
         END $$ 
 DELIMITER ;
 
-call SpCorteDeCajaDetalle(29);
 
-
-DELIMITER $$
-	create procedure SpInventarioConteo()
-		BEGIN 
-			update inventarioproductos as ip
-				inner join facturadetallebackup as fd
-					set ip.inventarioProductoCant = ip.inventarioProductoCant - fd.cantidadBackup
-						where ip.productoId = fd.productoIdBackup;
-        END $$
-DELIMITER ;
 
 
 DELIMITER $$

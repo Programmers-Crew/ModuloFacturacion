@@ -151,7 +151,8 @@ public class ProductosViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(menu.prefsRegresarProductos.get("regresar", "root").equals("menu")){
+        System.out.println(menu.prefsRegresarProductos.get("regresarProducto", "root"));
+        if(menu.prefsRegresarProductos.get("regresarProducto", "root").equals("menu")){
             regresarbtn.setVisible(false);
         }else{
             regresarbtn.setVisible(true);
@@ -167,10 +168,19 @@ public class ProductosViewController implements Initializable {
     @FXML
     private void regresar(MouseEvent event) throws IOException {
          String menu1 ="";
-        if(menu.prefsRegresarProductos.get("regresar", "root").equals("menu")){
+         
+        if(menu.prefsRegresarProductos.get("regresarProducto", "root").equals("menu")){
             menu1= "org/moduloFacturacion/view/menuPrincipal.fxml";
         }else{
-            menu1 = "org/moduloFacturacion/view/InventarioView.fxml";
+              
+            if(menu.prefsRegresarProductos.get("regresarProducto", "root").equals("inventario")){
+                menu1 = "org/moduloFacturacion/view/InventarioView.fxml";
+            }else{
+                if(menu.prefsRegresarProductos.get("regresarProducto", "root").equals("facturacion")){
+                    menu1 = "org/moduloFacturacion/view/FacturacionView.fxml";
+                }
+            }
+            
         }
         
         cambioScene.Cambio(menu1,(Stage) anchor.getScene().getWindow());
@@ -211,7 +221,7 @@ public class ProductosViewController implements Initializable {
          txtPrecioProducto.setText("");
          cmbCodigoBuscar.setValue("");
     }
-    
+     
     public void desactivarControles(){
         
         btnEditar.setDisable(true);
