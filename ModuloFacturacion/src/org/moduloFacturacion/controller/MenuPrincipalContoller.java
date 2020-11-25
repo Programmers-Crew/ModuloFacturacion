@@ -1,9 +1,13 @@
 package org.moduloFacturacion.controller;
 
+import VO.ArchivosVO;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import java.io.ByteArrayInputStream;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +40,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -50,6 +55,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import org.moduloFacturacion.bean.CuadroImagen;
+import org.moduloFacturacion.bean.MiVisorPDF;
+
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
 import org.moduloFacturacion.bean.CambioScene;
@@ -71,6 +79,12 @@ public class MenuPrincipalContoller implements Initializable {
     private CheckBox checkBox;
     @FXML
     private AnchorPane cajaConsulta;
+    @FXML
+    private ScrollPane scroll;
+    @FXML
+    private JFXButton btnAtras;
+    @FXML
+    private JFXButton btnSiguiente;
 
 
  
@@ -1055,6 +1069,123 @@ public class MenuPrincipalContoller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    // tab de informacion donde irá el manual de usuario
+    
+    
+    
+   
 
+  
+    
+    int numImg;
+    private ArrayList<ArchivosVO> ListaComponente;
+    MiVisorPDF pn = new MiVisorPDF();
+    ArchivosVO pl = new ArchivosVO();
+    
+    CuadroImagen img= new CuadroImagen();
+    int paginas = 0;
+    private int totalp = -1;
+
+    @FXML
+    private void tabInformacion(Event event) {
+        //Es considerado pagina 1
+        numImg = 0;
+        //Lee la pagina 1
+        
+        ListaComponente = pn.leerPDF();
+        
+        //Guardamos todas las paginas en el ArrayList
+        
+        
+            pl = ListaComponente.get(paginas);
+            InputStream targetStream = new ByteArrayInputStream(pl.getArchivos());
+
+            img.setImagen(targetStream);
+            
+        
+       
+        
+        totalp = ListaComponente.size();
+        //Mostramos la primera pagina
+        ArchivosVO pi = new ArchivosVO();
+        pi = ListaComponente.get(0);
+        ImageView img1 = new ImageView();
+        img1.setImage(img.imagen);
+        
+        img1.fitWidthProperty().bind(scroll.widthProperty());
+        scroll.setCenterShape(true);
+        scroll.setContent(img1);
+        
+    }
+    
+     @FXML
+    private void btnAtras(ActionEvent event) {
+         try{
+                paginas--;
+                pl = ListaComponente.get(paginas);
+                InputStream targetStream = new ByteArrayInputStream(pl.getArchivos());
+
+                img.setImagen(targetStream);
+                
+                
+
+
+                totalp = ListaComponente.size();
+                //Mostramos la primera pagina
+                ArchivosVO pi = new ArchivosVO();
+                pi = ListaComponente.get(0);
+                ImageView img1 = new ImageView();
+                img1.setImage(img.imagen);
+
+                img1.fitWidthProperty().bind(scroll.widthProperty());
+                scroll.setCenterShape(true);
+                scroll.setContent(img1);
+             }catch(Exception ex){
+                  Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("YA NO SE ECONTRARON  MÁS PÁGINAS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+                    paginas = -1;
+             }
+    }
+    
+      @FXML
+    private void btnSiguiente(ActionEvent event) {
+             try{
+                paginas++;
+                 pl = ListaComponente.get(paginas);
+                InputStream targetStream = new ByteArrayInputStream(pl.getArchivos());
+
+                img.setImagen(targetStream);
+                
+                 
+
+
+                totalp = ListaComponente.size();
+                //Mostramos la primera pagina
+                ArchivosVO pi = new ArchivosVO();
+                pi = ListaComponente.get(0);
+                ImageView img1 = new ImageView();
+                img1.setImage(img.imagen);
+
+                img1.fitWidthProperty().bind(scroll.widthProperty());
+                scroll.setCenterShape(true);
+                scroll.setContent(img1);
+             }catch(Exception ex){
+                  Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("YA NO SE ECONTRARON  MÁS PÁGINAS");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+                    paginas = -1;
+             }
+    }
  }
 
