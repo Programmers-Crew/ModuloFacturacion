@@ -702,7 +702,6 @@ DELIMITER $$
 												order by f.facturaId asc;
         END $$
 DELMITER ;
-call SpBuscarClienteFacturaFecha(00001);
 
 DELIMITER $$
 	create procedure SpListarBusquedasFacturasPorId(idBuscado int(5))
@@ -840,8 +839,6 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-call SpCorteDeCaja('2020-11-10');
-call SpTotalVendio('2020-11-10');
 
 DELIMITER $$
 	create procedure SpTotalVendio(fechaCorte date)
@@ -867,7 +864,6 @@ DELIMITER $$
         END $$ 
 DELIMITER ;
 
-call SpCorteDeCajaDetalle(29);
 
 
 DELIMITER $$

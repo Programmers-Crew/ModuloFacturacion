@@ -576,6 +576,7 @@ public class ClienteViewController implements Initializable {
         try{
             txtNitCliente.setText(colNitCliente.getCellData(index));
             txtNombreCliente.setText(colNombreCliente.getCellData(index));
+            txtDireccionCliente.setText(colDireccionCliente.getCellData(index));
             codigo = colCodigoCliente.getCellData(index);
             activarControles();
             activarText();
