@@ -4,8 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.print.PrinterJob;
 
 import java.io.IOException;
@@ -17,7 +15,6 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +44,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.swing.JOptionPane;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.Animations;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
@@ -100,6 +96,8 @@ public class FacturacionViewController implements Initializable {
     private JFXTextField txtDireccionCliente;
     @FXML
     private JFXTextField txtLetrasPrecio;
+    @FXML
+    private JFXButton btnReporteVentas;
     
     private void cargarEstado(Event event) {
         animacion.animacion(anchor3, anchor4);
@@ -113,7 +111,17 @@ public class FacturacionViewController implements Initializable {
     Letras letras = new Letras();
 
     PrinterJob impresion = PrinterJob.getPrinterJob();
-    
+
+   
+
+    @FXML
+    private void vistaProducto(MouseEvent event) throws IOException {
+        menu.prefsRegresarProductos.put("regresarProducto", "facturacion");
+          String menu1 = "org/moduloFacturacion/view/ProductosView.fxml";
+        cambioScene.Cambio(menu1,(Stage) anchor.getScene().getWindow());
+    }
+
+
 
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, VENDER,FILTRAR,CARGAR};
 
@@ -606,6 +614,88 @@ public int buscarCodigoProducto(String precioProductos){
         }
     }
     
+  public int validarEstadoProducto(String estado){
+      int codigo = 0;
+      String sql = "{call SpBuscarEstadoNombre('"+estado+"')}";
+      
+      try{
+          PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+          ResultSet rs = ps.executeQuery();
+          while(rs.next()){
+              codigo = rs.getInt("estadoProductoId");
+          }
+          
+      }catch(SQLException ex){
+          ex.printStackTrace();
+      }
+      return codigo;
+  }
+  
+  public boolean validarProducto(){
+       int codigoProducto1 = buscarCodigoProducto(cmbNombreProducto.getValue());
+       String sql = "{call SpBuscarInventarioProductos('"+codigoProducto1+"')}";
+       int cantidad=0;
+       boolean valor=false;
+       String estado="";
+       try{
+           PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+           ResultSet rs = ps.executeQuery();
+           
+           while(rs.next()){
+               cantidad = rs.getInt("inventarioProductoCant");
+               estado = rs.getString("estadoProductoDesc");
+           }
+       }catch(SQLException ex){
+                Notifications noti = Notifications.create();
+                noti.graphic(new ImageView(imgError));
+                noti.title("ERROR");
+                noti.text(ex.toString());
+                noti.position(Pos.BOTTOM_RIGHT);
+                noti.hideAfter(Duration.seconds(4));
+                noti.darkStyle();   
+                noti.show();
+       }
+       
+       String sql1="";
+       if(estado.equalsIgnoreCase("AGOTADO")){
+           valor=false;
+       }else{
+           int total = cantidad -Integer.parseInt(txtCantidadProducto.getText());
+           if(total<0){
+               valor = false;
+               Notifications noti = Notifications.create();
+                noti.graphic(new ImageView(imgError));
+                noti.title("ERROR");
+                noti.text("ESTE PRODUCTO NO POSEE EXISTENCIAS, ACTUALICE EL INVENTARIO");
+                noti.position(Pos.BOTTOM_RIGHT);
+                noti.hideAfter(Duration.seconds(4));
+                noti.darkStyle();   
+                noti.show();
+           }else{
+               if(total==0){
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ATENCIÓN");
+                    noti.text("ESTE PRODUCTO SE HA AGOTADO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+                    valor = true;
+                    sql1="{call SpActualizarInventarioProductos('"+codigoProducto1+"','"+total+"','"+validarEstadoProducto("AGOTADO")+"')}";
+               }else{
+                   sql1="{call SpActualizarInventarioProductos('"+codigoProducto1+"','"+total+"','"+validarEstadoProducto(estado)+"')}";
+                   valor = true;
+               }
+               try{
+                   PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql1);
+                   ps.execute();
+               }catch(SQLException ex){
+                   ex.printStackTrace();
+               }
+           }
+       }
+    return valor;
+  }
   
   @FXML
     private void btnAgregarFacturaBackUp(MouseEvent event) {
@@ -631,8 +721,8 @@ public int buscarCodigoProducto(String precioProductos){
             
             }else{
                     
-                    
-                   FacturacionDetalleBackup nuevoBackUp = new FacturacionDetalleBackup();
+                if(validarProducto() == true){
+                    FacturacionDetalleBackup nuevoBackUp = new FacturacionDetalleBackup();
                    nuevoBackUp.setProductoDesc(cmbNombreProducto.getValue());
                    nuevoBackUp.setCantidadBackup(Integer.parseInt(txtCantidadProducto.getText()));
                    nuevoBackUp.setTotalParcialBackup(Double.parseDouble(txtPrecioProducto.getText())*Integer.parseInt(txtCantidadProducto.getText()));
@@ -641,6 +731,17 @@ public int buscarCodigoProducto(String precioProductos){
                    tipoOperacionFacturacion = Operacion.AGREGAR;
                    accionEstado(sql);  
                    txtLetrasPrecio.setText(letras.Convertir(twoDForm.format(Double.parseDouble(txtTotalFactura.getText())), true));
+                }else{
+                    Notifications noti = Notifications.create();
+                noti.graphic(new ImageView(imgError));
+                noti.title("ERROR");
+                noti.text("ESTE PRODUCTO NO POSEE EXISTENCIAS, ACTUALICE EL INVENTARIO");
+                noti.position(Pos.BOTTOM_RIGHT);
+                noti.hideAfter(Duration.seconds(4));
+                noti.darkStyle();   
+                noti.show();
+                }
+                   
             }
             
         }
@@ -687,16 +788,7 @@ public int buscarCodigoProducto(String precioProductos){
         return codigoUsuario;
     }
     
-    public void conteoProductos(){       
-        try{
-        String sqlConteoProducto = "{call SpInventarioConteo()}";
-        PreparedStatement psConteoProductos = Conexion.getIntance().getConexion().prepareCall(sqlConteoProducto);
-        psConteoProductos.execute();   
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    
+
     public void guardarFactura(){
         double totalNeto = Double.parseDouble(txtTotalFactura.getText())/1.12;
        double totalIva = totalNeto*0.12;
@@ -770,10 +862,9 @@ public int buscarCodigoProducto(String precioProductos){
                 noti.darkStyle();
                 noti.show();
            }else{
-               conteoProductos();
                 imprimir();
                 comprobarClienteExistente();
-
+                txtLetrasPrecio.setText("");
                 guardarFactura();
 
                 limpiarTextCliente();
@@ -960,13 +1051,15 @@ public int buscarCodigoProducto(String precioProductos){
         colTotalIva.setCellValueFactory(new PropertyValueFactory("facturaTotalIva"));
         colTotalBuscado.setCellValueFactory(new PropertyValueFactory("facturaTotal"));
         colFechaBuscada.setCellValueFactory(new PropertyValueFactory("facturaFecha"));
-        
+        new AutoCompleteComboBoxListener(txtBusquedaCodigoFac);
         txtBusquedaCodigoFac.setValue("");
         txtFechaInicio.setValue(null);
         txtFechaFinal.setValue(null);
         tblResultadoProducto.setItems(null);
         txtResultadoNit.setText("");
         txtResultadoNombre.setText("");
+        btnCorteDeCaja.setDisable(true);
+        btnReporteVentas.setDisable(true);
     }  
     
         
@@ -1002,7 +1095,7 @@ public int buscarCodigoProducto(String precioProductos){
         colTotalIva.setCellValueFactory(new PropertyValueFactory("facturaTotalIva"));
         colTotalBuscado.setCellValueFactory(new PropertyValueFactory("facturaTotal"));
         colFechaBuscada.setCellValueFactory(new PropertyValueFactory("facturaFecha"));
-        
+        buscarProducto();
         txtBusquedaCodigoFac.setValue("");
     }  
     
@@ -1243,22 +1336,22 @@ public int buscarCodigoProducto(String precioProductos){
     @FXML
     public void buscarPorFechas(){
         try{
-      if(txtFechaInicio.getValue().equals("") || txtFechaFinal.getValue().equals("")){
-                    Notifications noti = Notifications.create();
-                    noti.graphic(new ImageView(imgError));
-                    noti.title("ERROR");
-                    noti.text("El CAMPO DE BUSQUEDA ESTA VACÍO");
-                    noti.position(Pos.BOTTOM_RIGHT);
-                    noti.hideAfter(Duration.seconds(4));
-                    noti.darkStyle();   
-                    noti.show();
-        }else{
-            tipoOperacionBusquedaFacturas = Operacion.FILTRAR;
-            cargarFacturasBuscadasPorFecha();
-            
-        }  
+            if(txtFechaInicio.getValue() == null || txtFechaFinal.getValue()==null){
+                          Notifications noti = Notifications.create();
+                          noti.graphic(new ImageView(imgError));
+                          noti.title("ERROR");
+                          noti.text("SELECCIONE FECHAS PARA PODER FILTRAR");
+                          noti.position(Pos.BOTTOM_RIGHT);
+                          noti.hideAfter(Duration.seconds(4));
+                          noti.darkStyle();   
+                          noti.show();
+              }else{
+                  tipoOperacionBusquedaFacturas = Operacion.FILTRAR;
+                  cargarFacturasBuscadasPorFecha();
+
+                }  
             }catch(Exception e){
-        e.printStackTrace();
+               e.printStackTrace();
             }
     }
 
@@ -1292,13 +1385,7 @@ public int buscarCodigoProducto(String precioProductos){
                                 break;
                             }
                         }
-                        noti.graphic(new ImageView(imgCorrecto));
-                        noti.title("OPERACIÓN EXITOSA");
-                        noti.text("SU OPERACIÓN SE HA REALIZADO CON EXITO");
-                        noti.position(Pos.BOTTOM_RIGHT);
-                        noti.hideAfter(Duration.seconds(4));
-                        noti.darkStyle();
-                        noti.show();
+                       
                     }else{
                         noti.graphic(new ImageView(imgError));
                         noti.title("ERROR AL BUSCAR");
@@ -1330,19 +1417,11 @@ public int buscarCodigoProducto(String precioProductos){
         try{
 
             txtBusquedaCodigoFac.setValue(colNumeroFacBuscado.getCellData(index).toString());
-            System.out.println(txtBusquedaCodigoFac);
+            
             buscarProducto();
             
         }catch(Exception ex){
-            ex.printStackTrace();
-            Notifications noti = Notifications.create();
-            noti.graphic(new ImageView(imgError));
-            noti.title("ERROR AL CARGAR DATOS");
-            noti.text("Error al cargar la base de datos");
-            noti.position(Pos.BOTTOM_RIGHT);
-            noti.hideAfter(Duration.seconds(4));
-            noti.darkStyle();
-            noti.show();
+            
            
         }
     }
@@ -1372,11 +1451,24 @@ public int buscarCodigoProducto(String precioProductos){
                 
                 parametros.put("FechaCorte", "'"+FechaCorte+"'");
                  GenerarReporte.mostrarReporte("CorteDeCaja.jasper", "CIERRE DE CAJA", parametros);
+                
+                 txtFechaInicio.setValue(null);
+                  btnReporteVentas.setDisable(true);
+                 btnCorteDeCaja.setDisable(true);
                 }catch(Exception e){
                     e.printStackTrace();
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("DEBE SELECCIONAR FECHA DE INICIO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
                 }
     }
     
+    @FXML
     public void generarReporteVentas(){
             switch(tipoOperacionBusquedaFacturas){
                 case NINGUNO:
@@ -1394,11 +1486,17 @@ public int buscarCodigoProducto(String precioProductos){
                 
                 parametros.put("FechaCorte", "'"+FechaCorte+"'");
                  GenerarReporte.mostrarReporte("CierreDeCaja.jasper", "CIERRE DE CAJA", parametros);
+                 
+                 txtFechaInicio.setValue(null);
+                 btnReporteVentas.setDisable(true);
+                 btnCorteDeCaja.setDisable(true);
                 }catch(Exception e){
                     e.printStackTrace();
+                    
                 }
     }
     
+    @FXML
     public void generarReporteCierreCaja(){
             switch(tipoOperacionBusquedaFacturas){
                 case NINGUNO:
@@ -1406,6 +1504,12 @@ public int buscarCodigoProducto(String precioProductos){
                 break;
             }
     }
+        @FXML
+    private void fechaInicio(ActionEvent event) {
+        btnReporteVentas.setDisable(false);
+        btnCorteDeCaja.setDisable(false);
+    }
+    
 }
 
 

@@ -28,6 +28,14 @@
    <children>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="600.0" styleClass="bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+            <Pane fx:id="regresarbtn" layoutX="7.0" layoutY="5.0" onMouseClicked="#regresar" prefHeight="27.0" prefWidth="46.0" styleClass="paneRegresar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <Reflection />
+               </effect>
+            </Pane>
             <Pane fx:id="buttonInicio" layoutX="7.0" layoutY="5.0" onMouseClicked="#regresar" prefHeight="27.0" prefWidth="46.0" styleClass="paneInicio">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -74,7 +82,9 @@
                                                 <ComboBox fx:id="cmbCategoriaProducto" editable="true" layoutX="17.0" layoutY="170.0" prefHeight="26.0" prefWidth="250.0" styleClass="comboOscuro" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="9.799999999999983" />
                                                 <Label layoutX="20.0" layoutY="202.0" text="PROVEEDOR:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="207.0" />
                                                 <ComboBox fx:id="cmbProveedorProducto" editable="true" layoutX="19.0" layoutY="225.0" prefHeight="26.0" prefWidth="250.0" styleClass="comboOscuro" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="9.799999999999983" AnchorPane.topAnchor="226.0" />
-                                                <HBox alignment="CENTER" layoutX="2.0" layoutY="260.0" prefHeight="27.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="314.0">
+                                                <Label layoutX="21.0" layoutY="252.0" prefHeight="18.0" prefWidth="61.0" text="PRECIO:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="260.0" />
+                                                <JFXTextField fx:id="txtPrecioProducto" layoutX="14.0" layoutY="265.0" onKeyReleased="#validarPrecioProducto" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="276.0" />
+                                                <HBox alignment="CENTER" layoutX="2.0" layoutY="260.0" prefHeight="27.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="320.0">
                                                    <children>
                                                       <GridPane prefHeight="30.0" prefWidth="260.0">
                                                          <columnConstraints>
@@ -111,8 +121,6 @@
                                                       </GridPane>
                                                    </children>
                                                 </HBox>
-                                                <Label layoutX="21.0" layoutY="252.0" prefHeight="18.0" prefWidth="61.0" text="PRECIO:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="256.0" />
-                                                <JFXTextField fx:id="txtPrecioProducto" layoutX="14.0" layoutY="265.0" onKeyReleased="#validarPrecioProducto" prefHeight="26.0" prefWidth="170.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="268.0" />
                                              </children>
                                              <padding>
                                                 <Insets left="5.0" />

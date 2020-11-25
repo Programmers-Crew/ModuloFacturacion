@@ -90,6 +90,8 @@ DELIMITER $$
 		END $$
 DELIMITER ;
 
+call spAgregarEstadoProducto("EN EXISTENCIA");
+call spAgregarEstadoProducto("AGOTADO");
 
 DELIMITER $$
 	create procedure SpActualizarEstadoProducto(idBuscado tinyint(1), nuevaDesc varchar(100))
@@ -111,7 +113,15 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-
+DELIMITER $$
+	create procedure SpBuscarEstadoNombre(nombre varchar(100))
+		BEGIN
+			select estadoProductoId, estadoProductoDesc
+				from EstadoProductos
+					where estadoProductoDesc = nombre
+						order by estadoProductoId asc;
+        END $$
+DELIMITER ;
 
 DELIMITER $$
 	create procedure SpEliminarEstadoProductos(idBuscado tinyint(1))
@@ -207,6 +217,7 @@ DELIMITER $$
 	create procedure SpBuscarCategoriaProductos(idBuscado int(100))
 		BEGIN
 			select categoriaNombre, categoriaId
+            from categoriaproductos
 				where categoriaId = idBuscado
 					order by categoriaId asc;
 		END $$
@@ -864,17 +875,11 @@ DELIMITER $$
         END $$ 
 DELIMITER ;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Davis-Roldan
 
-DELIMITER $$
-	create procedure SpInventarioConteo()
-		BEGIN 
-			update inventarioproductos as ip
-				inner join facturadetallebackup as fd
-					set ip.inventarioProductoCant = ip.inventarioProductoCant - fd.cantidadBackup
-						where ip.productoId = fd.productoIdBackup;
-        END $$
-DELIMITER ;
 
 
 DELIMITER $$

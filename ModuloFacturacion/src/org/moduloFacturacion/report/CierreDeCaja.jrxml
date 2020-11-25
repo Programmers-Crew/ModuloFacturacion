@@ -2,13 +2,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CierreDeCaja" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="0bd975ad-d6e5-421c-aa44-5ce81356ac7e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="513"/>
 	<parameter name="FechaCorte" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\git\\ModuloFacturacion\\ModuloFacturacion\\src\\org\\moduloFacturacion\\report\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:/ModuloFacturacion/ModuloFacturacion/src/org/moduloFacturacion/report/"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="imagesDir" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[call SpCorteDeCaja($P!{FechaCorte});]]>
 	</queryString>
@@ -42,7 +43,7 @@
 				<reportElement isPrintRepeatedValues="false" x="0" y="372" width="752" height="200" uuid="22213afe-69b2-43f3-ba7c-e59dfeddb42a">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:\\git\\ModuloFacturacion\\ModuloFacturacion\\src\\org\\moduloFacturacion\\img\\Background sky blue line.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:/ModuloFacturacion/ModuloFacturacion/src/org/moduloFacturacion/report/fondo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="16" y="549" width="130" height="22" uuid="6299c248-b01f-46af-9d54-b3fbd8ed089a"/>
@@ -115,7 +116,7 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="-20" y="33" width="712" height="100" isRemoveLineWhenBlank="true" uuid="7281dcdf-24cf-4317-afb7-2f76d49b303a">
+				<reportElement x="0" y="33" width="712" height="100" isRemoveLineWhenBlank="true" uuid="7281dcdf-24cf-4317-afb7-2f76d49b303a">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="FechaCorte">
@@ -129,38 +130,38 @@
 	<columnHeader>
 		<band height="30" splitType="Stretch">
 			<rectangle radius="10">
-				<reportElement x="10" y="0" width="752" height="24" forecolor="#1E88E5" backcolor="#42A5F5" uuid="14be8e88-238f-4074-ad10-8d07525019e0"/>
+				<reportElement x="0" y="3" width="752" height="24" forecolor="#1E88E5" backcolor="#42A5F5" uuid="14be8e88-238f-4074-ad10-8d07525019e0"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="607" y="0" width="120" height="24" uuid="86897925-0e80-4930-b6aa-67dd30266475"/>
+				<reportElement x="605" y="6" width="120" height="24" uuid="86897925-0e80-4930-b6aa-67dd30266475"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL FACTURA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="177" y="0" width="120" height="27" uuid="ceea6cfa-c063-48b2-93f2-8289dcdd42c2"/>
+				<reportElement x="177" y="3" width="120" height="27" uuid="ceea6cfa-c063-48b2-93f2-8289dcdd42c2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CLIENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="37" y="0" width="120" height="24" uuid="21d6dcaa-cc64-4d5a-acc6-ddbd5ef16225"/>
+				<reportElement x="37" y="6" width="120" height="24" uuid="21d6dcaa-cc64-4d5a-acc6-ddbd5ef16225"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NUMERO FACTURA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="460" y="0" width="120" height="24" uuid="f6f87970-e917-4356-86a7-b6347866efce"/>
+				<reportElement x="460" y="6" width="120" height="24" uuid="f6f87970-e917-4356-86a7-b6347866efce"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[USUARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="326" y="0" width="120" height="27" uuid="c2531d1a-70c7-48b8-8c62-da3cb6359f48"/>
+				<reportElement x="326" y="3" width="120" height="27" uuid="c2531d1a-70c7-48b8-8c62-da3cb6359f48"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>

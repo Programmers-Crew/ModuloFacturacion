@@ -21,9 +21,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -44,6 +48,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.AutoCompleteComboBoxListener;
@@ -54,7 +59,8 @@ import org.moduloFacturacion.db.Conexion;
 
 
 public class MenuPrincipalContoller implements Initializable {
-    
+    double xOffset = 0;
+    double yOffset = 0;
     LoginViewController login = new LoginViewController();
     CambioScene cambioScene = new CambioScene();
     @FXML
@@ -63,6 +69,9 @@ public class MenuPrincipalContoller implements Initializable {
     private Button on;
     @FXML
     private CheckBox checkBox;
+    @FXML
+    private AnchorPane cajaConsulta;
+
 
  
 
@@ -130,6 +139,8 @@ public class MenuPrincipalContoller implements Initializable {
     
     public Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
     public Preferences prefsUsuario1 = Preferences.userRoot().node(this.getClass().getName());
+    public Preferences prefsRegresar = Preferences.userRoot().node(this.getClass().getName());
+    public Preferences prefsRegresarProductos = Preferences.userRoot().node(this.getClass().getName());
      ValidarStyle validar = new ValidarStyle();
     
     
@@ -268,8 +279,10 @@ public class MenuPrincipalContoller implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        prefsRegresar.put("regresar", "menu");
+        prefsRegresarProductos.put("regresarProducto", "menu");
          validar.validarMenu(prefs.get("dark", "root"), anchor);
-        labelUsuario.setText("¡Bienvenido "+login.prefsUsuario.get("usuario","root")+"!");
+        labelUsuario.setText("¡BIENVENIDO "+login.prefsUsuario.get("usuario","root").toUpperCase()+"!");
         cmbCodigoUsuario.setValue("");
         if(login.prefsLogin.get("tipo","root").equals("empleado")){
             cajaInventario.setDisable(true);
@@ -299,7 +312,8 @@ public class MenuPrincipalContoller implements Initializable {
        tt.setNode(paneBienvenida);
        tt.setCycleCount(1);
        tt.play();
-        
+       
+       
         
        //caja de clientes
        
@@ -339,11 +353,30 @@ public class MenuPrincipalContoller implements Initializable {
        tInventario.setCycleCount(1);
        tInventario.play();
        
+       //CAJA DE PRECIOS
+          FadeTransition ftPrecios = new FadeTransition();
+       ftPrecios.setFromValue(0);
+       ftPrecios.setToValue(1);
+       ftPrecios.setDuration(Duration.seconds(2.5));
+       ftPrecios.setNode(cajaConsulta);
+       ftPrecios.setCycleCount(1);
+       ftPrecios.play();
+       
+       
+       TranslateTransition ttPrecios = new TranslateTransition();
+       ttPrecios.setFromY(-80);
+       ttPrecios.setToY(1);
+       ttPrecios.setDuration(Duration.seconds(3));
+       ttPrecios.setNode(cajaConsulta);
+       ttPrecios.setCycleCount(1);
+       ttPrecios.play();
+       
+       
        // caja de facturas
        FadeTransition ftFacturas = new FadeTransition();
        ftFacturas.setFromValue(0);
        ftFacturas.setToValue(1);
-       ftFacturas.setDuration(Duration.seconds(2));
+       ftFacturas.setDuration(Duration.seconds(3));
        ftFacturas.setNode(cajaFactura);
        ftFacturas.setCycleCount(1);
        ftFacturas.play();
@@ -352,7 +385,7 @@ public class MenuPrincipalContoller implements Initializable {
        TranslateTransition ttFacturas = new TranslateTransition();
        ttFacturas.setFromY(-80);
        ttFacturas.setToY(0);
-       ttFacturas.setDuration(Duration.seconds(3.0));
+       ttFacturas.setDuration(Duration.seconds(3.5));
        ttFacturas.setNode(cajaFactura);
        ttFacturas.setCycleCount(1);
        ttFacturas.play();
@@ -462,6 +495,25 @@ public class MenuPrincipalContoller implements Initializable {
        tInventario.setNode(cajaInventario);
        tInventario.setCycleCount(1);
        tInventario.play();
+       
+         
+       //CAJA DE PRECIOS
+          FadeTransition ftPrecios = new FadeTransition();
+       ftPrecios.setFromValue(0);
+       ftPrecios.setToValue(1);
+       ftPrecios.setDuration(Duration.seconds(2.5));
+       ftPrecios.setNode(cajaConsulta);
+       ftPrecios.setCycleCount(1);
+       ftPrecios.play();
+       
+       
+       TranslateTransition ttPrecios = new TranslateTransition();
+       ttPrecios.setFromY(-80);
+       ttPrecios.setToY(1);
+       ttPrecios.setDuration(Duration.seconds(3));
+       ttPrecios.setNode(cajaConsulta);
+       ttPrecios.setCycleCount(1);
+       ttPrecios.play();
        
        // caja de facturas
        FadeTransition ftFacturas = new FadeTransition();
@@ -973,6 +1025,35 @@ public class MenuPrincipalContoller implements Initializable {
     private void on(MouseEvent event) {
         prefs.put("dark", "claro");
         validar.validarMenu(prefs.get("dark", "root"), anchor);
+    }
+        @FXML
+    private void consultaPrecios(MouseEvent event) throws IOException {
+        
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/moduloFacturacion/view/ConsultaPrecios.fxml"));
+        Scene scene = new Scene(root);
+         
+        
+       root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+        stage.setWidth(599);
+        stage.setHeight(510);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle("CONSULTA DE PRECIOS");
+        stage.setScene(scene);
+        stage.show();
     }
 
  }

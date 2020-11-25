@@ -3,7 +3,9 @@
     
 }
 
-
+.cerrar:hover{
+    -fx-background-color: #CC0000;
+}
 .menu{
     -fx-background-color: #0099CC;
     

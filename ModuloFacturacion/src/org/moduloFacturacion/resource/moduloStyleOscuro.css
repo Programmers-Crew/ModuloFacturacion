@@ -11,12 +11,23 @@
 .bar{
     -fx-background-color: #0099CC;
 }
+.paneRegresar{
+     -fx-background-image: url(../img/regresar.png);
+    -fx-background-size: stretch;
+    /*visibility: false;*/
+}
 
 .paneBienvenida{
     -fx-background-color: #2E2E2E;
     -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2); 
 }
-
+.paneRegresar:hover{
+   -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2);
+    
+}
+.paneRegresar:pressed{
+    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 0, 0);
+}
 
 .paneInicio:hover{
    -fx-effect: dropshadow(three-pass-box, derive(black, -10%), 10, 0, 2, 2);
@@ -76,6 +87,13 @@
 }
 
 
+.jfxOscuro{
+     -fx-text-inner-color: white;
+    
+}
+.jfxOscuro .cell{
+    -fx-text-fill: white;
+}
 .anchorOscuro{
     -fx-background-color: #212121;
 }
@@ -135,6 +153,10 @@
     -fx-border-width: 0 0 1 0;
 }
 
+.comboOscuro .list-cell:filled:selected .text{
+    -fx-fill: white;
+    
+}
 .comboOscuro:editable .text-field{
     -fx-background-color: #2E2E2E;
     

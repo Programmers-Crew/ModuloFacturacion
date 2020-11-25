@@ -1,7 +1,6 @@
 package org.moduloFacturacion.controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +12,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -68,14 +66,11 @@ public class InventarioViewController implements Initializable {
     private AnchorPane anchor4;
     
     Animations animacion = new Animations();
-    
     @FXML
-    private void validarCantidadProducto(ActionEvent event) {
-    }
+    private JFXButton btnAgregarInventario1;
 
-    @FXML
-    private void validarCodigoEstado(ActionEvent event) {
-    }
+
+  
 
     
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO, SUMAR};
@@ -155,7 +150,8 @@ public class InventarioViewController implements Initializable {
     @FXML
     private JFXButton btnBuscarEstadoProductos;
     @FXML
-    private JFXComboBox<String> cmbCodigoEstadoProductos;
+    private ComboBox<String> cmbCodigoEstadoProductos;
+    
     
     
     //========================================== CODIGO PARA VISTA INVENTARIO =============================================================
@@ -190,8 +186,7 @@ public class InventarioViewController implements Initializable {
     public void activarTextInventario(){
         cmbCodigoProductoInventario.setDisable(false);
         txtCantidadInventario.setEditable(true);
-        txtProveedorInventario.setEditable(true);
-        txtProductoInventario.setEditable(true);
+        
         cmbNombreEstado.setDisable(false);
     }
     
@@ -200,6 +195,7 @@ public class InventarioViewController implements Initializable {
     private void cargarProductos(Event event) {
         iniciarInventario();
         llenarComboProducto();
+        btnAgregarInventario1.setDisable(true);
         animacion.animacion(anchor1, anchor2);
     }
     
@@ -279,6 +275,7 @@ public class InventarioViewController implements Initializable {
         cmbFiltroCodigo.setValue("");
         cmbNombreEstado.setValue("");
         new AutoCompleteComboBoxListener(cmbFiltroCodigo);
+        
         new AutoCompleteComboBoxListener(cmbNombreEstado);
     }
      
@@ -288,6 +285,8 @@ public class InventarioViewController implements Initializable {
     private void seleccionarElementosProductos(MouseEvent event) {
         int index = tblInventario.getSelectionModel().getSelectedIndex();
         try{
+            tipoOperacionInventario = Operacion.CANCELAR;
+            accionInventario();
             cmbCodigoProductoInventario.setValue(colCodigoProductoInventario.getCellData(index).toString());
             txtCantidadInventario.setText(colCantidadInventario.getCellData(index).toString());
             txtProveedorInventario.setText(colProveedorInventario.getCellData(index));
@@ -295,20 +294,14 @@ public class InventarioViewController implements Initializable {
             cmbNombreEstado.setValue(colEstadoInventario.getCellData(index));
 
             codigoProducto = colCodigoProductoInventario.getCellData(index);
-            activarControles();
+            
             activarTextInventario();
             cmbNombreEstado.setDisable(false);
+            btnAgregarInventario1.setDisable(false);
             
+            activarControles();
         }catch(Exception ex){
-            ex.printStackTrace();
-            Notifications noti = Notifications.create();
-            noti.graphic(new ImageView(imgError));
-            noti.title("ERROR AL CARGAR DATOS");
-            noti.text("Error al cargar la base de datos");
-            noti.position(Pos.BOTTOM_RIGHT);
-            noti.hideAfter(Duration.seconds(4));
-            noti.darkStyle();
-            noti.show();
+            
            
         }
     }
@@ -371,8 +364,10 @@ public class InventarioViewController implements Initializable {
                 btnEliminarInventario.setText("CANCELAR");
                 btnBuscarInventario.setDisable(true);
                 btnEliminarInventario.setDisable(false);
+                
                 activarTextInventario();
                 limpiarText();
+                btnAgregarInventario1.setDisable(true);
                 break;
             case CANCELAR:
                 tipoOperacionInventario = Operacion.NINGUNO;
@@ -383,6 +378,7 @@ public class InventarioViewController implements Initializable {
                 btnEliminarInventario.setText("ELIMINAR");
                 limpiarText();
                 cmbFiltroCodigo.setDisable(false);
+                btnAgregarInventario1.setDisable(true);
                 break;
         }
     }
@@ -575,8 +571,10 @@ public class InventarioViewController implements Initializable {
                         noti.hideAfter(Duration.seconds(4));
                         noti.darkStyle();
                         noti.show();
+                        cmbNombreEstado.setDisable(false);
                         activarTextInventario();
-                        cmbNombreEstado.setDisable(true);
+                        btnAgregarInventario1.setDisable(false);
+                        
                     }else{
                          
                         noti.graphic(new ImageView(imgError));
@@ -605,7 +603,7 @@ public class InventarioViewController implements Initializable {
                  case SUMAR:
                 alert.setTitle("SUMAR PRODUCTO");
                 alert.setHeaderText("SUMAR PRODUCTO");
-                alert.setContentText("¿Está sumar esta cantidad?");
+                alert.setContentText("¿Está seguro que desea sumar esta cantidad?");
                 
                 alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
                 
@@ -656,42 +654,7 @@ public class InventarioViewController implements Initializable {
     }
     
     
-    private void validarCantidadProducto(KeyEvent event) {
-        if(tipoOperacionInventario == Operacion.GUARDAR){
-            
-                if(txtCantidadInventario.getText().matches(".*[a-z].*") || txtCantidadInventario.getText().matches(".*[A-Z].*")){
-                    btnAgregarInventario.setDisable(true);
-                    Notifications noti = Notifications.create();
-                    noti.graphic(new ImageView(imgError));
-                    noti.title("ERROR");
-                    noti.text("El CAMPO DE CÓDIGO NO PUEDE LLEVAR LETRAS");
-                    noti.position(Pos.BOTTOM_RIGHT);
-                    noti.hideAfter(Duration.seconds(4));
-                    noti.darkStyle();   
-                    noti.show();
-                }else{
-                    btnAgregarInventario.setDisable(false);
-                }
-              
-        }else{
-            
-                if(txtCantidadInventario.getText().matches(".*[a-z].*") || txtCantidadInventario.getText().matches(".*[A-Z].*")){
-                    btnEditarInventario.setDisable(true);
-                    Notifications noti = Notifications.create();
-                    noti.graphic(new ImageView(imgError));
-                    noti.title("ERROR");
-                    noti.text("El CAMPO DE CÓDIGO NO PUEDE LLEVAR LETRAS");
-                    noti.position(Pos.BOTTOM_RIGHT);
-                    noti.hideAfter(Duration.seconds(4));
-                    noti.darkStyle();   
-                    noti.show();
-                }else{
-                    btnEditarInventario.setDisable(false);
-                    
-                }
-            
-        }
-    }
+  
     
     public int buscarCodigoEstado(String descripcionEstado){    
         try{
@@ -750,15 +713,15 @@ public class InventarioViewController implements Initializable {
                     noti.show();
            }else{
                    InventarioProductos nuevoInventario = new InventarioProductos();
-                   nuevoInventario.setProductoId(cmbCodigoProductoInventario.getValue());
+                   nuevoInventario.setProductoId(codigoProducto);
                    nuevoInventario.setInventarioProductoCant(Integer.parseInt(txtCantidadInventario.getText()));
 
                    String sql = "{call SpSumaProductos('"+nuevoInventario.getProductoId()+"','"+ nuevoInventario.getInventarioProductoCant()+"')}";
                    tipoOperacionInventario = Operacion.SUMAR;
                    accion(sql);                   
-               }
+                }
                     accionInventario();
-                            }
+    }
     
     
     
@@ -773,9 +736,18 @@ public class InventarioViewController implements Initializable {
                         while(resultado.next()){
                             txtProductoInventario.setText(resultado.getString("productoDesc"));
                             txtProveedorInventario.setText(resultado.getString("proveedorNombre"));
+                            btnAgregarInventario.setDisable(false);
                         }  
                 }catch(Exception e){
-                    e.printStackTrace();
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("El CAMPO DE BUSQUEDA ESTA VACÍO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+                    btnAgregarInventario.setDisable(true);
                 }
             }
     }
@@ -910,7 +882,7 @@ public class InventarioViewController implements Initializable {
             txtDescEstadoProducto.setText(colDescEstadoProductos.getCellData(index));
             btnEliminarEstadoProductos.setDisable(false);
             btnEditarEstadoProductos.setDisable(false);
-            
+            cmbNombreEstado.setDisable(false);
             codigoEstado = colCodigoEstadoCodigo.getCellData(index);
             activarTextEstado();
         }catch(Exception e){
@@ -1247,42 +1219,7 @@ public class InventarioViewController implements Initializable {
     private void btnBuscarEstado(MouseEvent event) {
         buscarEstado();
     }
-    
-    private void validarCodigoEstado(KeyEvent event) {
-         if(tipoOperacionEstado == Operacion.GUARDAR){
-            
-                if(txtCodigoEstadoProducto.getText().matches(".*[a-z].*")){
-                    btnAgregarEstadoProductos.setDisable(true);
-                    Notifications noti = Notifications.create();
-                    noti.graphic(new ImageView(imgError));
-                    noti.title("ERROR");
-                    noti.text("El CAMPO DE CÓDIGO NO PUEDE LLEVAR LETRAS");
-                    noti.position(Pos.BOTTOM_RIGHT);
-                    noti.hideAfter(Duration.seconds(4));
-                    noti.darkStyle();   
-                    noti.show();
-                }else{
-                    btnAgregarEstadoProductos.setDisable(false);
-                }
-              
-        }else{
-            
-                if(txtCodigoEstadoProducto.getText().matches(".*[a-z].*")){
-                    btnEditarEstadoProductos.setDisable(true);
-                    Notifications noti = Notifications.create();
-                    noti.graphic(new ImageView(imgError));
-                    noti.title("ERROR");
-                    noti.text("El CAMPO DE CÓDIGO NO PUEDE LLEVAR LETRAS");
-                    noti.position(Pos.BOTTOM_RIGHT);
-                    noti.hideAfter(Duration.seconds(4));
-                    noti.darkStyle();   
-                    noti.show();
-                }else{
-                    btnEditarEstadoProductos.setDisable(false);
-                }
-            
-        }
-    }
+ 
     
     
     @FXML
@@ -1309,13 +1246,68 @@ public class InventarioViewController implements Initializable {
         cmbNombreEstado.setValue("");
         cmbCodigoProductoInventario.setValue("");
         llenarComboProducto();
-
-                }    
+        
+        new AutoCompleteComboBoxListener(cmbCodigoProductoInventario);
+    }    
 
     @FXML
     private void regresar(MouseEvent event) throws IOException {
          String menu = "org/moduloFacturacion/view/menuPrincipal.fxml";
         cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
+    }
+    
+    
+
+
+    @FXML
+    private void btnProveedores(MouseEvent event) throws IOException {
+        menu.prefsRegresar.put("regresar", "inventario");
+        String menu1 = "org/moduloFacturacion/view/ProveedoresView.fxml";
+        cambioScene.Cambio(menu1,(Stage) anchor.getScene().getWindow());
+    }
+    
+    @FXML
+    private void btnProductos(MouseEvent event) throws IOException {
+        menu.prefsRegresarProductos.put("regresarProducto", "inventario");
+          String menu = "org/moduloFacturacion/view/ProductosView.fxml";
+        cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
+    }
+    
+        @FXML
+    private void validarCodigoInventario(KeyEvent event) {
+            System.out.println("hola");
+    }
+      @FXML
+    private void validarCantidadProducto(KeyEvent event) {
+         char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(letra)){
+            if(!Character.isWhitespace(letra)){
+                event.consume();
+            }else{
+                if(Character.isSpaceChar(letra)){
+                    event.consume();
+                }
+            }
+           
+        }
+    }
+    
+       
+    @FXML
+    private void validarCodigoEstado(KeyEvent event) {
+          char letra = event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(letra)){
+            if(!Character.isWhitespace(letra)){
+                event.consume();
+            }else{
+                if(Character.isSpaceChar(letra)){
+                    event.consume();
+                }
+            }
+           
+        }
     }
     
 }

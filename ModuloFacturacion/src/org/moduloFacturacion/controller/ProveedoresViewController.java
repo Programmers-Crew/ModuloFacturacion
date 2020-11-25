@@ -28,6 +28,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
@@ -54,6 +55,10 @@ public class ProveedoresViewController implements Initializable {
     private AnchorPane anchor1;
     @FXML
     private AnchorPane anchor2;
+    @FXML
+    private Pane regresarpane;
+    @FXML
+    private Pane regresarbtn;
     public enum Operacion{AGREGAR,GUARDAR,ELIMINAR,BUSCAR,ACTUALIZAR,CANCELAR,NINGUNO};
     public Operacion tipoOperacionProveedores= Operacion.NINGUNO;
     public Operacion cancelar = Operacion.NINGUNO;
@@ -107,10 +112,16 @@ public class ProveedoresViewController implements Initializable {
     
     public void desactivarTextProveedores(){
         txtNombreProveedores.setEditable(false);
+        txtCodigoProveedores.setEditable(false);
+        txtTelefonoProveedores.setEditable(false);
         
     }
     
     public void activarTextProveedores(){
+        
+        txtNombreProveedores.setEditable(true);
+        txtCodigoProveedores.setEditable(true);
+        txtTelefonoProveedores.setEditable(true);
         txtNombreProveedores.setEditable(true);
     }
     
@@ -164,6 +175,7 @@ public class ProveedoresViewController implements Initializable {
     
     @FXML
     private void seleccionarElementos(MouseEvent event) {
+        
         int index = tblProveedores.getSelectionModel().getSelectedIndex();
         try{
             txtCodigoProveedores.setText(colCodigoProveedores.getCellData(index).toString());
@@ -173,7 +185,7 @@ public class ProveedoresViewController implements Initializable {
             btnEditar.setDisable(false);
             
             codigo = colCodigoProveedores.getCellData(index);
-            
+            activarTextProveedores();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -529,15 +541,39 @@ public class ProveedoresViewController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-          animacion.animacion(anchor1, anchor2);
+       
+        animacion.animacion(anchor1, anchor2);
         cargarDatosProveedores();
+        desactivarTextProveedores();
         validar.validarView(menu.prefs.get("dark", "root"), anchor);
+        
+        
+        
+         if(menu.prefsRegresar.get("regresar", "root").equals("menu")){
+             regresarbtn.setVisible(false);
+            
+        }else{
+             regresarpane.setVisible(false);
+             regresarbtn.setVisible(true);
+         }
     }    
 
     @FXML
     private void regresar(MouseEvent event) throws IOException {
-         String menu = "org/moduloFacturacion/view/menuPrincipal.fxml";
-        cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
+         String menu1 = "";
+        if(menu.prefsRegresar.get("regresar", "root").equals("menu")){
+            menu1 = "org/moduloFacturacion/view/menuPrincipal.fxml";
+        }else{
+            if(menu.prefsRegresar.get("regresar","root").equals("productos")){
+             menu1 = "org/moduloFacturacion/view/ProductosView.fxml";
+            }else{
+                if(menu.prefsRegresar.get("regresar","root").equals("inventario")){
+                    menu1 = "org/moduloFacturacion/view/InventarioView.fxml";
+                }
+            }
+        }
+        
+        cambioScene.Cambio(menu1,(Stage) anchor.getScene().getWindow());
     }
     @FXML
 

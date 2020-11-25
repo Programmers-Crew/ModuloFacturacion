@@ -99,6 +99,8 @@ public class ProductosViewController implements Initializable {
     private AnchorPane anchor4;
 
     Animations animacion = new Animations();
+    @FXML
+    private Pane regresarbtn;
 
    
     
@@ -149,6 +151,13 @@ public class ProductosViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println(menu.prefsRegresarProductos.get("regresarProducto", "root"));
+        if(menu.prefsRegresarProductos.get("regresarProducto", "root").equals("menu")){
+            regresarbtn.setVisible(false);
+        }else{
+            regresarbtn.setVisible(true);
+            buttonInicio.setVisible(false);
+        }
         validar.validarView(menu.prefs.get("dark", "root"), anchor);
        iniciarProducto();
          
@@ -158,14 +167,30 @@ public class ProductosViewController implements Initializable {
        
     @FXML
     private void regresar(MouseEvent event) throws IOException {
-         String menu = "org/moduloFacturacion/view/menuPrincipal.fxml";
-        cambioScene.Cambio(menu,(Stage) anchor.getScene().getWindow());
+         String menu1 ="";
+         
+        if(menu.prefsRegresarProductos.get("regresarProducto", "root").equals("menu")){
+            menu1= "org/moduloFacturacion/view/menuPrincipal.fxml";
+        }else{
+              
+            if(menu.prefsRegresarProductos.get("regresarProducto", "root").equals("inventario")){
+                menu1 = "org/moduloFacturacion/view/InventarioView.fxml";
+            }else{
+                if(menu.prefsRegresarProductos.get("regresarProducto", "root").equals("facturacion")){
+                    menu1 = "org/moduloFacturacion/view/FacturacionView.fxml";
+                }
+            }
+            
+        }
+        
+        cambioScene.Cambio(menu1,(Stage) anchor.getScene().getWindow());
     }
 
     
 
     @FXML
     private void buttonProveedor(MouseEvent event) throws IOException {
+        menu.prefsRegresar.put("regresar","productos");
         String proveedores = "org/moduloFacturacion/view/ProveedoresView.fxml";
         cambioScene.Cambio(proveedores,(Stage) anchor.getScene().getWindow());
     }
@@ -196,7 +221,7 @@ public class ProductosViewController implements Initializable {
          txtPrecioProducto.setText("");
          cmbCodigoBuscar.setValue("");
     }
-    
+     
     public void desactivarControles(){
         
         btnEditar.setDisable(true);
@@ -1302,7 +1327,8 @@ public class ProductosViewController implements Initializable {
               
         }else{
             
-                if(txtCodigoCategoria.getText().matches(".*[a-z].*")){
+                if(tipoOperacionCategoria == Operacion.ACTUALIZAR){
+                    if(txtCodigoCategoria.getText().matches(".*[a-z].*")){
                     btnEditarCategoria.setDisable(true);
                     Notifications noti = Notifications.create();
                     noti.graphic(new ImageView(imgError));
@@ -1315,6 +1341,7 @@ public class ProductosViewController implements Initializable {
                 }else{
                     btnEditarCategoria.setDisable(false);
                     
+                }
                 }
             
         }

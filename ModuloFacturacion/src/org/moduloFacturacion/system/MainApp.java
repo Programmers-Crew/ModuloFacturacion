@@ -1,12 +1,11 @@
 package org.moduloFacturacion.system;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.moduloFacturacion.controller.LoginViewController;
@@ -37,14 +36,23 @@ public class MainApp extends Application {
             
             root = FXMLLoader.load(getClass().getClassLoader().getResource("org/moduloFacturacion/view/menuPrincipal.fxml"));
             Scene scene = new Scene(root);
+            stage.setTitle("PROGRAMMERS BILLING");
+            stage.getIcons().add(new Image(getClass().getResource("/org/moduloFacturacion/img/LogoGrande.png").toExternalForm()));
             stage.setWidth(1100);
-            stage.setHeight(590);
+            stage.setHeight(597);
+            stage.setMinWidth(1100);
+            stage.setMinHeight(597);
             stage.setScene(scene);
+            
+            
             stage.show();
+            
           
         }else{
             root = FXMLLoader.load(getClass().getClassLoader().getResource("org/moduloFacturacion/view/LoginView.fxml"));
             Scene scene = new Scene(root);
+            stage.setTitle("LOGIN PROGRAMMERS BILLING");
+            stage.getIcons().add(new Image(getClass().getResource("/org/moduloFacturacion/img/LogoGrande.png").toExternalForm()));
             stage.setWidth(668);
             stage.setHeight(520);
             stage.setScene(scene);     
