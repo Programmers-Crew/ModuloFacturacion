@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:/ModuloFacturacion/ModuloFacturacion/src/org/moduloFacturacion/report/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:/git/ModuloFacturacion/ModuloFacturacion/src/org/moduloFacturacion/report/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="imagesDir" class="java.lang.String" isForPrompting="false"/>
 	<queryString>

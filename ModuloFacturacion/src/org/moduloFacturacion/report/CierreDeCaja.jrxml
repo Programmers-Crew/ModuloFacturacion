@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:/ModuloFacturacion/ModuloFacturacion/src/org/moduloFacturacion/report/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:/git/ModuloFacturacion/ModuloFacturacion/src/org/moduloFacturacion/report/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="imagesDir" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
@@ -43,7 +43,7 @@
 				<reportElement isPrintRepeatedValues="false" x="0" y="372" width="752" height="200" uuid="22213afe-69b2-43f3-ba7c-e59dfeddb42a">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA["C:/ModuloFacturacion/ModuloFacturacion/src/org/moduloFacturacion/report/fondo.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:/git/ModuloFacturacion/ModuloFacturacion/src/org/moduloFacturacion/report/fondo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="16" y="549" width="130" height="22" uuid="6299c248-b01f-46af-9d54-b3fbd8ed089a"/>
