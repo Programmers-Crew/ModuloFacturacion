@@ -713,7 +713,6 @@ DELIMITER $$
 												order by f.facturaId asc;
         END $$
 DELMITER ;
-call SpBuscarClienteFacturaFecha(00001);
 
 DELIMITER $$
 	create procedure SpListarBusquedasFacturasPorId(idBuscado int(5))
@@ -876,6 +875,10 @@ DELIMITER $$
         END $$ 
 DELIMITER ;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> Davis-Roldan
 
 
 
