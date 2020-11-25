@@ -1470,11 +1470,21 @@ public int buscarCodigoProducto(String precioProductos){
     
     @FXML
     public void generarReporteVentas(){
-            switch(tipoOperacionBusquedaFacturas){
-                case NINGUNO:
-                    imprimirReporteVentas();
-                break;
-            }
+       if(txtFechaInicio.getValue()== null){
+            Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("DEBE SELECCIONAR FECHA DE INICIO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+                    
+       }else{
+           imprimirReporteVentas();
+       }
+        
+           
     }
     
         public void imprimirCierreDeCaja(){
@@ -1498,11 +1508,19 @@ public int buscarCodigoProducto(String precioProductos){
     
     @FXML
     public void generarReporteCierreCaja(){
-            switch(tipoOperacionBusquedaFacturas){
-                case NINGUNO:
-                    imprimirCierreDeCaja();
-                break;
-            }
+         if(txtFechaInicio.getValue()==null){
+              Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("DEBE SELECCIONAR FECHA DE INICIO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+         }else{  
+            imprimirCierreDeCaja();
+         }
+              
     }
         @FXML
     private void fechaInicio(ActionEvent event) {
