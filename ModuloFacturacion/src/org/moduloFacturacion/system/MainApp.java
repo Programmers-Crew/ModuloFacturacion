@@ -30,7 +30,6 @@ public class MainApp extends Application {
         }        
          
         Parent root;
-       
        if(pc.prefsValidacion.get("program", "root").equals("true")){
            if(menu.prefsUsuario1.get("validar", "root").equals("recordar")){    
             

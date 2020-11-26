@@ -4,9 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 import javafx.fxml.FXML;
@@ -44,8 +41,11 @@ public class ActivationViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         prefsValidacion.put("act", "771495f765ad06279c51dbbade9400ff");
-        maquinas.putInt("maquinas", 0);
+        
         prefsValidacion.put("program", "false");
+        
+        System.out.println(maquinas.get("maquinas", "root"));
+        
     }    
 
 
@@ -58,41 +58,56 @@ public class ActivationViewController implements Initializable {
     private void btnRegistrar(MouseEvent event) throws IOException {
        
         if(!txtClave.getText().isEmpty()){
-            if(prefsValidacion.get("act", "root").equals(txtClave.getText())){
-                
+            
+            if(Integer.parseInt(maquinas.get("maquinas", "root"))>4 ){
                 Notifications noti = Notifications.create();
-                noti.graphic(new ImageView(imgCorrecto));
-                noti.title("ACTIVACIÓN EXITOSA");
-                noti.text("SE HA REGISTRADO CORRECTAMENTE");
-                noti.position(Pos.BOTTOM_RIGHT);
-                noti.hideAfter(Duration.seconds(4));
-                noti.darkStyle();
-                noti.show();
-                
-                
-                Stage primaryStage = new Stage();
-                Parent  root = FXMLLoader.load(getClass().getClassLoader().getResource("org/moduloFacturacion/view/LoginView.fxml"));
-                Scene scene = new Scene(root);
-                primaryStage.setTitle("LOGIN PROGRAMMERS BILLING");
-                primaryStage.getIcons().add(new Image(getClass().getResource("/org/moduloFacturacion/img/LogoGrande.png").toExternalForm()));
-                primaryStage.setWidth(668);
-                primaryStage.setHeight(520);
-                primaryStage.setScene(scene);     
-                primaryStage.initStyle(StageStyle.UNDECORATED);
-                primaryStage.show();
-                prefsValidacion.put("program", "true");
-                Stage stage = (Stage) anchor.getScene().getWindow();
-                stage.close();
-                
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("SUPERO LIMITE DE LICENCIAS PERMITIDAS PARA INSTALAR CONTACTE CON PROGRAMMERSCREW");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
             }else{
-                Notifications noti = Notifications.create();
-                noti.graphic(new ImageView(imgError));
-                noti.title("ERROR");
-                noti.text("ESTA CLAVE NO ESTA REGISTRADA");
-                noti.position(Pos.BOTTOM_RIGHT);
-                noti.hideAfter(Duration.seconds(4));
-                noti.darkStyle();
-                noti.show();
+                if(prefsValidacion.get("act", "root").equals(txtClave.getText())){
+
+                    maquinas.putInt("maquinas", Integer.parseInt(maquinas.get("maquinas", "root"))+1);
+
+                    System.out.println(maquinas.get("maquinas", "root"));
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgCorrecto));
+                    noti.title("ACTIVACIÓN EXITOSA");
+                    noti.text("SE HA REGISTRADO CORRECTAMENTE");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+
+
+                    Stage primaryStage = new Stage();
+                    Parent  root = FXMLLoader.load(getClass().getClassLoader().getResource("org/moduloFacturacion/view/LoginView.fxml"));
+                    Scene scene = new Scene(root);
+                    primaryStage.setTitle("LOGIN PROGRAMMERS BILLING");
+                    primaryStage.getIcons().add(new Image(getClass().getResource("/org/moduloFacturacion/img/LogoGrande.png").toExternalForm()));
+                    primaryStage.setWidth(668);
+                    primaryStage.setHeight(520);
+                    primaryStage.setScene(scene);     
+                    primaryStage.initStyle(StageStyle.UNDECORATED);
+                    primaryStage.show();
+                    prefsValidacion.put("program", "true");
+                    Stage stage = (Stage) anchor.getScene().getWindow();
+                    stage.close();
+
+                }else{
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("ESTA CLAVE NO ESTA REGISTRADA");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+                }
             }
         }
              
