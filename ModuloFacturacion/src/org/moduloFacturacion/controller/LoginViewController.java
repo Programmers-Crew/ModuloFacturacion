@@ -10,8 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 import javafx.animation.FadeTransition;
@@ -37,7 +35,6 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.moduloFacturacion.bean.CambioScene;
 import org.moduloFacturacion.db.Conexion;
-import org.moduloFacturacion.system.MainApp;
 
 
 public class LoginViewController implements Initializable {
