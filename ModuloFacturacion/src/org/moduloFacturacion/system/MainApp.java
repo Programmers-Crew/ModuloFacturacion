@@ -19,10 +19,11 @@ public class MainApp extends Application {
     ActivationViewController pc = new ActivationViewController();
    
     
+    
     @Override
     public void start(Stage stage) throws Exception {
         Conexion c = new Conexion();
-        
+       
         if(c.getConexion() != null){
             System.out.println("CONEXIO CORRECTA 1");
         }else{

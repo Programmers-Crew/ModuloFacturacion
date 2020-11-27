@@ -43,7 +43,7 @@ public class ActivationViewController implements Initializable {
         prefsValidacion.put("act", "771495f765ad06279c51dbbade9400ff");
         
         prefsValidacion.put("program", "false");
-        
+       
         System.out.println(maquinas.get("maquinas", "root"));
         
     }    
