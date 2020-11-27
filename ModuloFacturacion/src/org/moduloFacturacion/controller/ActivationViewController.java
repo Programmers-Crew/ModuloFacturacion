@@ -34,7 +34,6 @@ public class ActivationViewController implements Initializable {
     Image imgError = new Image("org/moduloFacturacion/img/error.png");
     Image imgCorrecto= new Image("org/moduloFacturacion/img/correcto.png");
     public Preferences prefsValidacion = Preferences.userRoot().node(this.getClass().getName());;
-    public Preferences maquinas = Preferences.userRoot().node(this.getClass().getName());;
     
     @FXML
     private AnchorPane anchor;
@@ -44,7 +43,7 @@ public class ActivationViewController implements Initializable {
         
         prefsValidacion.put("program", "false");
        
-        System.out.println(maquinas.get("maquinas", "root"));
+     
         
     }    
 
@@ -59,21 +58,9 @@ public class ActivationViewController implements Initializable {
        
         if(!txtClave.getText().isEmpty()){
             
-            if(Integer.parseInt(maquinas.get("maquinas", "root"))>4 ){
-                Notifications noti = Notifications.create();
-                    noti.graphic(new ImageView(imgError));
-                    noti.title("ERROR");
-                    noti.text("SUPERO LIMITE DE LICENCIAS PERMITIDAS PARA INSTALAR CONTACTE CON PROGRAMMERSCREW");
-                    noti.position(Pos.BOTTOM_RIGHT);
-                    noti.hideAfter(Duration.seconds(4));
-                    noti.darkStyle();
-                    noti.show();
-            }else{
+            
                 if(prefsValidacion.get("act", "root").equals(txtClave.getText())){
 
-                    maquinas.putInt("maquinas", Integer.parseInt(maquinas.get("maquinas", "root"))+1);
-
-                    System.out.println(maquinas.get("maquinas", "root"));
                     Notifications noti = Notifications.create();
                     noti.graphic(new ImageView(imgCorrecto));
                     noti.title("ACTIVACIÓN EXITOSA");
@@ -108,9 +95,7 @@ public class ActivationViewController implements Initializable {
                     noti.darkStyle();
                     noti.show();
                 }
-            }
-        }
-             
+            }     
     }
 
     @FXML
