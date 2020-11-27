@@ -28,7 +28,6 @@ public class MainApp extends Application {
         }else{
             System.out.println("CONEXION INCORRECTA");
         }        
-         
         Parent root;
        if(pc.prefsValidacion.get("program", "root").equals("true")){
            if(menu.prefsUsuario1.get("validar", "root").equals("recordar")){    
