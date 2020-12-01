@@ -850,7 +850,6 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
-
 DELIMITER $$
 	create procedure SpTotalVendio(fechaCorte date)
 		BEGIN
@@ -897,6 +896,3 @@ DELIMITER $$
 							where f.facturaFecha = fechaCorte;
         END $$
 DELIMITER ;
-
-
-call SpDatoReporteVentas("2020-11-30");

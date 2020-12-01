@@ -13,10 +13,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
-
+import org.moduloFacturacion.report.GenerarReporte;
 
 
 import javafx.animation.FadeTransition;
@@ -44,6 +46,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -86,6 +89,7 @@ public class MenuPrincipalContoller implements Initializable {
     @FXML
     private JFXButton btnSiguiente;
 
+  
 
  
 
@@ -1187,5 +1191,67 @@ public class MenuPrincipalContoller implements Initializable {
                     paginas = -1;
              }
     }
+    
+      @FXML
+    private void cierreCaja(ActionEvent event) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("CIERRE DE CAJA");
+        dialog.setHeaderText("Ingrese la fecha: ");
+        dialog.setContentText("año/mes/día");
+        Optional<String>  result = dialog.showAndWait();
+        
+        if(result.isPresent()){
+            try{
+            
+                Map parametros = new HashMap();
+
+                 String FechaCorte = result.get();
+                String repuesta = "'"+FechaCorte+"'";
+                
+                parametros.put("FechaCorte", "'"+FechaCorte+"'");
+                System.out.println(repuesta);
+                 GenerarReporte.mostrarReporte("CierreDeCaja.jasper", "CIERRE DE CAJAS", parametros);
+                 
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+        }
+        
+    }
+
+    @FXML
+    private void reporteVentas(ActionEvent event) {
+         TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("REPORTE DE VENTAS");
+        dialog.setHeaderText("Ingrese la fecha: ");
+        dialog.setContentText("año/mes/día");
+        Optional<String>  result = dialog.showAndWait();
+        if(result.isPresent()){
+            try{
+                Map parametros = new HashMap();
+
+                String FechaCorte = result.get();
+                 
+                String repuesta = "'"+FechaCorte+"'";
+                
+                parametros.put("FechaCorte", "'"+FechaCorte+"'");
+                 GenerarReporte.mostrarReporte("CorteDeCaja.jasper", "REPORTE DE VENTAS", parametros);
+                
+                
+                }catch(Exception e){
+                    e.printStackTrace();
+                    Notifications noti = Notifications.create();
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ERROR");
+                    noti.text("DEBE SELECCIONAR FECHA DE INICIO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();
+                    noti.show();
+                }
+        }
+    }
+
+    
  }
 

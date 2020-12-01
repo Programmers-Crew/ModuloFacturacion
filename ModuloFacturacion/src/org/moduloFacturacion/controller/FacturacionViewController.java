@@ -1450,7 +1450,7 @@ public int buscarCodigoProducto(String precioProductos){
                 String repuesta = "'"+FechaCorte+"'";
                 
                 parametros.put("FechaCorte", "'"+FechaCorte+"'");
-                 GenerarReporte.mostrarReporte("CorteDeCaja.jasper", "CIERRE DE CAJA", parametros);
+                 GenerarReporte.mostrarReporte("CorteDeCaja.jasper", "REPORTE DE VENTAS", parametros);
                 
                  txtFechaInicio.setValue(null);
                   btnReporteVentas.setDisable(true);

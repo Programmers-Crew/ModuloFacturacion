@@ -157,6 +157,8 @@ public class LoginViewController implements Initializable {
                     primaryStage.setWidth(1100);
                     primaryStage.setHeight(590);
                     primaryStage.setScene(scene);
+                    primaryStage.setTitle("PROGRAMMERS BILLING");
+                    primaryStage.getIcons().add(new Image(getClass().getResource("/org/moduloFacturacion/img/LogoGrande.png").toExternalForm()));
                     primaryStage.show();
                     Notifications noti = Notifications.create();
                     noti.graphic(new ImageView(imgCorrecto));
