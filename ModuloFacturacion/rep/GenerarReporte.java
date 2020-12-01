@@ -1,4 +1,5 @@
-package org.moduloFacturacion.controller;
+
+package org.moduloFacturacion.report;
 
 import net.sf.jasperreports.engine.util.JRLoader;   // leer el reporte
 import net.sf.jasperreports.engine.JasperReport;    // Obtener el archiivo seleccionado
@@ -8,9 +9,7 @@ import net.sf.jasperreports.engine.JasperFillManager; // Saber que archivo quier
 import net.sf.jasperreports.view.JasperViewer; // Ver el archivo
 import java.util.Map;
 import java.io.InputStream;
-
 import org.moduloFacturacion.db.Conexion;
-
 
 public class GenerarReporte {
     public static void mostrarReporte(String nombreReporte, String titulo, Map parametros){

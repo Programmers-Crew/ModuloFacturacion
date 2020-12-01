@@ -854,7 +854,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpTotalVendio(fechaCorte date)
 		BEGIN
-			select facturaFecha, sum(facturaTotalNeto) as 'Total Neto Vendido', sum(facturaTotalIva) as 'Total Iva Vendido' , sum(facturaTotal) as 'Total Vendido', count(f.facturaId), sum(fd.cantidad)
+			select distinct f.facturaId facturaFecha, sum(facturaTotalNeto) as 'Total Neto Vendido', sum(facturaTotalIva) as 'Total Iva Vendido' , sum(facturaTotal) as 'Total Vendido', count(f.facturaId), sum(fd.cantidad)
 				from facturas as f
 					inner join facturadetalle as fd
 						on f.facturaDetalleId = fd.facturaDetalleId
@@ -865,7 +865,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpCorteDeCajaDetalle(facturaId int)
 		BEGIN
-			select productoDesc, productoPrecio ,cantidad
+			select distinct f.facturaId. productoDesc, productoPrecio ,cantidad
 				from facturadetalle as fd
 					inner join productos as p
 						on fd.productoId = p.productoId
@@ -874,13 +874,6 @@ DELIMITER $$
 									where f.facturaId = facturaId;
         END $$ 
 DELIMITER ;
-
-<<<<<<< HEAD
-
-=======
->>>>>>> Davis-Roldan
-
-
 
 DELIMITER $$
 	create procedure SpSumaProductos(idBuscado int, cantidad int)

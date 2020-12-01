@@ -36,7 +36,7 @@ public class MiVisorPDF {
     public ArrayList<ArchivosVO> leerPDF() {
         String url = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();        
         System.out.println(url);
-        File file = new File("src/org/moduloFacturacion/bean/manualdeusuairo.pdf");
+        File file = new File("rep/manualdeusuairo.pdf");
         byte[] bi = null;
         ArrayList<ArchivosVO> ar = new ArrayList<ArchivosVO>();
         try {
