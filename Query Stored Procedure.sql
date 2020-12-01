@@ -834,7 +834,7 @@ DELIMITER $$
 					where estadoProductoDesc = nombre;
         END $$
 DELIMITER ;
-
+ 
 
 DELIMITER $$
 	create procedure SpCorteDeCaja(fechaCorte date)
@@ -854,7 +854,7 @@ DELIMITER ;
 DELIMITER $$
 	create procedure SpTotalVendio(fechaCorte date)
 		BEGIN
-			select distinct f.facturaId facturaFecha, sum(facturaTotalNeto) as 'Total Neto Vendido', sum(facturaTotalIva) as 'Total Iva Vendido' , sum(facturaTotal) as 'Total Vendido', count(f.facturaId), sum(fd.cantidad)
+			select  distinct f.facturaDetalleId , facturaFecha, sum(distinct facturaTotalNeto) as 'Total Neto Vendido', sum(distinct facturaTotalIva) as 'Total Iva Vendido' , sum(distinct facturaTotal) as 'Total Vendido', count(distinct f.facturaId), sum(fd.cantidad)
 				from facturas as f
 					inner join facturadetalle as fd
 						on f.facturaDetalleId = fd.facturaDetalleId
@@ -862,10 +862,12 @@ DELIMITER $$
 		END $$
 DELIMITER ;
 
+
+
 DELIMITER $$
 	create procedure SpCorteDeCajaDetalle(facturaId int)
 		BEGIN
-			select distinct f.facturaId. productoDesc, productoPrecio ,cantidad
+			select distinct f.facturaId, productoDesc, productoPrecio ,cantidad
 				from facturadetalle as fd
 					inner join productos as p
 						on fd.productoId = p.productoId
@@ -884,7 +886,7 @@ DELIMITER $$
         END $$
 DELIMITER ;
 
- 
+
 DELIMITER $$
 	create procedure SpDatoReporteVentas(fechaCorte date)
 		BEGIN 
@@ -897,3 +899,4 @@ DELIMITER $$
 DELIMITER ;
 
 
+call SpDatoReporteVentas("2020-11-30");
