@@ -98,4 +98,11 @@ create table Facturas(
 	CONSTRAINT FK_usuarioFactura FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId)
 );
 
-
+DELIMITER $$
+CREATE PROCEDURE SpActualizarInventarioProductos(idBuscado int(100), cant int(100),estado tinyint(1))
+BEGIN
+			update InventarioProductos
+				set inventarioProductoCant = cant, estadoProductoId = estado
+					where productoId = idBuscado;
+END $$
+DELIMITER ;        
