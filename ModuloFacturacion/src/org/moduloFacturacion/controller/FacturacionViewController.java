@@ -740,8 +740,7 @@ public int buscarCodigoProducto(String precioProductos){
                 noti.hideAfter(Duration.seconds(4));
                 noti.darkStyle();   
                 noti.show();
-                }
-                   
+                }  
             }
             
         }
