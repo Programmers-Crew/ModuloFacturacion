@@ -141,7 +141,7 @@ public class FacturacionViewController implements Initializable {
 
     boolean comprobarCliente = false;
     Notifications noti = Notifications.create();
-    int codigoProducto;
+    int codigoProducto, cantidadEditar;
     
     // ================= VARIABLES PRA BUSCAR FACTURAS
         public Operacion tipoOperacionBusquedaFacturas = Operacion.NINGUNO; 
@@ -880,6 +880,33 @@ public int buscarCodigoProducto(String precioProductos){
 
       @FXML
     private void btnEditar(MouseEvent event) {
+       int codigoProducto1 = buscarCodigoProducto(cmbNombreProducto.getValue());
+       String sql1 = "{call SpBuscarInventarioProductos('"+codigoProducto1+"')}";
+       String sql2 = "";
+       int cantidad=0;
+      
+       String estado="";
+       try{
+           PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql1);
+           ResultSet rs = ps.executeQuery();
+           
+           while(rs.next()){
+               cantidad = rs.getInt("inventarioProductoCant");
+               estado = rs.getString("estadoProductoDesc");
+           }
+       }catch(SQLException ex){
+                Notifications noti = Notifications.create();
+                noti.graphic(new ImageView(imgError));
+                noti.title("ERROR");
+                noti.text(ex.toString());
+                noti.position(Pos.BOTTOM_RIGHT);
+                noti.hideAfter(Duration.seconds(4));
+                noti.darkStyle();   
+                noti.show();
+       } 
+       
+       
+        int cantidadValidar = Integer.parseInt(txtCantidadProducto.getText()), total=0;
         if(cmbNombreProducto.getValue().equals("") || txtPrecioProducto.getText().isEmpty() || txtCantidadProducto.getText().isEmpty()){
             Notifications noti = Notifications.create();
             noti.graphic(new ImageView(imgError));
@@ -890,42 +917,179 @@ public int buscarCodigoProducto(String precioProductos){
             noti.darkStyle();
             noti.show();
         }else{
-            int index = tblBackUp.getSelectionModel().getSelectedIndex();
-            FacturacionDetalleBackup nuevaFactura = new FacturacionDetalleBackup();
-            nuevaFactura.setFacturaDetalleIdBackup(colCodigoFactura.getCellData(index));
-            nuevaFactura.setProductoDesc(cmbNombreProducto.getValue());
-            
-            nuevaFactura.setCantidadBackup(Integer.parseInt(txtCantidadProducto.getText()));
-            nuevaFactura.setTotalParcialBackup(Double.parseDouble(txtPrecioProducto.getText())*Integer.parseInt(txtCantidadProducto.getText()));
-            
-            
-           String sql = "{call spEditarBackup('"+nuevaFactura.getFacturaDetalleIdBackup()+"','"+buscarCodigoProducto(nuevaFactura.getProductoDesc())+"','"+nuevaFactura.getCantidadBackup()+"','"+nuevaFactura.getTotalParcialBackup()+"')}";
-           try{
-               PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
-               ps.execute();
+            if(cantidadEditar < Integer.parseInt(txtCantidadProducto.getText())){
+                System.out.println("mayor");
+                total = cantidadValidar-cantidadEditar;
+                
+                cantidad = cantidad-total;
+                System.out.println(total);
+                if(cantidad == 0){
+                    noti.graphic(new ImageView(imgError));
+                    noti.title("ATENCIÓN");
+                    noti.text("ESTE PRODUCTO SE HA AGOTADO");
+                    noti.position(Pos.BOTTOM_RIGHT);
+                    noti.hideAfter(Duration.seconds(4));
+                    noti.darkStyle();   
+                    noti.show();
+                    sql2="{call SpActualizarInventarioProductos('"+codigoProducto1+"','"+cantidad+"','"+validarEstadoProducto("AGOTADO")+"')}";
+                    
+                    try{
+                         PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql2);
+                         ps.execute();
+                     }catch(SQLException ex){
+                         ex.printStackTrace();
+                     }
+                    int index = tblBackUp.getSelectionModel().getSelectedIndex();
+                    FacturacionDetalleBackup nuevaFactura = new FacturacionDetalleBackup();
+                    nuevaFactura.setFacturaDetalleIdBackup(colCodigoFactura.getCellData(index));
+                    nuevaFactura.setProductoDesc(cmbNombreProducto.getValue());
+
+                    nuevaFactura.setCantidadBackup(Integer.parseInt(txtCantidadProducto.getText()));
+                    nuevaFactura.setTotalParcialBackup(Double.parseDouble(txtPrecioProducto.getText())*Integer.parseInt(txtCantidadProducto.getText()));
+                    
+                    
+                   String sql = "{call spEditarBackup('"+nuevaFactura.getFacturaDetalleIdBackup()+"','"+buscarCodigoProducto(nuevaFactura.getProductoDesc())+"','"+nuevaFactura.getCantidadBackup()+"','"+nuevaFactura.getTotalParcialBackup()+"')}";
+                   try{
+                       PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                       ps.execute();
+
+                        noti.graphic(new ImageView(imgCorrecto));
+                        noti.title("OPERACIÓN EXITOSA");
+                        noti.text("SE HA EDITADO EXITOSAMENTE EL REGISTRO");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                        tipoOperacionFacturacion = Operacion.NINGUNO;
+                        cargarDatos();
+                        btnEditar.setDisable(true);
+                        valorTotalFactura();
+                   }catch(SQLException ex){
+                       ex.printStackTrace();
+                         Notifications noti = Notifications.create();
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR");
+                        noti.text("NO SE HA PODIDO ACTUALIZAR EL CAMPO");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();
+                        noti.show();
+                   }
+                }else{
+                    if(cantidad<0){
+                        Notifications noti = Notifications.create();
+                        noti.graphic(new ImageView(imgError));
+                        noti.title("ERROR");
+                        noti.text("ESTE PRODUCTO NO POSEE EXISTENCIAS, ACTUALICE EL INVENTARIO");
+                        noti.position(Pos.BOTTOM_RIGHT);
+                        noti.hideAfter(Duration.seconds(4));
+                        noti.darkStyle();   
+                        noti.show();
+                    }else{
+                        
+                         sql2="{call SpActualizarInventarioProductos('"+codigoProducto1+"','"+cantidad+"','"+validarEstadoProducto(estado)+"')}";
+                         
+                        try{
+                            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql2);
+                            ps.execute();
+                        }catch(SQLException ex){
+                            ex.printStackTrace();
+                        }
+                         int index = tblBackUp.getSelectionModel().getSelectedIndex();
+                         FacturacionDetalleBackup nuevaFactura = new FacturacionDetalleBackup();
+                         nuevaFactura.setFacturaDetalleIdBackup(colCodigoFactura.getCellData(index));
+                         nuevaFactura.setProductoDesc(cmbNombreProducto.getValue());
+
+                         nuevaFactura.setCantidadBackup(Integer.parseInt(txtCantidadProducto.getText()));
+                         nuevaFactura.setTotalParcialBackup(Double.parseDouble(txtPrecioProducto.getText())*Integer.parseInt(txtCantidadProducto.getText()));
+
+
+                        String sql = "{call spEditarBackup('"+nuevaFactura.getFacturaDetalleIdBackup()+"','"+buscarCodigoProducto(nuevaFactura.getProductoDesc())+"','"+nuevaFactura.getCantidadBackup()+"','"+nuevaFactura.getTotalParcialBackup()+"')}";
+                        try{
+                            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                            ps.execute();
+
+                             noti.graphic(new ImageView(imgCorrecto));
+                             noti.title("OPERACIÓN EXITOSA");
+                             noti.text("SE HA EDITADO EXITOSAMENTE EL REGISTRO");
+                             noti.position(Pos.BOTTOM_RIGHT);
+                             noti.hideAfter(Duration.seconds(4));
+                             noti.darkStyle();
+                             noti.show();
+                             tipoOperacionFacturacion = Operacion.NINGUNO;
+                             cargarDatos();
+                             btnEditar.setDisable(true);
+                             valorTotalFactura();
+                        }catch(SQLException ex){
+                            ex.printStackTrace();
+                              Notifications noti = Notifications.create();
+                             noti.graphic(new ImageView(imgError));
+                             noti.title("ERROR");
+                             noti.text("NO SE HA PODIDO ACTUALIZAR EL CAMPO");
+                             noti.position(Pos.BOTTOM_RIGHT);
+                             noti.hideAfter(Duration.seconds(4));
+                             noti.darkStyle();
+                             noti.show();
+                        }
+                    }
+                }
+            }else{
+                if(cantidadEditar > Integer.parseInt(txtCantidadProducto.getText())){
+                    
+                    cantidadEditar = cantidadEditar - cantidadValidar;
+                    cantidad = cantidad + cantidadEditar;
+                    
+                    
+                    sql2="{call SpActualizarInventarioProductos('"+codigoProducto1+"','"+cantidad+"','"+validarEstadoProducto(estado)+"')}";
+                         
+                        try{
+                            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql2);
+                            ps.execute();
+                        }catch(SQLException ex){
+                            ex.printStackTrace();
+                        }
+                         int index = tblBackUp.getSelectionModel().getSelectedIndex();
+                         FacturacionDetalleBackup nuevaFactura = new FacturacionDetalleBackup();
+                         nuevaFactura.setFacturaDetalleIdBackup(colCodigoFactura.getCellData(index));
+                         nuevaFactura.setProductoDesc(cmbNombreProducto.getValue());
+
+                         nuevaFactura.setCantidadBackup(Integer.parseInt(txtCantidadProducto.getText()));
+                         nuevaFactura.setTotalParcialBackup(Double.parseDouble(txtPrecioProducto.getText())*Integer.parseInt(txtCantidadProducto.getText()));
+
+
+                        String sql = "{call spEditarBackup('"+nuevaFactura.getFacturaDetalleIdBackup()+"','"+buscarCodigoProducto(nuevaFactura.getProductoDesc())+"','"+nuevaFactura.getCantidadBackup()+"','"+nuevaFactura.getTotalParcialBackup()+"')}";
+                        try{
+                            PreparedStatement ps = Conexion.getIntance().getConexion().prepareCall(sql);
+                            ps.execute();
+
+                             noti.graphic(new ImageView(imgCorrecto));
+                             noti.title("OPERACIÓN EXITOSA");
+                             noti.text("SE HA EDITADO EXITOSAMENTE EL REGISTRO");
+                             noti.position(Pos.BOTTOM_RIGHT);
+                             noti.hideAfter(Duration.seconds(4));
+                             noti.darkStyle();
+                             noti.show();
+                             tipoOperacionFacturacion = Operacion.NINGUNO;
+                             cargarDatos();
+                             btnEditar.setDisable(true);
+                             valorTotalFactura();
+                        }catch(SQLException ex){
+                            ex.printStackTrace();
+                              Notifications noti = Notifications.create();
+                             noti.graphic(new ImageView(imgError));
+                             noti.title("ERROR");
+                             noti.text("NO SE HA PODIDO ACTUALIZAR EL CAMPO");
+                             noti.position(Pos.BOTTOM_RIGHT);
+                             noti.hideAfter(Duration.seconds(4));
+                             noti.darkStyle();
+                             noti.show();
+                        }
+                    
+                }
                
-                noti.graphic(new ImageView(imgCorrecto));
-                noti.title("OPERACIÓN EXITOSA");
-                noti.text("SE HA EDITADO EXITOSAMENTE EL REGISTRO");
-                noti.position(Pos.BOTTOM_RIGHT);
-                noti.hideAfter(Duration.seconds(4));
-                noti.darkStyle();
-                noti.show();
-                tipoOperacionFacturacion = Operacion.NINGUNO;
-                cargarDatos();
-                btnEditar.setDisable(true);
-                valorTotalFactura();
-           }catch(SQLException ex){
-               ex.printStackTrace();
-                 Notifications noti = Notifications.create();
-                noti.graphic(new ImageView(imgError));
-                noti.title("ERROR");
-                noti.text("NO SE HA PODIDO ACTUALIZAR EL CAMPO");
-                noti.position(Pos.BOTTOM_RIGHT);
-                noti.hideAfter(Duration.seconds(4));
-                noti.darkStyle();
-                noti.show();
-           }
+            }
+            
+          
         }
     }
     
@@ -948,7 +1112,7 @@ public int buscarCodigoProducto(String precioProductos){
                 int index  = tblBackUp.getSelectionModel().getSelectedIndex();
                 cmbNombreProducto.setValue(colDesProductoBackUp.getCellData(index));
                 txtCantidadProducto.setText(colCantidadProductoBackUp.getCellData(index).toString());
-                
+                cantidadEditar = colCantidadProductoBackUp.getCellData(index);
                 btnEditar.setDisable(false);
                 btnVender.setDisable(true);
                 btnImprimir.setDisable(true);
