@@ -862,7 +862,7 @@ DELIMITER $$
 		END $$
 DELIMITER ;
 
-call SpCorteDeCajaDetalle(1234567);
+
 
 DELIMITER $$
 	create procedure SpCorteDeCajaDetalle(facturaId int)
